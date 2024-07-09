@@ -25,15 +25,15 @@ const loginUser = async(req,res)=>{
         }
 
         const token = createToken(user._id);
-        res.json({success:true,token})
+        res.json({success:true,token,message:`${user.role}`})
     } catch (error) {
-        res.json({success:false,})
+        res.json({success:false,message:"Error"})
     }
 }
 
 //register user
 const registerUser = async(req,res)=>{
-    const {name,password,email} = req.body;
+    const {name,password,email,role} = req.body;
     try {
         const exists = await userModel.findOne({email});
         if(exists) 
@@ -53,7 +53,7 @@ const registerUser = async(req,res)=>{
         const hashedPassword = await bcrypt.hash(password,salt);
 
         const newUser =  new userModel({
-            name:name,email:email,password:hashedPassword
+            name:name,email:email,password:hashedPassword,role:role
         })
 
         const user = await newUser.save()
@@ -68,4 +68,3 @@ const registerUser = async(req,res)=>{
 
 
 export {loginUser,registerUser}
-//6 hr 24 min
