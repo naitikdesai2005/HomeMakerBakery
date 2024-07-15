@@ -1,8 +1,4 @@
-body {
-  margin: 0;
-}
-
-.login-nav-button {
+/* .login-nav-button {
   color: white;
   background-color: white;
   border: 1px solid #58231f;
@@ -15,7 +11,7 @@ body {
 .login-nav-button:hover {
   background-color: #be6e66;
   color: white;
-}
+} */
 
 .mainpage {
   display: flex;

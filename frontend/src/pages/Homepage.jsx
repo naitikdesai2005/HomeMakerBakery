@@ -9,7 +9,7 @@ import Navbar from "./Navbar/Navbar.jsx";
 function Homepage() {
   const [category, setCategory] = useState("All");
   return (
-    <div className="container">
+    <div>
       <Navbar />
       <div className="mainpage">
         <div className="mainpage-content">
