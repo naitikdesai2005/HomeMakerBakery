@@ -21,7 +21,7 @@ function Homepage() {
             impedit nihil totam error laborum! Modi dolore necessitatibus veniam
             maxime distinctio!
           </h5>
-          <button className="login-button">Know more</button>
+          <button className="know-button">Know more</button>
         </div>
         <img src="/images/home.jpg" alt="background" />
       </div>

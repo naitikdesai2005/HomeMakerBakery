@@ -17,11 +17,13 @@ const Navbar = () => {
           <a href="about">About</a>
           <a href="services">Services</a>
           <a href="contact">Contact</a>
-          <button className="login-button">
+          <button className="login-nav-button">
             <Link to="/signup">Login/Signup</Link>
           </button>
           &nbsp;
-          <button className="register-button"><Link to="/signup">Register as a Baker</Link></button>
+          <button className="register-button">
+            <Link to="/signup">Register as a Baker</Link>
+          </button>
         </div>
       </nav>
     </div>

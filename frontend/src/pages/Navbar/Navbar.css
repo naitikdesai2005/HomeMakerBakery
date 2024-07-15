@@ -47,9 +47,8 @@
   transition: 0.3s left;
 }
 
-
-.login-button {
-  background-color: white;
+.login-nav-button {
+  background-color: #fff;
   border: 1px solid #58231f;
   padding: 10px 20px;
   border-radius: 25px;
@@ -57,9 +56,9 @@
   transition: background-color 0.3s;
 }
 
-.login-button:hover {
-  background-color: #58231f;
-  color: white;
+.login-nav-button:hover{
+  background-color:#58231f;
+  color: #fff;
 }
 
 .register-button {

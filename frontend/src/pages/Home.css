@@ -1,17 +1,17 @@
-/* .login-nav-button {
-  color: white;
-  background-color: white;
-  border: 1px solid #58231f;
+.know-button {
+  color: black;
+  background-color: #fff;
+  border: 2px solid #58231f;
   padding: 10px 20px;
   border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.login-nav-button:hover {
-  background-color: #be6e66;
+.know-button:hover {
+  background-color: #58231f;
   color: white;
-} */
+}
 
 .mainpage {
   display: flex;
