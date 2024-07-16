@@ -4,8 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import Signup from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login.jsx";
 import Homepage from "./pages/Homepage.jsx";
-import { useState } from "react";
-import Navbar from "./pages/Navbar/Navbar.jsx";
 
 function App() {
   return (
