@@ -1,0 +1,77 @@
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px 0px;
+}
+
+.navbar-logo h3 {
+  height: 30px;
+}
+
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 
+.navbar-search input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  width: 350px;
+  transition: width 0.3s ease-in-out;
+}
+
+.navbar-search input:focus {
+  width: 400px;
+} */
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-menu a {
+  color: #333;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.navbar-menu a:hover {
+  border-bottom: 2px solid #58231f;
+  transition: 0.3s left;
+}
+
+.login-button {
+  background-color: #fff;
+  border: 2px solid #58231f;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: #58231f;
+  color: white;
+}
+
+.registration-button {
+  background-color: #fff;
+  border: 2px solid #58231f;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.registration-button:hover {
+  background-color: #58231f;
+  color: white;
+}
