@@ -45,7 +45,7 @@ const Navbar = () => {
           <a className="login-button" href="/signup">
             Login/Signup
           </a>
-          <a className="registration-button" href="">
+          <a className="registration-button" href="/bakerRegister">
             Register as Baker
           </a>
         </div>
