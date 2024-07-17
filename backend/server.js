@@ -2,8 +2,9 @@ import express from 'express'
 import cors from 'cors'
 import { connectDB } from './config/db.js'
 import userRouter from './routes/userRoute.js'
+import bakerRouter from './routes/bakerRoute.js'
 import 'dotenv/config'
-import dashboardRouter from './routes/dashboardRoute.js'
+
 
 //app config
 const app = express()
@@ -21,8 +22,8 @@ connectDB()
 app.use("/images",express.static('uploads'))
 
 // app.use("/api/cart",cartRouter)
-app.use("/api/user",userRouter)
-app.use("/api",dashboardRouter);
+app.use("/api/user",userRouter);
+app.use("/api/baker",bakerRouter);
 
 app.get("/",(req,res)=>{
     res.send("API Working...!!!")
