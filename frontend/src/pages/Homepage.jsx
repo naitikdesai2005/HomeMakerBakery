@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import Navbar from "./Navbar/Navbar.jsx";
 import Menu from "./menu/Menu.jsx";
 import Footer from "./Footer/Footer.jsx";
 import Contact from "./Contact/Contact.jsx";
-import "./Home.css";
-import Navbar from "./Navbar/Navbar.jsx";
 import Aboutus from "./Aboutus/Aboutus.jsx";
-import Products from "./Products/Products.jsx";
+import Product from "./Product/Product.jsx";
+import "./Home.css";
+import { StoreContextProvider } from "./context/StoreContext";
+import { food_list } from "../../images/assets.js";
 
 function Homepage() {
   const [category, setCategory] = useState("All");
+
   return (
     <div>
       <Navbar />
@@ -23,14 +25,30 @@ function Homepage() {
             impedit nihil totam error laborum! Modi dolore necessitatibus veniam
             maxime distinctio!
           </h5>
-          {/* <button className="know-button">Know more</button> */}
         </div>
         <img src="/images/home.jpg" alt="background" />
       </div>
       <Menu category={category} setCategory={setCategory} />
+      <StoreContextProvider>
+        <div className="product-list">
+          {food_list.map((product) => (
+            <Product
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              price={product.price}
+              description={product.description}
+              image={product.image}
+              rating={product.rating}
+            />
+          ))}
+        </div>
+      </StoreContextProvider>
+      <hr />
       <Contact />
+      <hr />
       <Aboutus />
-      <Products />
+      <hr />
       <Footer />
     </div>
   );

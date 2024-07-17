@@ -12,7 +12,7 @@ const menuItems = [
 
 const Menu = ({ category, setCategory }) => {
   return (
-    <div className="menu-container">
+    <div className="menu-container" id="menu">
       <h1>Shop by category</h1>
       <div className="menu-items">
         {menuItems.map((item, index) => {

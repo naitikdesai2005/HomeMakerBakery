@@ -29,9 +29,9 @@ const Navbar = () => {
             About
           </a>
           <a
-            href="#Products"
-            onClick={() => setMenu("Products")}
-            className={menu === "Products" ? "active" : ""}
+            href="#menu"
+            onClick={() => setMenu("Product")}
+            className={menu === "Product" ? "active" : ""}
           >
             Products
           </a>
