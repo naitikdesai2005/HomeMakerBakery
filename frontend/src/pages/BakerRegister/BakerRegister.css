@@ -36,19 +36,19 @@
   width: 100%;
 }
 
-.form-group {
+.register-form-group {
   margin-bottom: 15px;
   position: relative;
 }
 
-.form-group label {
+.register-form-group label {
   display: block;
   font-size: 14px;
   color: #333333;
   margin-bottom: 5px;
 }
 
-.form-group .icon {
+.register-form-group .icon {
   position: absolute;
   top: 50%;
   left: 10px;
@@ -56,7 +56,7 @@
   color: #888888;
 }
 
-.form-group input {
+.register-form-group input {
   width: calc(100% - 30px);
   padding: 10px 10px 10px 30px;
   border: none;
@@ -66,7 +66,7 @@
   transition: border-color 0.3s;
 }
 
-.form-group input:focus {
+.register-form-group input:focus {
   border-bottom-color: #58231f;
 }
 
@@ -97,6 +97,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -107,6 +108,7 @@
     transform: translateY(-20px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
