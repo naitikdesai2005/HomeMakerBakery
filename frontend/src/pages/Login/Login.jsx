@@ -6,7 +6,7 @@ import "./Login.css";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  // const [role, setRole] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,14 +45,14 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="forml-group">
+            {/* <div className="forml-group">
               <label>Role</label>
               <select value={role} onChange={(e) => setRole(e.target.value)}>
                 <option value="">Select Role</option>
                 <option value="user">User</option>
                 <option value="guest">Guest</option>
               </select>
-            </div>
+            </div> */}
             <button type="submit" className="Login-button">
               Login
             </button>

@@ -5,6 +5,8 @@ import Footer from "./Footer/Footer.jsx";
 import Contact from "./Contact/Contact.jsx";
 import "./Home.css";
 import Navbar from "./Navbar/Navbar.jsx";
+import Aboutus from "./Aboutus/Aboutus.jsx";
+import Products from "./Products/Products.jsx";
 
 function Homepage() {
   const [category, setCategory] = useState("All");
@@ -21,12 +23,14 @@ function Homepage() {
             impedit nihil totam error laborum! Modi dolore necessitatibus veniam
             maxime distinctio!
           </h5>
-          <button className="know-button">Know more</button>
+          {/* <button className="know-button">Know more</button> */}
         </div>
         <img src="/images/home.jpg" alt="background" />
       </div>
       <Menu category={category} setCategory={setCategory} />
       <Contact />
+      <Aboutus />
+      <Products />
       <Footer />
     </div>
   );
