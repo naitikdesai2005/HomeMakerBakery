@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import { assets } from "../../../images/assets";
 
 const Navbar = () => {
   const [menu, setMenu] = useState("home");
@@ -42,12 +43,22 @@ const Navbar = () => {
           >
             Contact
           </a>
+          <div className="navbar-right">
+            <div className="navbar-search-icon">
+              <img src={assets.basket_icon} alt="" />
+              <div className="dot"></div>
+            </div>
+          </div>
+        </div>
+        <div className="nav">
           <a className="login-button" href="/signup">
-            Login/Signup
+            <img src={assets.login_icon} alt="" />
           </a>
-          <a className="registration-button" href="/bakerRegister">
-            Register as Baker
-          </a>
+          <div className="nav-regis">
+            <a className="registration-button" href="/bakerRegister">
+              Register as Baker
+            </a>
+          </div>
         </div>
       </nav>
     </div>

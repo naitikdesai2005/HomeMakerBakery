@@ -7,6 +7,8 @@ import rating_starts from './rating_starts.png'
 import profile_icon from './profile_icon.png'
 import logout_icon from './logout_icon.png'
 import parcel_icon from './parcel_icon.png'
+import basket_icon from './basket_icon.png'
+import login_icon from './login.png'
 
 import food_1 from './cake1.jpeg'
 import food_2 from './cake2.jpeg'
@@ -42,7 +44,9 @@ export const assets = {
     selector_icon,
     profile_icon,
     logout_icon,
-    parcel_icon
+    parcel_icon,
+    basket_icon,
+    login_icon
 }
 export const food_list = [
     {

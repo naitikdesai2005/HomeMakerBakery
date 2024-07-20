@@ -30,19 +30,16 @@ const Footer = () => {
           <h3>Company</h3>
           <ul>
             <li>
-              <a href="#">Home</a>
+              <a href="#home">Home</a>
             </li>
             <li>
-              <a href="#">Features</a>
+              <a href="#product">Products</a>
             </li>
             <li>
-              <a href="#">Services</a>
+              <a href="#Aboutus">About Us</a>
             </li>
             <li>
-              <a href="#">About Us</a>
-            </li>
-            <li>
-              <a href="#">Contact Us</a>
+              <a href="#Contact">Contact Us</a>
             </li>
           </ul>
         </div>

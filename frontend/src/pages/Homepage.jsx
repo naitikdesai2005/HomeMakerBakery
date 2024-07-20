@@ -13,7 +13,7 @@ function Homepage() {
   return (
     <div>
       <Navbar />
-      <div className="mainpage">
+      <div className="mainpage" id="home">
         <div className="mainpage-content">
           <h1>Delicious</h1>
           <h1>&nbsp;&nbsp;Bakery</h1>
