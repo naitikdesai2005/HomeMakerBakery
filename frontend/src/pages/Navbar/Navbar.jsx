@@ -43,14 +43,13 @@ const Navbar = () => {
           >
             Contact
           </a>
-          <div className="navbar-right">
-            <div className="navbar-search-icon">
-              <img src={assets.basket_icon} alt="" />
-              <div className="dot"></div>
-            </div>
-          </div>
         </div>
         <div className="nav">
+          <div className="navbar-right">
+            <div className="navbar-search-icon">
+              <img src={assets.basket_icon} alt="" height={"60px"} />
+            </div>
+          </div>
           <a className="login-button" href="/signup">
             <img src={assets.login_icon} alt="" />
           </a>
