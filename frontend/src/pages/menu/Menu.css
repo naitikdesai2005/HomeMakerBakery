@@ -3,6 +3,7 @@
     padding: 20px;
     margin-top: 60px;
 }
+
 .menu-items {
     display: flex;
     justify-content: center;
@@ -25,7 +26,7 @@
     transition: 0.2s;
 }
 
-.menu-item hr{
+.menu-item hr {
     margin: 10px 0px;
     height: 2px;
     background-color: #e2e2e2;
@@ -44,4 +45,13 @@
 
 .menu-item:hover {
     cursor: pointer;
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(4, 20fr);
+    gap: 30px;
+    max-width: 1300px;
+    margin: auto;
+    margin-top: 20px;
 }

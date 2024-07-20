@@ -4,10 +4,8 @@ import Menu from "./menu/Menu.jsx";
 import Footer from "./Footer/Footer.jsx";
 import Contact from "./Contact/Contact.jsx";
 import Aboutus from "./Aboutus/Aboutus.jsx";
-import Product from "./Product/Product.jsx";
 import "./Home.css";
-import { StoreContextProvider } from "./context/StoreContext";
-import { food_list } from "../../images/assets.js";
+import ProductDisplay from "./ProductDisplay/ProductDisplay.jsx";
 
 function Homepage() {
   const [category, setCategory] = useState("All");
@@ -29,21 +27,7 @@ function Homepage() {
         <img src="/images/home.jpg" alt="background" />
       </div>
       <Menu category={category} setCategory={setCategory} />
-      <StoreContextProvider>
-        <div className="product-list">
-          {food_list.map((product) => (
-            <Product
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              description={product.description}
-              image={product.image}
-              rating={product.rating}
-            />
-          ))}
-        </div>
-      </StoreContextProvider>
+      <ProductDisplay category={category} />
       <hr />
       <Contact />
       <hr />
