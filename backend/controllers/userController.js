@@ -46,7 +46,6 @@ const loginUser = async (req, res) => {
             }
             if (baker.role === "baker") {
                 const token = createToken(baker._id);
-                res.cookie("token",token)
                 return res.json({ success: true, token,message:"baker"});
             } else {
                 return res.json({ success: false, message: "Role is not decided" });
