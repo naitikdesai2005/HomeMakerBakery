@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 import validator from "validator";
 import bakerModel from "../models/bakerModel.js";
+import cookie from "cookie"
 
 
 //create token
@@ -25,9 +26,14 @@ const loginUser = async (req, res) => {
             if (!isMatch) {
                 return res.json({ success: false, message: "Invalid Password" });
             }
-            if (user.role === "user") {
+
+            if (user.role === "admin") {
                 const token = createToken(user._id);
-                return res.json({ success: true, token });
+                return res.json({ success: true, token,message:"admin"});
+            } 
+            else if (user.role === "user") {
+                const token = createToken(user._id);
+                return res.json({ success: true, token,message:"user"});
             } else {
                 return res.json({ success: false, message: "Role is not decided" });
             }
@@ -40,7 +46,8 @@ const loginUser = async (req, res) => {
             }
             if (baker.role === "baker") {
                 const token = createToken(baker._id);
-                return res.json({ success: true, token });
+                res.cookie("token",token)
+                return res.json({ success: true, token,message:"baker"});
             } else {
                 return res.json({ success: false, message: "Role is not decided" });
             }
@@ -78,7 +85,47 @@ const registerUser = async(req,res)=>{
 
         const user = await newUser.save()
         const token = createToken(user._id)
-        res.json({success:true,token});
+        res.json({success:true,token,message:"user"});
+
+    } catch (error) {
+        console.log(error);
+        res.json({success:false,message:"Something went Wrong!!!"})
+    }
+}
+
+
+
+const registerAdmin = async(req,res)=>{
+    const {name,password,email} = req.body;
+    try {
+        const exists = await userModel.findOne({email});
+        if(exists) 
+            {
+                return res.json({success:false,message:"User already exists"})
+            }
+
+        if(!validator.isEmail(email)){
+            return res.json({success:false,message:"Invalid email"})
+        }
+        if(password.length<8){
+            return res.json({success:false,message:"Password must be at least 8 characters"})
+        }
+
+        //hashing user password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password,salt);
+
+        const newUser =  new userModel({
+            name:name,email:email,password:hashedPassword
+        })
+
+        if(newUser.email === "Admin@gmail.com"){
+            newUser.role = "admin";
+        }
+
+        const user = await newUser.save()
+        const token = createToken(user._id)
+        res.json({success:true,token,message:"admin"});
 
     } catch (error) {
         console.log(error);
@@ -113,7 +160,7 @@ const registerBaker=async(req,res)=>{
 
         const baker = await newBaker.save()
         const token = createToken(baker._id)
-        res.json({success:true,token});
+        res.json({success:true,token,message:"'baker"});
 
     } catch (error) {
         console.log(error);
@@ -121,4 +168,4 @@ const registerBaker=async(req,res)=>{
     }
 }
 
-export {loginUser,registerUser,registerBaker}
+export {loginUser,registerUser,registerBaker,registerAdmin}
