@@ -9,7 +9,7 @@ const Navbar = () => {
     <div>
       <nav className="navbar">
         <div className="navbar-logo">
-          <h3>Sweet</h3>
+          <Link to='/'><h3>Sweet</h3></Link>
         </div>
         {/* <div className="navbar-search">
           <input type="text" placeholder="Search..." />
@@ -47,7 +47,9 @@ const Navbar = () => {
         <div className="nav">
           <div className="navbar-right">
             <div className="navbar-search-icon">
-              <img src={assets.basket_icon} alt="" height={"60px"} />
+              <Link to='/cart'>
+                <img src={assets.basket_icon} alt="" height={"60px"} />
+              </Link>
             </div>
           </div>
           <a className="login-button" href="/signup">
