@@ -10,14 +10,15 @@ import cookie from "cookie"
 const addItem=async(req,res)=>{
     try {
 
-        // let bakerData = await bakerModel.findById(req.body.bakerid);
+        let bakerData = await bakerModel.findById(req.body.userId);
+        let bakerId= await bakerData.bakerId;
 
         const item = new productModel({
             name: req.body.name,
             price: req.body.price,
             description: req.body.description,
             category: req.body.category,
-            bakerid: req.params
+            bakerid: bakerId
         })
         await item.save();
         res.status(200).json({ message: "Item added successfully" });
