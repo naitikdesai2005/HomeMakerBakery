@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs"
 import validator from "validator";
 import bakerModel from "../models/bakerModel.js";
 import cookie from "cookie"
+import productModel from "../models/productModel.js";
 
 
 //create token
