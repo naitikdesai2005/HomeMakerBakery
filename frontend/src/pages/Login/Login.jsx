@@ -7,10 +7,29 @@ import "./Login.css";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let valid = true;
+
+    setEmailError("");
+    setPasswordError("");
+
+    if (!email) {
+      setEmailError("Please enter your email.");
+      valid = false;
+    }
+
+    if (!password) {
+      setPasswordError("Please enter your password.");
+      valid = false;
+    }
+
+    if (!valid) return;
+
     try {
       const response = await axios.post(
         "http://localhost:3000/api/user/login",
@@ -33,14 +52,13 @@ function Login() {
           console.log("baker");
         }
       } else {
-        console.error("Login failed:", response.data.message);
+        alert("Login failed: " + response.data.message);
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
     }
   };
 
-  
   return (
     <div className="login-container">
       <div className="login-form">
@@ -59,6 +77,7 @@ function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+              {emailError && <p className="error">{emailError}</p>}
             </div>
             <div className="form-group">
               <label>
@@ -69,6 +88,7 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {passwordError && <p className="error">{passwordError}</p>}
             </div>
             <button type="submit" className="Login-button">
               Login
