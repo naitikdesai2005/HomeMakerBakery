@@ -45,35 +45,59 @@ const addItem=async(req,res)=>{
 
 
 //all item list
-const listItem=async(req,res)=>{
+// const listItem=async(req,res)=>{
 
-    let bakerData = await bakerModel.findById(req.body.userId);
-    let bakerId= await bakerData._id;
+//     let bakerData = await bakerModel.findById(req.body.userId);
+//     let bakerId= await bakerData._id;
 
-    if (!bakerData) {
-        return res.json({ success: false, message: "Baker data not found." });
-      }
+//     if (!bakerData) {
+//         return res.json({ success: false, message: "Baker data not found." });
+//       }
 
-    let itm = [];
+//     let itm = [];
+//     try {
+//       const Items=await productModel.find({});
+
+//       Items.forEach(Item => {
+//         if(bakerId==Item.bakerid)
+//         {
+//             // res.json({success:true,data:Item});
+//             itm.push(Item);
+//         }
+//         // else
+//         // {
+//         //     res.json({success:false,message:"Baker has no item."})
+//         // }
+//       });
+
+//       res.json({success:true,data:itm});
+//     } catch (error) {
+//       res.json({success:false,message:"Error"});
+//     }
+//   }
+
+
+  const listItem = async (req, res) => {
     try {
-      const Items=await productModel.find({});
-
-      Items.forEach(Item => {
-        if(bakerId==Item.bakerid)
-        {
-            // res.json({success:true,data:Item});
-            itm.push(Item);
+        // Verify the token
+        let bakerData = await bakerModel.findById(req.body.userId);
+        // let bakerId= await bakerData._id;
+        if (!bakerData) {
+            return res.json({ success: false, message: "Baker not found" });
         }
-        else
-        {
-            res.json({success:false,message:"Baker has no item."})
+  
+        // Retrieve products for the baker
+        const items = await productModel.find({ bakerid: bakerData._id });
+        if (items.length > 0) {
+            res.json({ success: true, data: items });
+        } else {
+            res.json({ success: false, message: "Baker has no items" });
         }
-      });
-
-      res.json({success:true,data:itm});
     } catch (error) {
-      res.json({success:false,message:"Error"});
+        console.error(error.message);
+        res.json({ success: false, message: "Error retrieving items" });
     }
   }
+
 
 export {addItem,listItem};
