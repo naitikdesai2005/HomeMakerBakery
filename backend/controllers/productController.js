@@ -11,7 +11,7 @@ const addItem=async(req,res)=>{
     try {
 
         let bakerData = await bakerModel.findById(req.body.userId);
-        let bakerId= await bakerData.bakerId;
+        let bakerId= await bakerData._id;
 
         const item = new productModel({
             name: req.body.name,
@@ -28,4 +28,4 @@ const addItem=async(req,res)=>{
     }
 }
 
-export {addItem}
+export {addItem};
