@@ -21,6 +21,7 @@ const addItem=async(req,res)=>{
             bakerid: bakerId
         })
         await item.save();
+        
         res.status(200).json({ message: "Item added successfully" });
     } catch (error) {
         console.log(error);
