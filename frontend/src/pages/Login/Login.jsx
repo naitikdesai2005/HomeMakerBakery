@@ -69,7 +69,9 @@ function Login() {
               />
             </div>
             <button type="submit" className="Login-button">
-              Login
+            <a href="/homeuser">
+            Login
+          </a>
             </button>
             <h4 className="account">
               Don't Have an Account?<Link to="/signup"> Sign up</Link>
