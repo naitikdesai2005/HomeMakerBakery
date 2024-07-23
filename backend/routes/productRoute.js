@@ -5,6 +5,6 @@ import authMiddleware from "../middleware/auth.js"
 const productRoute = express.Router();
 
 productRoute.post("/add",authMiddleware,addItem);
-productRoute.get("/list",listItem);
+productRoute.get("/list",authMiddleware,listItem);
 
 export default productRoute;

@@ -49,6 +49,11 @@ const listItem=async(req,res)=>{
 
     let bakerData = await bakerModel.findById(req.body.userId);
     let bakerId= await bakerData._id;
+
+    if (!bakerData) {
+        return res.json({ success: false, message: "Baker data not found." });
+      }
+
     let itm = [];
     try {
       const Items=await productModel.find({});
