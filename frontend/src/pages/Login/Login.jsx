@@ -12,10 +12,13 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/user/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/user/login",
+        {
+          email,
+          password,
+        }
+      );
       if (response.data.success) {
         console.log("Login Successful!", response.data);
         // Optionally save the token to localStorage or context
@@ -68,11 +71,11 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button type="submit" className="Login-button">
-            <a href="/homeuser">
-            Login
-          </a>
-            </button>
+            <Link to="/homeuser">
+              <button type="submit" className="Login-button">
+                Login
+              </button>
+            </Link>
             <h4 className="account">
               Don't Have an Account?<Link to="/signup"> Sign up</Link>
             </h4>
