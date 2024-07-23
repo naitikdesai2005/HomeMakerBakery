@@ -100,9 +100,6 @@ const addItem=async(req,res)=>{
     }
   }
 
-
-
-
   const deleteItem = async (req, res) => {
     try {
       const { productId} = req.body;
