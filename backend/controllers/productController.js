@@ -28,56 +28,7 @@ const addItem=async(req,res)=>{
     }
 }
 
-// const listItem = async (req, res) => {
-//     try {
-//         const bakerData = await someFunctionToGetBakerData();
-//         console.log("Baker Data:", bakerData); // Debugging output
-//         if (!bakerData) {
-//             throw new Error("Baker data not found");
-//         }
-//         let bakerId = bakerData._id;
-//         // Continue with your logic using bakerId
-//     } catch (error) {
-//         console.error(error.message);
-//         res.status(500).send({ error: error.message });
-//     }
-// };
-
-
-//all item list
-// const listItem=async(req,res)=>{
-
-//     let bakerData = await bakerModel.findById(req.body.userId);
-//     let bakerId= await bakerData._id;
-
-//     if (!bakerData) {
-//         return res.json({ success: false, message: "Baker data not found." });
-//       }
-
-//     let itm = [];
-//     try {
-//       const Items=await productModel.find({});
-
-//       Items.forEach(Item => {
-//         if(bakerId==Item.bakerid)
-//         {
-//             // res.json({success:true,data:Item});
-//             itm.push(Item);
-//         }
-//         // else
-//         // {
-//         //     res.json({success:false,message:"Baker has no item."})
-//         // }
-//       });
-
-//       res.json({success:true,data:itm});
-//     } catch (error) {
-//       res.json({success:false,message:"Error"});
-//     }
-//   }
-
-
-  const listItem = async (req, res) => {
+    const listItem = async (req, res) => {
     try {
         // Verify the token
         let bakerData = await bakerModel.findById(req.body.userId);
@@ -85,7 +36,7 @@ const addItem=async(req,res)=>{
         if (!bakerData) {
             return res.json({ success: false, message: "Baker not found" });
         }
-  
+
         // Retrieve products for the baker
         const items = await productModel.find({ bakerid: bakerData._id });
         if (items.length > 0) {
@@ -97,7 +48,7 @@ const addItem=async(req,res)=>{
         console.error(error.message);
         res.json({ success: false, message: "Error retrieving items" });
     }
-  }
+    }
 
 
 export {addItem,listItem};
