@@ -6,6 +6,7 @@ import Login from "./pages/Login/Login.jsx";
 import Homepage from "./pages/Homepage.jsx";
 import BakerRegister from "./pages/BakerRegister/BakerRegister.jsx";
 import Cart from "./pages/Cart/Cart.jsx";
+import HomeUser from "./pages/HomeUser/HomeUser.jsx";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/homeuser" element={<HomeUser />} />
         <Route path="/login" element={<Login />} />
         <Route path="/bakerRegister" element={<BakerRegister />} />
       </Routes>
