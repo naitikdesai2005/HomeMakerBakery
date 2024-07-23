@@ -1,19 +1,42 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock } from "react-icons/fa";
+import axios from "axios";
 import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [role, setRole] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login SuccessFull! ", {
-      email,
-      password,
-    });
+    try {
+      const response = await axios.post("http://localhost:3000/api/user/login", {
+        email,
+        password,
+      });
+      if (response.data.success) {
+        console.log("Login Successful!", response.data);
+        // Optionally save the token to localStorage or context
+        localStorage.setItem("token", response.data.token);
+        // Redirect based on user role
+        if (response.data.message === "admin") {
+          // navigate("/admin-dashboard");
+          console.log("admin");
+        } else if (response.data.message === "user") {
+          // navigate("/user-dashboard");
+          console.log("user");
+        } else if (response.data.message === "baker") {
+          // navigate("/baker-dashboard");
+          console.log("baker");
+        }
+      } else {
+        console.error("Login failed:", response.data.message);
+      }
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+    }
   };
 
   return (
@@ -45,14 +68,6 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            {/* <div className="forml-group">
-              <label>Role</label>
-              <select value={role} onChange={(e) => setRole(e.target.value)}>
-                <option value="">Select Role</option>
-                <option value="user">User</option>
-                <option value="guest">Guest</option>
-              </select>
-            </div> */}
             <button type="submit" className="Login-button">
               Login
             </button>
