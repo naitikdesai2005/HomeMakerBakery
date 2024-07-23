@@ -21,17 +21,15 @@ function Login() {
       );
       if (response.data.success) {
         console.log("Login Successful!", response.data);
-        // Optionally save the token to localStorage or context
         localStorage.setItem("token", response.data.token);
-        // Redirect based on user role
         if (response.data.message === "admin") {
-          // navigate("/admin-dashboard");
+          navigate("/homeadmin");
           console.log("admin");
         } else if (response.data.message === "user") {
-          // navigate("/user-dashboard");
+          navigate("/homeuser");
           console.log("user");
         } else if (response.data.message === "baker") {
-          // navigate("/baker-dashboard");
+          navigate("/homebaker");
           console.log("baker");
         }
       } else {
@@ -71,11 +69,9 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <Link to="/homeuser">
-              <button type="submit" className="Login-button">
-                Login
-              </button>
-            </Link>
+            <button type="submit" className="Login-button">
+              Login
+            </button>
             <h4 className="account">
               Don't Have an Account?<Link to="/signup"> Sign up</Link>
             </h4>
