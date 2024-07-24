@@ -21,6 +21,7 @@ const addItem=async(req,res)=>{
             bakerid: bakerId
         })
         await item.save();
+        
         res.status(200).json({ message: "Item added successfully" });
     } catch (error) {
         console.log(error);
@@ -50,5 +51,31 @@ const addItem=async(req,res)=>{
     }
     }
 
+  const deleteItem = async (req, res) => {
+    try {
+      const { productId} = req.body;
+  
+      let bakerData = await bakerModel.findById(req.body.userId);
+      
+      if (!bakerData) {
+        return res.json({ success: false, message: "Baker not found" });
+      }
 
-export {addItem,listItem};
+      
+      const item = await productModel.findById(productId);
+      if (!item) {
+        return res.json({ success: false, message: "Item not found" });
+      }
+      if (item.bakerid.toString() === bakerData._id.toString()) {
+        await productModel.findByIdAndDelete(productId);
+        return res.json({ success: true, message: "Item deleted successfully" });
+      } else {
+        return res.json({ success: false, message: "Baker is not verified for this item" });
+      }
+    } catch (error) {
+      console.error(error.message);
+      res.json({ success: false, message: "Error retrieving items" });
+    }
+  }
+
+export {addItem,listItem,deleteItem};

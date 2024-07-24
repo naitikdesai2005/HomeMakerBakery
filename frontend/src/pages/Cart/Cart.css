@@ -32,3 +32,9 @@
 .cart-items-item .cross{
   cursor: pointer;
 }
+
+.cart-items-item .cross img{
+  height: 20px;
+  width: 20px;
+  margin-left: 15px;
+}

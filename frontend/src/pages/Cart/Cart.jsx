@@ -3,6 +3,7 @@ import "./Cart.css";
 import { StoreContext } from "../context/StoreContext";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
+import { assets } from "../../../images/assets";
 
 const Cart = () => {
   const { cartItems, food_list, removeFromCart } = useContext(StoreContext);
@@ -36,7 +37,7 @@ const Cart = () => {
                       onClick={() => removeFromCart(item._id)}
                       className="cross"
                     >
-                      x
+                      <img src={assets.cross_icon} alt="" />
                     </p>
                   </div>
                   <hr />
