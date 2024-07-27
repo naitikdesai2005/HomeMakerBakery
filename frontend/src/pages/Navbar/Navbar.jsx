@@ -15,9 +15,9 @@ const Navbar = () => {
             <h3>Sweet</h3>
           </Link>
         </div>
-        {/* <div className="navbar-search">
+        <div className="navbar-search">
           <input type="text" placeholder="Search..." />
-        </div> */}
+        </div>
         <div className="navbar-menu">
           <Link
             to="/"

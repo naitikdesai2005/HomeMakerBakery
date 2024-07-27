@@ -19,7 +19,6 @@
   color: #333;
 }
 
-/* 
 .navbar-search input {
   padding: 8px 12px;
   border: 1px solid #ddd;
@@ -31,7 +30,7 @@
 
 .navbar-search input:focus {
   width: 400px;
-} */
+}
 
 .navbar-menu {
   display: flex;
@@ -53,7 +52,7 @@
 
 .nav {
   display: flex;
-  margin-left: -120px;
+  margin-left: -29px;
   margin-right: 20px;
 }
 
