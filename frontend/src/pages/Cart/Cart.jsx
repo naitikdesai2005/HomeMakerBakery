@@ -4,10 +4,13 @@ import { StoreContext } from "../context/StoreContext";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { assets } from "../../../images/assets";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart } = useContext(StoreContext);
+  const { cartItems, food_list, removeFromCart, getTotalCartAmount } =
+    useContext(StoreContext);
 
+  const navigate = useNavigate();
   return (
     <>
       <Navbar />
@@ -45,6 +48,33 @@ const Cart = () => {
               );
             }
           })}
+        </div>
+        <div className="cat-bottom">
+          <div className="cart-total">
+            <h2>Cart Totals</h2>
+            <div>
+              <div className="cart-total-details">
+                <p>Subtotal</p>
+                <p>Rs. {getTotalCartAmount()}</p>
+              </div>
+              <hr />
+              <div className="cart-total-details">
+                <p>Delivery Fee</p>
+                <p>Rs. {getTotalCartAmount() === 0 ? 0 : 2}</p>
+              </div>
+              <hr />
+              <div className="cart-total-details">
+                <b>Total</b>
+                <b>
+                  Rs.{" "}
+                  {getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}
+                </b>
+              </div>
+            </div>
+            <button onClick={() => navigate("/order")}>
+              PROCEED TO CHECKOUT
+            </button>
+          </div>
         </div>
       </div>
       <br />
