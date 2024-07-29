@@ -30,17 +30,17 @@ function Signup() {
     setName("");
 
     if (!email) {
-      setEmail("Please enter your email.");
+      alert("Please enter your email.");
       valid = false;
     }
 
     if (!password) {
-      setPassword("Please enter your password.");
+      alert("Please enter your password.");
       valid = false;
     }
 
     if (!name) {
-      setName("Please enter your Name.");
+      alert("Please enter your Name.");
       valid = false;
     }
 
