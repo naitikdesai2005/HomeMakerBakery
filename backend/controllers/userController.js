@@ -160,7 +160,7 @@ const registerBaker=async(req,res)=>{
 
         const baker = await newBaker.save()
         const token = createToken(baker._id)
-        res.json({success:true,token,message:"'baker"});
+        res.json({success:true,token,message:"'baker"})
 
     } catch (error) {
         console.log(error);
@@ -168,4 +168,19 @@ const registerBaker=async(req,res)=>{
     }
 }
 
-export {loginUser,registerUser,registerBaker,registerAdmin}
+const allitem = async(req,res)=>{
+    try {
+        const items = await productModel.find();
+        if (items.length > 0) {
+            res.json({ success: true, data: items });
+        }
+        else{
+            res.json({success:true, message:"no items in inventory"})
+        }
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:"Something wrong"})
+    }
+}
+
+export {loginUser,registerUser,registerBaker,registerAdmin,allitem}

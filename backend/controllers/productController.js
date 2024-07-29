@@ -83,14 +83,12 @@ const addItem=async(req,res)=>{
 
   const listItem = async (req, res) => {
     try {
-        // Verify the token
         let bakerData = await bakerModel.findById(req.body.userId);
         // let bakerId= await bakerData._id;
         if (!bakerData) {
             return res.json({ success: false, message: "Baker not found" });
         }
-  
-        // Retrieve products for the baker
+
         const items = await productModel.find({ bakerid: bakerData._id });
         if (items.length > 0) {
             res.json({ success: true, data: items });
