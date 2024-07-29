@@ -50,7 +50,7 @@ const Navbar = () => {
         </div>
         <div className="nav">
           <div className="navbar-right">
-            <div className="navbar-search-icon">
+            <div className="navbar-cart-icon">
               <Link to="/cart">
                 <img src={assets.basket_icon} alt="" height={"60px"} />
               </Link>

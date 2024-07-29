@@ -55,3 +55,20 @@
     margin: auto;
     margin-top: 20px;
 }
+
+@media(max-width:1050px) {
+    .explore-menu-text {
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .menu-item img {
+        border-radius: 50%;
+        height: 70px;
+        object-fit: cover;
+        width: 7.0vw;
+        min-width: 60px;
+        transition: 0.2s;
+    }
+
+}
