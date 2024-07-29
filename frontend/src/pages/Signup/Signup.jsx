@@ -1,22 +1,73 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import "./Signup.css";
+import axios from "axios";
 
 function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Form submitted", {
+  //     name,
+  //     email,
+  //     password,
+  //     termsAccepted,
+  //   });
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted", {
-      name,
-      email,
-      password,
-      termsAccepted,
-    });
+    let valid = true;
+
+    setEmail("");
+    setPassword("");
+    setName("");
+
+    if (!email) {
+      alert("Please enter your email.");
+      valid = false;
+    }
+
+    if (!password) {
+      alert("Please enter your password.");
+      valid = false;
+    }
+
+    if (!name) {
+      alert("Please enter your Name.");
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/user/registerUser",
+        {
+          email,
+          password,
+          name,
+        }
+      );
+      if (response.data.success) {
+        console.log("SignUp Successful!", response.data);
+        localStorage.setItem("token", response.data.token);
+        if (response.data.message === "user") {
+          navigate("/homeuser");
+          console.log("user");
+        }
+      } else {
+        alert("Login failed: " + response.data.message);
+      }
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+    }
   };
 
   return (
