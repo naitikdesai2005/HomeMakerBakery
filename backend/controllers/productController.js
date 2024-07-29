@@ -20,8 +20,11 @@ const addItem=async(req,res)=>{
             category: req.body.category,
             bakerid: bakerId
         })
-        await item.save();
+
         
+        const savedItem = await item.save();
+        bakerData.products.push(savedItem._id);
+        await bakerData.save();
         res.status(200).json({ message: "Item added successfully" });
     } catch (error) {
         console.log(error);
@@ -117,6 +120,10 @@ const addItem=async(req,res)=>{
       }
       if (item.bakerid.toString() === bakerData._id.toString()) {
         await productModel.findByIdAndDelete(productId);
+
+        bakerData.products = bakerData.products.filter(id => id.toString() !== productId);
+        await bakerData.save();
+
         return res.json({ success: true, message: "Item deleted successfully" });
       } else {
         return res.json({ success: false, message: "Baker is not verified for this item" });

@@ -8,7 +8,7 @@ const bakerSchema = new mongoose.Schema({
     mobilenumber:{type:Number,required:true},
     bankAccNumber:{type:Number,required:true},
     role:{type:String,default:"baker"},
-    products:{type:Object,default:[]},
+    products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'product' }],
     select:{type:Boolean,default:true},
 
 },{minimize:false})
