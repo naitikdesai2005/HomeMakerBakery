@@ -9,24 +9,103 @@ import {
   FaHome,
   FaCreditCard,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import axios from "axios";
 import Navbar from "../Navbar/Navbar.jsx";
+import { useNavigate } from "react-router-dom";
+import Container from "postcss/lib/container";
 
 function BakerRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [bakerName, setBakerName] = useState("");
-  const [bakeryName, setBakeryName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [name, setBakerName] = useState("");
+  const [bakeryname, setBakeryName] = useState("");
+  const [mobilenumber, setPhone] = useState("");
+  const [bakeryaddress, setAddress] = useState("");
   const [bankAccNumber, setBankAccNumber] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Register SuccessFull! ", {
+  //     email,
+  //     password,
+  //   });
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Register SuccessFull! ", {
-      email,
-      password,
-    });
+    let valid = true;
+
+    setEmail("");
+    setPassword("");
+    setAddress("");
+    setBakerName("");
+    setBakeryName("");
+    setBankAccNumber("");
+    setPhone("");
+
+    if (!email) {
+      alert("Please enter your email.");
+      valid = false;
+    }
+
+    if (!password) {
+      alert("Please enter your password.");
+      valid = false;
+    }
+
+    if (!name) {
+      setBakerName("Please enter your Name.");
+      valid = false;
+    }
+
+    if (!bakeryname) {
+      setBakeryName("Please enter your Bakery Name.");
+      valid = false;
+    }
+    if (!mobilenumber) {
+      alert("Please enter your Phone Number.");
+      valid = false;
+    }
+
+    if (!bakeryaddress) {
+      setAddress("Please enter your Address.");
+      valid = false;
+    }
+
+    if (!bankAccNumber) {
+      alert("Please enter your Account Details.");
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/baker/registerBaker",
+        {
+          email,
+          password,
+          name,
+          bakeryname,
+          mobilenumber,
+          bakeryaddress,
+          bankAccNumber,
+        }
+      );
+      if (response.data.success) {
+        console.log("Registration Successful!", response.data);
+        localStorage.setItem("token", response.data.token);
+        // if (response.data.message === "baker") {
+        navigate("/homebaker");
+        console.log("baker");
+        // }
+      } else {
+        alert("Login failed: " + response.data.message);
+      }
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+    }
   };
 
   return (
@@ -45,8 +124,9 @@ function BakerRegister() {
                 </label>
                 <input
                   type="text"
-                  value={bakerName}
+                  value={name}
                   onChange={(e) => setBakerName(e.target.value)}
+                  required
                 />
               </div>
               <div className="register-form-group">
@@ -55,8 +135,9 @@ function BakerRegister() {
                 </label>
                 <input
                   type="text"
-                  value={bakeryName}
+                  value={bakeryname}
                   onChange={(e) => setBakeryName(e.target.value)}
+                  required
                 />
               </div>
               <div className="register-form-group">
@@ -75,7 +156,7 @@ function BakerRegister() {
                 </label>
                 <input
                   type="phone"
-                  value={phone}
+                  value={mobilenumber}
                   onChange={(e) => setPhone(e.target.value)}
                 />
               </div>
@@ -95,8 +176,9 @@ function BakerRegister() {
                 </label>
                 <input
                   type="text"
-                  value={address}
+                  value={bakeryaddress}
                   onChange={(e) => setAddress(e.target.value)}
+                  required
                 />
               </div>
               <div className="register-form-group">

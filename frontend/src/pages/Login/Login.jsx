@@ -19,12 +19,12 @@ function Login() {
     setPasswordError("");
 
     if (!email) {
-      setEmailError("Please enter your email.");
+      alert("Please enter your email.");
       valid = false;
     }
 
     if (!password) {
-      setPasswordError("Please enter your password.");
+      alert("Please enter your password.");
       valid = false;
     }
 
