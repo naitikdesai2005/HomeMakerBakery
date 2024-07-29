@@ -5,7 +5,7 @@ import authMiddleware from "../middleware/auth.js"
 const productRoute = express.Router();
 
 productRoute.post("/add",authMiddleware,addItem);
-productRoute.get("/list",authMiddleware,listItem);
+productRoute.get("/bakerProduct",authMiddleware,listItem);
 productRoute.post("/delete",authMiddleware,deleteItem);
 
 export default productRoute;
