@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import "./PlaceOrder.css";
+import "./Order.css";
 import { StoreContext } from "../context/StoreContext";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
