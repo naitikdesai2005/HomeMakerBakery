@@ -9,7 +9,7 @@ import Cart from "./pages/Cart/Cart.jsx";
 import HomeUser from "./pages/HomeUser/HomeUser.jsx";
 import HomeBaker from "./pages/HomeBaker/HomeBaker.jsx";
 import HomeAdmin from "./pages/HomeAdmin/HomeAdmin.jsx";
-import PlaceOrder from "./pages/PlaceOrder/PlaceOrder.jsx";
+import PlaceOrder from "./pages/placeOrder/PlaceOrder.jsx";
 
 function App() {
   return (
