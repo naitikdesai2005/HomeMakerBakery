@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import axios from "axios";
 import "./Login.css";
+import Navbar from "../Navbar/Navbar";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -60,46 +61,53 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-form">
-        <div className="image-container">
-          <img src="/images/bac.jpg" alt="Cookies" className="cookies-image" />
-        </div>
-        <div className="form-container">
-          <h2>Login</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>
-                <FaEnvelope className="icon" /> Email
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {emailError && <p className="error">{emailError}</p>}
-            </div>
-            <div className="form-group">
-              <label>
-                <FaLock className="icon" /> Password
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {passwordError && <p className="error">{passwordError}</p>}
-            </div>
-            <button type="submit" className="Login-button">
-              Login
-            </button>
-            <h4 className="account">
-              Don't Have an Account?<Link to="/signup"> Sign up</Link>
-            </h4>
-          </form>
+    <>
+      <Navbar />
+      <div className="login-container">
+        <div className="login-form">
+          <div className="image-container">
+            <img
+              src="/images/bac.jpg"
+              alt="Cookies"
+              className="cookies-image"
+            />
+          </div>
+          <div className="form-container">
+            <h2>Login</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>
+                  <FaEnvelope className="icon" /> Email
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {emailError && <p className="error">{emailError}</p>}
+              </div>
+              <div className="form-group">
+                <label>
+                  <FaLock className="icon" /> Password
+                </label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {passwordError && <p className="error">{passwordError}</p>}
+              </div>
+              <button type="submit" className="Login-button">
+                Login
+              </button>
+              <h4 className="account">
+                Don't Have an Account?<Link to="/signup"> Sign up</Link>
+              </h4>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

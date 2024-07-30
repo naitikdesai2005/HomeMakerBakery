@@ -14,20 +14,19 @@
   width: 1100px;
   display: flex;
   height: 560px;
-  flex-direction: row;
   align-items: center;
   overflow: hidden;
+  margin-top: -150px;
 }
 
 .signup-container {
+  margin-top: 130px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   color: #58231f;
-  background-size: cover;
   background-repeat: no-repeat;
-  background-color: #58231f;
 }
 
 .image-container {

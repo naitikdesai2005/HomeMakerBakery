@@ -21,11 +21,9 @@ const PlaceOrder = () => {
           <input type="text" placeholder="Street" />
           <div className="multi-field">
             <input type="text" placeholder="City" />
-            <input type="text" placeholder="State" />
           </div>
           <div className="multi-field">
             <input type="text" placeholder="Zip code" />
-            <input type="text" placeholder="Country" />
           </div>
           <input type="text" placeholder="Phone" />
         </div>

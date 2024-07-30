@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import "./Menu.css";
-import { StoreContextProvider } from "../context/StoreContext";
-import { food_list } from "../../../images/assets.js";
-import Product from "../Product/Product.jsx";
 
 const menuItems = [
   { name: "Cakes", image: "./images/cake.jpg" },

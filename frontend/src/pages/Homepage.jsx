@@ -6,6 +6,7 @@ import Contact from "./Contact/Contact.jsx";
 import Aboutus from "./Aboutus/Aboutus.jsx";
 import "./Home.css";
 import ProductDisplay from "./ProductDisplay/ProductDisplay.jsx";
+import Slideshow from "./Slideshow/Slideshow.jsx";
 
 function Homepage() {
   const [category, setCategory] = useState("All");
@@ -26,6 +27,7 @@ function Homepage() {
         </div>
         <img src="/images/home.jpg" alt="background" />
       </div>
+      {/* <Slideshow /> */}
       <Menu category={category} setCategory={setCategory} />
       <ProductDisplay category={category} />
       <hr />
