@@ -17,8 +17,11 @@ function Homepage() {
       <div className="mainpage" id="home">
         <div className="mainpage-content">
           <h1>Delicious</h1>
+          <br />
+          <br />
           <h1>&nbsp;&nbsp;Bakery</h1>
           <h1>&nbsp;Shop!</h1>
+          <br />
           <h5>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate
             impedit nihil totam error laborum! Modi dolore necessitatibus veniam
