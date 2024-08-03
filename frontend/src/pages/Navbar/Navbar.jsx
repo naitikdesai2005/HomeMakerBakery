@@ -12,7 +12,7 @@ const Navbar = () => {
       <nav className="navbar">
         <div className="navbar-logo">
           <Link to="/">
-            <h3>Sweet</h3>
+            <img src="../../images/1.jpg" alt="" />
           </Link>
         </div>
         <div className="navbar-search">
@@ -26,13 +26,13 @@ const Navbar = () => {
           >
             Home
           </Link>
-          <a
-            href="#Aboutus"
+          <Link
+            to="/aboutus"
             onClick={() => setMenu("About")}
             className={menu === "About" ? "active" : ""}
           >
             About
-          </a>
+          </Link>
           <a
             href="#menu"
             onClick={() => setMenu("Product")}
@@ -40,13 +40,13 @@ const Navbar = () => {
           >
             Products
           </a>
-          <a
-            href="#Contact"
+          <Link
+            to="/contact"
             onClick={() => setMenu("Contact")}
             className={menu === "Conatct" ? "active" : ""}
           >
             Contact
-          </a>
+          </Link>
         </div>
         <div className="nav">
           <div className="navbar-right">

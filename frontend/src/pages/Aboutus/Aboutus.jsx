@@ -1,10 +1,15 @@
 import React from "react";
+import "./Aboutus.css";
+import Navbar from "../Navbar/Navbar";
 
 const Aboutus = () => {
   return (
-    <div className="Aboutus" id="Aboutus">
-      <h1>About Us</h1>
-    </div>
+    <>
+      <Navbar />
+      <div className="Aboutus">
+        <h1>About Us</h1>
+      </div>
+    </>
   );
 };
 

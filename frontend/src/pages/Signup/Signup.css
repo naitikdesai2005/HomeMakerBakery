@@ -15,7 +15,7 @@
   height: 560px;
   align-items: center;
   overflow: hidden;
-  margin-top: -150px;
+  margin-top: -250px;
 }
 
 .signup-container {
@@ -35,6 +35,7 @@
 
 .image-container img {
   width: 560px;
+  animation:alternate-reverse;
 }
 
 .cookies-image {

@@ -26,7 +26,7 @@ const Footer = () => {
             </a>
           </div>
         </div>
-        <div className="section">
+        {/* <div className="section">
           <h3>Company</h3>
           <ul>
             <li>
@@ -42,7 +42,7 @@ const Footer = () => {
               <a href="#Contact">Contact Us</a>
             </li>
           </ul>
-        </div>
+        </div> */}
         <div className="section">
           <h3>Contact</h3>
           <p>(406) 555-0120</p>
@@ -74,4 +74,3 @@ const Footer = () => {
 };
 
 export default Footer;
-  

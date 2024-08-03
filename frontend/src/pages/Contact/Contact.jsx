@@ -1,38 +1,105 @@
-import React from "react";
-import "./Contact.css";
+import React, { useState } from "react";
+import "./Contact.css"; // Make sure to create this CSS file
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
 
-const Contact = () => {
+function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission
+    console.log(formData);
+  };
+
   return (
-    <section className="contact-section" id="Contact">
-      <h2>Have Questions? Reach Out To Us</h2>
-      <p>
-        For any questions, reservations, or special orders, feel free to contact
-        us sed diam nonumy eirmod tempor invidunt ut labore et dolore.
-      </p>
-      <div className="contact-container">
+    <>
+      <Navbar />
+      <div className="contact-form-container">
+        <form className="contact-form" onSubmit={handleSubmit}>
+          <div className="cform-group">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="cform-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="cform-group">
+            <label htmlFor="phoneNumber">Phone Number</label>
+            <input
+              type="tel"
+              id="phoneNumber"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="cform-group">
+            <label htmlFor="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+            ></textarea>
+          </div>
+          <button type="submit" className="contact-submit-button">
+            Submit
+          </button>
+        </form>
         <div className="contact-info">
+          <h2>Contact Us</h2>
           <p>
-            <i className="fas fa-envelope"></i> contact@trimbar.com
+            Contact us for questions, technical assistance, or collaboration
+            opportunities via the contact information provided.
           </p>
-          <p>
-            <i className="fas fa-phone"></i> +88 0123 456 789
-          </p>
-          <p>
-            <i className="fas fa-map-marker-alt"></i> 62, 74th Avenue, Glendale
-            NY 11385, US
-          </p>
-        </div>
-        <div className="map-container">
-          <iframe
-            title="map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.7241584425724!2d-74.00601508459213!3d40.7127752793317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDQyJzQ2LjAiTiA3NMKwMDAnMTUuMCJX!5e0!3m2!1sen!2sus!4v1631553724299!5m2!1sen!2sus"
-            allowFullScreen=""
-            loading="lazy"
-          ></iframe>
+          <ul>
+            <li>
+              <i className="fa fa-phone"></i> +123-456-7890
+            </li>
+            <li>
+              <i className="fa fa-envelope"></i> hello@reallygreatsite.com
+            </li>
+            <li>
+              <i className="fa fa-map-marker"></i> 123 Anywhere ST., Any City,
+              12345
+            </li>
+          </ul>
         </div>
       </div>
-    </section>
+      <Footer />
+    </>
   );
-};
+}
 
-export default Contact;
+export default ContactForm;

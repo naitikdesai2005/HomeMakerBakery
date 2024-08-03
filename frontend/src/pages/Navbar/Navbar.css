@@ -4,19 +4,25 @@
   align-items: center;
   background-color: #fff;
   padding: 15px 0px;
+  margin-top: -70px;
 }
 
-.navbar-logo h3 {
+/* .navbar-logo h3 {
   height: 40px;
   margin-top: 20px;
   font-size: 40px;
   color: #58231f;
-}
+} */
 
 .navbar-logo {
   font-size: 1.5rem;
   font-weight: bold;
   color: #333;
+}
+
+.navbar-logo img {
+  height: 250px;
+  width: 250px;
 }
 
 .navbar-search input {
