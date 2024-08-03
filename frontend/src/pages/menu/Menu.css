@@ -4,6 +4,12 @@
     margin-top: 10px;
 }
 
+.menu-container h1{
+    text-align: center;
+    padding: 20px;
+    margin-top: -10px;
+}
+
 .menu-items {
     display: flex;
     justify-content: center;

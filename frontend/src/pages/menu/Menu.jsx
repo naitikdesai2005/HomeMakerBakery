@@ -14,6 +14,7 @@ const Menu = ({ category, setCategory }) => {
   return (
     <div className="menu-container" id="menu">
       <h1>Explore Products</h1>
+      <br />
       <div className="menu-items">
         {menuItems.map((item, index) => {
           return (

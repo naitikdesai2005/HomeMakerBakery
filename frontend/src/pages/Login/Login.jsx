@@ -41,6 +41,7 @@ function Login() {
       );
       if (response.data.success) {
         console.log("Login Successful!", response.data);
+        console.log("email", email);
         localStorage.setItem("token", response.data.token);
         if (response.data.message === "admin") {
           navigate("/homeadmin");

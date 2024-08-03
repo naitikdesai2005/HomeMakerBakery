@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./Cart.css";
 import { StoreContext } from "../context/StoreContext";
 import Navbar from "../Navbar/Navbar";
@@ -11,6 +11,17 @@ const Cart = () => {
     useContext(StoreContext);
 
   const navigate = useNavigate();
+  const [emptyCartMessage, setEmptyCartMessage] = useState(false);
+
+  const handleCheckout = () => {
+    if (getTotalCartAmount() === 0) {
+      setEmptyCartMessage(true);
+    } else {
+      setEmptyCartMessage(false);
+      navigate("/order");
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -29,7 +40,7 @@ const Cart = () => {
           {food_list.map((item, index) => {
             if (cartItems[item._id] > 0) {
               return (
-                <div>
+                <div key={index}>
                   <div className="cart-items-title cart-items-item">
                     <img src={item.image} alt="" />
                     <p>{item.name}</p>
@@ -71,9 +82,10 @@ const Cart = () => {
                 </b>
               </div>
             </div>
-            <button onClick={() => navigate("/order")}>
-              PROCEED TO CHECKOUT
-            </button>
+            {emptyCartMessage && (
+              <h2 className="empty-cart-message">Your cart is empty😒</h2>
+            )}
+            <button onClick={handleCheckout}>PROCEED TO CHECKOUT</button>
           </div>
         </div>
       </div>
