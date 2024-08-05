@@ -1,17 +1,17 @@
 import userModel from "../models/userModel.js";
-import jwt from "jsonwebtoken"
-import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import validator from "validator";
 import bakerModel from "../models/bakerModel.js";
-import cookie from "cookie"
+import cookie from "cookie";
 import productModel from "../models/productModel.js";
 
-
-//create token
+// Create token
 const createToken = (id) => {
-    return jwt.sign({id},process.env.JWT_SECRET)
-}
-//login user
+    return jwt.sign({ id }, process.env.JWT_SECRET);
+};
+
+// Login user
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -30,11 +30,10 @@ const loginUser = async (req, res) => {
 
             if (user.role === "admin") {
                 const token = createToken(user._id);
-                return res.json({ success: true, token,message:"admin"});
-            } 
-            else if (user.role === "user") {
+                return res.json({ success: true, token, message: "admin" });
+            } else if (user.role === "user") {
                 const token = createToken(user._id);
-                return res.json({ success: true, token,message:"user"});
+                return res.json({ success: true, token, message: "user" });
             } else {
                 return res.json({ success: false, message: "Role is not decided" });
             }
@@ -47,7 +46,7 @@ const loginUser = async (req, res) => {
             }
             if (baker.role === "baker") {
                 const token = createToken(baker._id);
-                return res.json({ success: true, token,message:"baker"});
+                return res.json({ success: true, token, message: "baker" });
             } else {
                 return res.json({ success: false, message: "Role is not decided" });
             }
@@ -57,130 +56,146 @@ const loginUser = async (req, res) => {
     }
 };
 
-
-//register user
-const registerUser = async(req,res)=>{
-    const {name,password,email} = req.body;
+// Register user
+const registerUser = async (req, res) => {
+    const { name, password, email } = req.body;
     try {
-        const exists = await userModel.findOne({email});
-        if(exists) 
-            {
-                return res.json({success:false,message:"User already exists"})
-            }
-
-        if(!validator.isEmail(email)){
-            return res.json({success:false,message:"Invalid email"})
-        }
-        if(password.length<8){
-            return res.json({success:false,message:"Password must be at least 8 characters"})
+        const exists = await userModel.findOne({ email });
+        if (exists) {
+            return res.json({ success: false, message: "User already exists" });
         }
 
-        //hashing user password
+        if (!validator.isEmail(email)) {
+            return res.json({ success: false, message: "Invalid email" });
+        }
+        if (password.length < 8) {
+            return res.json({ success: false, message: "Password must be at least 8 characters" });
+        }
+
+        // Hashing user password
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password,salt);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-        const newUser =  new userModel({
-            name:name,email:email,password:hashedPassword
-        })
+        const newUser = new userModel({
+            name: name,
+            email: email,
+            password: hashedPassword,
+        });
 
-        const user = await newUser.save()
-        const token = createToken(user._id)
-        res.json({success:true,token,message:"user"});
+        const user = await newUser.save();
+        const token = createToken(user._id);
+        res.json({ success: true, token, message: "user" });
 
     } catch (error) {
         console.log(error);
-        res.json({success:false,message:"Something went Wrong!!!"})
+        res.json({ success: false, message: "Something went wrong!!!" });
     }
-}
+};
 
-
-
-const registerAdmin = async(req,res)=>{
-    const {name,password,email} = req.body;
+// Register admin
+const registerAdmin = async (req, res) => {
+    const { name, password, email } = req.body;
     try {
-        const exists = await userModel.findOne({email});
-        if(exists) 
-            {
-                return res.json({success:false,message:"User already exists"})
-            }
-
-        if(!validator.isEmail(email)){
-            return res.json({success:false,message:"Invalid email"})
-        }
-        if(password.length<8){
-            return res.json({success:false,message:"Password must be at least 8 characters"})
+        const exists = await userModel.findOne({ email });
+        if (exists) {
+            return res.json({ success: false, message: "User already exists" });
         }
 
-        //hashing user password
+        if (!validator.isEmail(email)) {
+            return res.json({ success: false, message: "Invalid email" });
+        }
+        if (password.length < 8) {
+            return res.json({ success: false, message: "Password must be at least 8 characters" });
+        }
+
+        // Hashing user password
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password,salt);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-        const newUser =  new userModel({
-            name:name,email:email,password:hashedPassword
-        })
+        const newUser = new userModel({
+            name: name,
+            email: email,
+            password: hashedPassword,
+        });
 
-        if(newUser.email === "Admin@gmail.com"){
+        if (newUser.email === "Admin@gmail.com") {
             newUser.role = "admin";
         }
 
-        const user = await newUser.save()
-        const token = createToken(user._id)
-        res.json({success:true,token,message:"admin"});
+        const user = await newUser.save();
+        const token = createToken(user._id);
+        res.json({ success: true, token, message: "admin" });
 
     } catch (error) {
         console.log(error);
-        res.json({success:false,message:"Something went Wrong!!!"})
+        res.json({ success: false, message: "Something went wrong!!!" });
     }
-}
+};
 
-
-const registerBaker=async(req,res)=>{
-    const {name,password,email,bakeryname,bakeryaddress,bankAccNumber,mobilenumber} = req.body;
+// Register baker
+const registerBaker = async (req, res) => {
+    const { name, password, email, bakeryname, bakeryaddress, bankAccNumber, mobilenumber } = req.body;
     try {
-        const exists = await bakerModel.findOne({email});
-        if(exists) 
-            {
-                return res.json({success:false,message:"Baker already exists"})
-            }
-
-        if(!validator.isEmail(email)){
-            return res.json({success:false,message:"Invalid email"})
-        }
-        if(password.length<8){
-            return res.json({success:false,message:"Password must be at least 8 characters"})
+        const exists = await bakerModel.findOne({ email });
+        if (exists) {
+            return res.json({ success: false, message: "Baker already exists" });
         }
 
-        //hashing user password
+        if (!validator.isEmail(email)) {
+            return res.json({ success: false, message: "Invalid email" });
+        }
+        if (password.length < 8) {
+            return res.json({ success: false, message: "Password must be at least 8 characters" });
+        }
+
+        // Hashing user password
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password,salt);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-        const newBaker =  new bakerModel({
-            name:name,email:email,password:hashedPassword,bakeryname:bakeryname,bakeryaddress:bakeryaddress,bankAccNumber:bankAccNumber,mobilenumber:mobilenumber
-        })
+        const newBaker = new bakerModel({
+            name: name,
+            email: email,
+            password: hashedPassword,
+            bakeryname: bakeryname,
+            bakeryaddress: bakeryaddress,
+            bankAccNumber: bankAccNumber,
+            mobilenumber: mobilenumber,
+        });
 
-        const baker = await newBaker.save()
-        const token = createToken(baker._id)
-        res.json({success:true,token,message:"'baker"})
+        const baker = await newBaker.save();
+        const token = createToken(baker._id);
+        res.json({ success: true, token, message: "baker" });
 
     } catch (error) {
         console.log(error);
-        res.json({success:false,message:"Something went Wrong!!!"})
+        res.json({ success: false, message: "Something went wrong!!!" });
     }
-}
+};
 
-const allitem = async(req,res)=>{
+// Get all items
+const allitem = async (req, res) => {
     try {
         const items = await productModel.find();
         if (items.length > 0) {
             res.json({ success: true, data: items });
-        }
-        else{
-            res.json({success:true, message:"no items in inventory"})
+        } else {
+            res.json({ success: true, message: "No items in inventory" });
         }
     } catch (error) {
-        console.log(error)
-        res.json({success:false,message:"Something wrong"})
+        console.log(error);
+        res.json({ success: false, message: "Something went wrong" });
     }
-}
+};
 
-export {loginUser,registerUser,registerBaker,registerAdmin,allitem}
+// Logout user
+const logoutUser = (req, res) => {
+    res.setHeader('Set-Cookie', cookie.serialize('token', '', {
+        httpOnly: true,
+        expires: new Date(0),
+        path: '/',
+    }));
+
+    res.json({ success: true, message: "Logged out successfully" });
+};
+
+export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logoutUser };
