@@ -9,7 +9,7 @@ import cookie from "cookie"
 
 const addItem=async(req,res)=>{
     try {
-
+      let image_filename = `${req.file.filename}`
         let bakerData = await bakerModel.findById(req.body.userId);
         let bakerId= await bakerData._id;
 
@@ -18,7 +18,8 @@ const addItem=async(req,res)=>{
             price: req.body.price,
             description: req.body.description,
             category: req.body.category,
-            bakerid: bakerId
+            bakerid: bakerId,
+            image: image_filename
         })
 
         
@@ -68,6 +69,7 @@ const addItem=async(req,res)=>{
         return res.json({ success: false, message: "Item not found" });
       }
       if (item.bakerid.toString() === bakerData._id.toString()) {
+        fs.unlink(`uploads/${food.image}`, () => { })
         await productModel.findByIdAndDelete(productId);
 
         bakerData.products = bakerData.products.filter(id => id.toString() !== productId);
