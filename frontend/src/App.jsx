@@ -12,6 +12,7 @@ import HomeAdmin from "../../frontend/src/HomeAdmin/HomeAdmin.jsx";
 import PlaceOrder from "./pages/Order/Order.jsx";
 import ContactForm from "./pages/Contact/Contact.jsx";
 import Aboutus from "./pages/Aboutus/Aboutus.jsx";
+import Product from "./pages/Product/Product.jsx";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/order" element={<PlaceOrder />} />
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/aboutus" element={<Aboutus />} />
+        <Route path="/product" element={<Product />} />
       </Routes>
     </>
   );

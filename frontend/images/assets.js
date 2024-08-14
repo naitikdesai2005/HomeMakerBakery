@@ -9,6 +9,8 @@ import logout_icon from './logout_icon.png'
 import parcel_icon from './parcel_icon.png'
 import basket_icon from './basket_icon.png'
 import login_icon from './login.png'
+import add_icon from './add_icon.png'
+import order_icon from './order_icon.png'
 
 import food_1 from './cake1.jpeg'
 import food_2 from './cake2.jpeg'
@@ -46,7 +48,9 @@ export const assets = {
     logout_icon,
     parcel_icon,
     basket_icon,
-    login_icon
+    login_icon,
+    add_icon,
+    order_icon
 }
 export const food_list = [
     {

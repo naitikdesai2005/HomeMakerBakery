@@ -1,12 +1,18 @@
-const HomeBaker =()=>{
+import React from "react";
+import HeaderBaker from "./HeaderBaker/HeaderBaker";
+import Sidebar from "./Sidebar/Sidebar";
+import "./HomeBaker.css";
 
-  return(
-      <>
-      <div>
-          <h1>Welcome Baker</h1>
+const HomeBaker = () => {
+  return (
+    <div>
+      <HeaderBaker />
+      <hr />
+      <div className="app-content">
+        <Sidebar />
       </div>
-      </>
-  )
-}
+    </div>
+  );
+};
 
 export default HomeBaker;
