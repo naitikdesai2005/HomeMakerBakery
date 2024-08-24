@@ -1,17 +1,11 @@
-body {
-  font-family: 'Arial', sans-serif;
-  margin-top: -10px;
-}
-
 .about-us-container {
   padding: 30px 20px;
   width: 80%;
-  height: 80%;
+  margin-top: -180px;
   margin-left: 110px;
   display: block;
   justify-items: center;
   align-items: center;
-  background: linear-gradient(135deg, #e5cecd 0%, #93635f 100%);
   text-align: center;
 }
 
@@ -67,8 +61,8 @@ body {
 
 .signature {
   font-style: italic;
-  color: #888;
-  margin-top: 40px;
+  color: #686666;
+  margin-top: 20px;
 }
 
 .about-us-image {
@@ -88,6 +82,7 @@ body {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -99,6 +94,7 @@ body {
     opacity: 0;
     transform: translateX(-20px);
   }
+
   100% {
     opacity: 1;
     transform: translateX(0);
@@ -110,6 +106,7 @@ body {
     opacity: 0;
     transform: translateX(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateX(0);

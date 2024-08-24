@@ -6,9 +6,6 @@ const Aboutus = () => {
     <>
       <Navbar />
       <div className="about-us-container">
-      <div className="about-us-header">
-        <h1>About Us</h1>
-      </div>
       <div className="about-us-content">
         <div className="about-us-text">
           <h2>Our Story</h2>
