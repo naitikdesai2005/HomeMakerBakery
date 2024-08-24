@@ -9,7 +9,7 @@ import cookie from "cookie"
 
 const addItem=async(req,res)=>{
     try {
-      let image_filename = `${req.file.filename}`
+
         let bakerData = await bakerModel.findById(req.body.userId);
         let bakerId= await bakerData._id;
 
@@ -18,8 +18,7 @@ const addItem=async(req,res)=>{
             price: req.body.price,
             description: req.body.description,
             category: req.body.category,
-            bakerid: bakerId,
-            image: image_filename
+            bakerid: bakerId
         })
 
         
@@ -33,7 +32,56 @@ const addItem=async(req,res)=>{
     }
 }
 
-    const listItem = async (req, res) => {
+// const listItem = async (req, res) => {
+//     try {
+//         const bakerData = await someFunctionToGetBakerData();
+//         console.log("Baker Data:", bakerData); // Debugging output
+//         if (!bakerData) {
+//             throw new Error("Baker data not found");
+//         }
+//         let bakerId = bakerData._id;
+//         // Continue with your logic using bakerId
+//     } catch (error) {
+//         console.error(error.message);
+//         res.status(500).send({ error: error.message });
+//     }
+// };
+
+
+//all item list
+// const listItem=async(req,res)=>{
+
+//     let bakerData = await bakerModel.findById(req.body.userId);
+//     let bakerId= await bakerData._id;
+
+//     if (!bakerData) {
+//         return res.json({ success: false, message: "Baker data not found." });
+//       }
+
+//     let itm = [];
+//     try {
+//       const Items=await productModel.find({});
+
+//       Items.forEach(Item => {
+//         if(bakerId==Item.bakerid)
+//         {
+//             // res.json({success:true,data:Item});
+//             itm.push(Item);
+//         }
+//         // else
+//         // {
+//         //     res.json({success:false,message:"Baker has no item."})
+//         // }
+//       });
+
+//       res.json({success:true,data:itm});
+//     } catch (error) {
+//       res.json({success:false,message:"Error"});
+//     }
+//   }
+
+
+  const listItem = async (req, res) => {
     try {
         let bakerData = await bakerModel.findById(req.body.userId);
         // let bakerId= await bakerData._id;
@@ -51,7 +99,7 @@ const addItem=async(req,res)=>{
         console.error(error.message);
         res.json({ success: false, message: "Error retrieving items" });
     }
-    }
+  }
 
   const deleteItem = async (req, res) => {
     try {
@@ -69,7 +117,6 @@ const addItem=async(req,res)=>{
         return res.json({ success: false, message: "Item not found" });
       }
       if (item.bakerid.toString() === bakerData._id.toString()) {
-        fs.unlink(`uploads/${food.image}`, () => { })
         await productModel.findByIdAndDelete(productId);
 
         bakerData.products = bakerData.products.filter(id => id.toString() !== productId);

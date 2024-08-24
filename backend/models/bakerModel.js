@@ -10,6 +10,19 @@ const bakerSchema = new mongoose.Schema({
     role:{type:String,default:"baker"},
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'product' }],
     select:{type:Boolean,default:true},
+    orders: [
+        {
+            orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'order', required: true },
+            items: [
+                {
+                    productId: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true },
+                    quantity: { type: Number, required: true },
+                    price:{type:Number,required:true}
+                }
+            ],
+            status: { type: String, default: "Pending" }
+        }
+    ]
 
 },{minimize:false})
 
