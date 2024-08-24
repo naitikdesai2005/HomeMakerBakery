@@ -1,0 +1,16 @@
+.baker-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 4%;
+  margin-top: -10px;
+}
+
+.baker-nav img {
+  margin-bottom: -10px;
+  margin-left: -40px;
+}
+
+.baker-nav .profile{
+  margin-right: -30px;
+}

@@ -57,9 +57,14 @@ const Navbar = () => {
               <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div>
             </div>
           </div>
-          <a className="login-button" href="/signup">
+          {/* <a className="login-button" href="/signup">
             <img src={assets.login_icon} alt="" />
-          </a>
+          </a> */}
+          <div className="nav-login">
+            <a className="login-button" href="/signup">
+              Login
+            </a>
+          </div>
           <div className="nav-regis">
             <a className="registration-button" href="/bakerRegister">
               Register as Baker

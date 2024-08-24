@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Contact.css"; // Make sure to create this CSS file
+import "./Contact.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 
@@ -21,7 +21,6 @@ function ContactForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
     console.log(formData);
   };
 

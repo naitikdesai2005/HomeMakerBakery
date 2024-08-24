@@ -1,4 +1,4 @@
-/* .know-button {
+.know-button {
   color: black;
   background-color: #fff;
   border: 2px solid #58231f;
@@ -11,7 +11,7 @@
 .know-button:hover {
   background-color: #58231f;
   color: white;
-} */
+}
 
 .mainpage {
   display: flex;
