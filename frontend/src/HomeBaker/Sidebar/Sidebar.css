@@ -26,6 +26,16 @@
   cursor: pointer;
 }
 
+.sidebar-option:hover {
+  background-color: #fff0ed;
+  border-color: #773631;
+}
+
+.sidebar-option:active {
+  background-color: #fff0ed;
+  border-color: #773631;
+}
+
 @media (max-width:90px) {
   .sidebar-option p {
     display: none;

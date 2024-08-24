@@ -26,6 +26,9 @@ function Homepage() {
             impedit nihil totam error laborum! Modi dolore necessitatibus veniam
             maxime distinctio!
           </h5>
+          <a href="#menu">
+            <button className="know-button">Know more</button>
+          </a>
         </div>
         <img src="/images/home.jpg" alt="background" />
       </div>

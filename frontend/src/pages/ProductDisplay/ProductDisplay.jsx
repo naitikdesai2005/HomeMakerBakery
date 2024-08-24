@@ -4,7 +4,6 @@ import { StoreContext } from "../context/StoreContext";
 import Product from "../Product/Product";
 
 const ProductDisplay = ({ category }) => {
-  // const context = useContext(StoreContext);
   const { food_list } = useContext(StoreContext);
 
   return (
