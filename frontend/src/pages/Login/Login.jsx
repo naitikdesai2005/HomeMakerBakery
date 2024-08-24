@@ -4,6 +4,7 @@ import { FaEnvelope, FaLock } from "react-icons/fa";
 import axios from "axios";
 import "./Login.css";
 import Navbar from "../Navbar/Navbar";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -43,6 +44,7 @@ function Login() {
         console.log("Login Successful!", response.data);
         console.log("email", email);
         localStorage.setItem("token", response.data.token);
+        toast.success("Login Succesfully");
         if (response.data.message === "admin") {
           navigate("/homeadmin");
           console.log("admin");

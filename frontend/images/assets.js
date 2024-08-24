@@ -36,6 +36,7 @@ import food_21 from './choclate1.jpeg'
 import food_22 from './choclate2.jpeg'
 import food_23 from './choclate3.jpeg'
 import food_24 from './choclate4.jpeg'
+import upload_image from './upload_image.jpeg'
 
 export const assets = {
     rating_starts,
@@ -50,7 +51,8 @@ export const assets = {
     basket_icon,
     login_icon,
     add_icon,
-    order_icon
+    order_icon,
+    upload_image
 }
 export const food_list = [
     {

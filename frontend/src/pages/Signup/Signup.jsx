@@ -4,6 +4,7 @@ import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import "./Signup.css";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
+import { toast } from "react-toastify";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -59,6 +60,7 @@ function Signup() {
       if (response.data.success) {
         console.log("SignUp Successful!", response.data);
         localStorage.setItem("token", response.data.token);
+        toast.success("Sign up Succesfully");
         if (response.data.message === "user") {
           navigate("/homeuser");
           console.log("user");
