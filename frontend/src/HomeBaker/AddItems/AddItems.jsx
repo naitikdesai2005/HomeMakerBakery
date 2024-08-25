@@ -37,7 +37,7 @@ const AddItems = () => {
     //     category: "Cake",
     //   });
     //   setImage(false);
-    //   toast.success("Product Added Succesfully");
+    toast.success("Product Added Succesfully");
     // } else {
     // toast.error("Product Not Added");
     // }
