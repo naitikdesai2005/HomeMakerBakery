@@ -19,6 +19,7 @@
   height: 100%;
   color: #58231f;
   background-repeat: no-repeat;
+  animation: fadeInRight 0.5s ease-in-out;
 }
 
 .image-container {

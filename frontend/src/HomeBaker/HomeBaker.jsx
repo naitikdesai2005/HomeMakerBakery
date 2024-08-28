@@ -37,7 +37,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const HomeBaker = () => {
-  const [activeComponent, setActiveComponent] = useState("add"); // Default to 'AddItems'
+  const [activeComponent, setActiveComponent] = useState("add"); 
 
   const renderComponent = () => {
     switch (activeComponent) {

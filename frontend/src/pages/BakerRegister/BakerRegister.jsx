@@ -118,82 +118,84 @@ function BakerRegister() {
           </div>
           <div className="Register-formfield">
             <form onSubmit={handleSubmit}>
-              <div className="register-form-group">
-                <label>
-                  <FaUser className="icon" /> Baker Name
-                </label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setBakerName(e.target.value)}
-                  required
-                />
+              <div className="Register-formfield">
+                <div className="register-form-group-name">
+                  <label>
+                    <FaUser className="icon" /> Baker Name
+                  </label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setBakerName(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="register-form-group-name">
+                  <label>
+                    <FaStore className="icon" /> Bakery Name
+                  </label>
+                  <input
+                    type="text"
+                    value={bakeryname}
+                    onChange={(e) => setBakeryName(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="register-form-group">
+                  <label>
+                    <FaEnvelope className="icon" /> Email
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div className="register-form-group">
+                  <label>
+                    <FaPhone className="icon" /> Phone No.
+                  </label>
+                  <input
+                    type="phone"
+                    value={mobilenumber}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+                <div className="register-form-group-full">
+                  <label>
+                    <FaLock className="icon" /> Password
+                  </label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <div className="register-form-group-full">
+                  <label>
+                    <FaHome className="icon" /> Address
+                  </label>
+                  <input
+                    type="text"
+                    value={bakeryaddress}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="register-form-group-full">
+                  <label>
+                    <FaCreditCard className="icon" /> Bank Account Number
+                  </label>
+                  <input
+                    type="text"
+                    value={bankAccNumber}
+                    onChange={(e) => setBankAccNumber(e.target.value)}
+                  />
+                </div>
+                <button type="submit" className="Register-button">
+                  Register
+                </button>
               </div>
-              <div className="register-form-group">
-                <label>
-                  <FaStore className="icon" /> Bakery Name
-                </label>
-                <input
-                  type="text"
-                  value={bakeryname}
-                  onChange={(e) => setBakeryName(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="register-form-group">
-                <label>
-                  <FaEnvelope className="icon" /> Email
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="register-form-group">
-                <label>
-                  <FaPhone className="icon" /> Phone No.
-                </label>
-                <input
-                  type="phone"
-                  value={mobilenumber}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </div>
-              <div className="register-form-group">
-                <label>
-                  <FaLock className="icon" /> Password
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className="register-form-group">
-                <label>
-                  <FaHome className="icon" /> Address
-                </label>
-                <input
-                  type="text"
-                  value={bakeryaddress}
-                  onChange={(e) => setAddress(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="register-form-group">
-                <label>
-                  <FaCreditCard className="icon" /> Bank Account Number
-                </label>
-                <input
-                  type="text"
-                  value={bankAccNumber}
-                  onChange={(e) => setBankAccNumber(e.target.value)}
-                />
-              </div>
-              <button type="submit" className="Register-button">
-                Register
-              </button>
             </form>
           </div>
         </div>

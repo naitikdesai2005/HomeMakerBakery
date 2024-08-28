@@ -126,6 +126,8 @@ import Aboutus from "./pages/Aboutus/Aboutus.jsx";
 import Product from "./pages/Product/Product.jsx";
 import Menu from "./pages/menu/Menu.jsx";
 import ProductDisplay from "./pages/ProductDisplay/ProductDisplay.jsx";
+import AddItems from "./HomeBaker/AddItems/AddItems.jsx";
+import ListItems from "./HomeBaker/ListItems/ListItems.jsx";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -159,6 +161,8 @@ function App() {
         <Route path="/product" element={<Product />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/productdisplay" element={<ProductDisplay />} />
+        <Route path="/additem" element={<AddItems />} />
+        <Route path="/listitem" element={<ListItems />} />
       </Routes>
     </>
   );
