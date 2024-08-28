@@ -13,7 +13,8 @@ const orderSchema = new mongoose.Schema({
             productId: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true },
             bakerId: { type: mongoose.Schema.Types.ObjectId, ref: 'baker', required: true },
             quantity: { type: Number, required: true },
-            price:{type:Number,required:true}
+            price:{type:Number,required:true},
+            status: { type: String, default: "Pending" }
         }
     ]
 }, { minimize: false });

@@ -1,4 +1,16 @@
 import userModel from "../models/userModel.js";
+import { createOrder } from "./orderController.js";
+
+
+// Create order from cart
+const checkout = async (req, res) => {
+  try {
+      await createOrder(req, res);
+  } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: "Error during checkout" });
+  }
+};
 
 //add items to user cart
 const addToCart = async (req, res) => {
@@ -54,4 +66,4 @@ const removeFromCart = async (req, res) => {
 };
 
 
-export {addToCart,getCart,removeFromCart};
+export {addToCart,getCart,removeFromCart,checkout};
