@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Navbar from "./Navbar/Navbar.jsx";
 import Menu from "./menu/Menu.jsx";
 import Footer from "./Footer/Footer.jsx";
-import Contact from "./Contact/Contact.jsx";
-import Aboutus from "./Aboutus/Aboutus.jsx";
 import "./Home.css";
 import ProductDisplay from "./ProductDisplay/ProductDisplay.jsx";
 

@@ -128,6 +128,7 @@ import Menu from "./pages/menu/Menu.jsx";
 import ProductDisplay from "./pages/ProductDisplay/ProductDisplay.jsx";
 import AddItems from "./HomeBaker/AddItems/AddItems.jsx";
 import ListItems from "./HomeBaker/ListItems/ListItems.jsx";
+import Profile from "./HomeUser/Profile/Profile.jsx";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -163,6 +164,7 @@ function App() {
         <Route path="/productdisplay" element={<ProductDisplay />} />
         <Route path="/additem" element={<AddItems />} />
         <Route path="/listitem" element={<ListItems />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );
