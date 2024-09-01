@@ -6,7 +6,9 @@ import { StoreContext } from "../../pages/context/StoreContext";
 
 const UserNavbar = () => {
   const [menu, setMenu] = useState("home");
-  const { getTotalCartAmount } = useContext(StoreContext);
+  const { getTotalCartItems } = useContext(StoreContext);
+  const cartItemCount = getTotalCartItems();
+
   return (
     <div>
       <nav className="navbar">
@@ -51,10 +53,13 @@ const UserNavbar = () => {
         <div className="nav">
           <div className="navbar-right">
             <div className="navbar-cart-icon">
-              <Link to="/cart">
-                <img src={assets.basket_icon} alt="" height={"60px"} />
+            <Link to="/cart">
+                <img src={assets.basket_icon} alt="Cart" height={"60px"} />
+                {cartItemCount > 0 && (
+                  <span className="cart-count">{cartItemCount}</span>
+                )}
               </Link>
-              <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div>
+              {/* <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div> */}
             </div>
           </div>
           <div className="profile-button">
