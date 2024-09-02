@@ -17,8 +17,8 @@ const bakerSchema = new mongoose.Schema({
                 {
                     productId: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true },
                     quantity: { type: Number, required: true },
-                    price:{type:Number,required:true},
-                    quantity: { type: Number, required: true }
+                    // price:{type:Number,required:true},
+                    // quantity: { type: Number, required: true }
                 }
             ],
             status: { type: String, default: "Pending" }
