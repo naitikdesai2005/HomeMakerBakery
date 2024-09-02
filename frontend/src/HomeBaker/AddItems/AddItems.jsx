@@ -27,27 +27,27 @@ const AddItems = () => {
     formData.append("description", data.description);
     formData.append("price", Number(data.price));
     formData.append("category", data.category);
-    formData.append("image", image);
-    // const response = await axios.post(`${url}/api/food/add`, formData);
-    // if (response.data.success) {
-    //   setData({
-    //     name: "",
-    //     description: "",
-    //     price: "",
-    //     category: "Cake",
-    //   });
-    //   setImage(false);
-    toast.success("Product Added Succesfully");
-    // } else {
-    // toast.error("Product Not Added");
-    // }
+    // formData.append("image", image);
+    const response = await axios.post(`${url}/api/product/add`, formData);
+    if (response.data.success) {
+      setData({
+        name: "",
+        description: "",
+        price: "",
+        category: "Cake",
+      });
+      // setImage(false);
+      toast.success("Product Added Succesfully");
+    } else {
+      toast.error("Product Not Added");
+    }
   };
 
   return (
     <div className="add">
       <form className="flex-col" onSubmit={onSubmitHandler}>
         <div className="add-img-upload flex-col">
-          <p>Upload Image</p>
+          {/* <p>Upload Image</p>
           <br />
           <label htmlFor="image">
             <img
@@ -56,14 +56,14 @@ const AddItems = () => {
               height={"100px"}
               width={"100px"}
             />
-          </label>
-          <input
+          </label> */}
+          {/* <input
             onChange={(e) => setImage(e.target.files[0])}
             type="file"
             id="image"
             hidden
             required
-          />
+          /> */}
         </div>
         <div className="add-product-name flex-col">
           <p>Product name</p>

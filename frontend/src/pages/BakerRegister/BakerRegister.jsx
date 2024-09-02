@@ -13,6 +13,7 @@ import axios from "axios";
 import Navbar from "../Navbar/Navbar.jsx";
 import { useNavigate } from "react-router-dom";
 import Container from "postcss/lib/container";
+import { toast } from "react-toastify";
 
 function BakerRegister() {
   const [email, setEmail] = useState("");
@@ -94,12 +95,11 @@ function BakerRegister() {
         }
       );
       if (response.data.success) {
+        toast.success("Register Succesfully");
         console.log("Registration Successful!", response.data);
         localStorage.setItem("token", response.data.token);
-        // if (response.data.message === "baker") {
-        navigate("/homebaker");
+        navigate("/login");
         console.log("baker");
-        // }
       } else {
         alert("Login failed: " + response.data.message);
       }
