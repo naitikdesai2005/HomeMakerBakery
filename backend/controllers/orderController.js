@@ -147,7 +147,8 @@ const createOrder = async (req, res) => {
                 items.push({
                     productId: product._id,
                     bakerId: product.bakerid,
-                    quantity: quantity
+                    quantity: quantity,
+                    price: product.price
                 });
                 totalPrice += product.price * quantity;
             }
@@ -174,9 +175,10 @@ const createOrder = async (req, res) => {
                     orderId: savedOrder._id,
                     items: [{
                         productId: item.productId,
-                        quantity: item.quantity
+                        quantity: item.quantity,
+                        price:item.price
                     }],
-                        status: "Pending"
+                        status:"Pending"
                 });
                 await baker.save();
             }
