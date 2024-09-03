@@ -13,6 +13,7 @@ const Cart = ({ id, image }) => {
     cartItems,
     food_list,
     removeFromCart,
+    addToCart,
     deleteFromCart,
     getTotalCartAmount,
     isAuthenticated,
@@ -53,18 +54,23 @@ const Cart = ({ id, image }) => {
                     <img src={item.image} alt="" />
                     <p>{item.name}</p>
                     <p>Rs. {item.price}</p>
-                    {/* <img
-                      onClick={() => removeFromCart(item._id)}
-                      src={assets.remove_icon_red}
-                      alt=""
-                      height={"200px"}
-                    /> */}
-                    <p>{cartItems[item._id]}</p>
-                    {/* <img
-                      onClick={() => addToCart(item._id)}
-                      src={assets.add_icon_green}
-                      alt=""
-                    /> */}
+                    <div className="quantity-control">
+                      <h1
+                        onClick={() => addToCart(item._id)}
+                        src={assets.add_icon_green}
+                        alt="Add item"
+                        className="quantity-button"
+                      >
+                        ➕
+                      </h1>
+                      <p>{cartItems[item._id]}</p>{" "}
+                      <h1
+                        onClick={() => removeFromCart(item._id)}
+                        className="quantity-button"
+                      >
+                        ➖
+                      </h1>
+                    </div>
                     <p>Rs. {item.price * cartItems[item._id]}</p>
                     <p
                       onClick={() => deleteFromCart(item._id)}

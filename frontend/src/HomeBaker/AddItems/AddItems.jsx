@@ -29,67 +29,71 @@ const AddItems = () => {
     formData.append("category", data.category);
 
     if (image) {
-        formData.append("image", image);
+      formData.append("image", image);
     }
 
-    console.log("Submitting form with data:", Object.fromEntries(formData.entries()));
+    console.log(
+      "Submitting form with data:",
+      Object.fromEntries(formData.entries())
+    );
 
     try {
-        const token = localStorage.getItem("token"); // Ensure token is stored in localStorage
-        const response = await axios.post(
-            `http://localhost:3000/api/product/add`,
-            formData,
-            {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    "token": token, // Send token in the "token" header
-                },
-            }
-        );
-
-        console.log("Server response:", response.data);
-
-        if (response.data.success) {
-            setData({
-                name: "",
-                description: "",
-                price: "",
-                category: "cake",
-            });
-            setImage(null);
-            toast.success("Product Added Successfully");
-        } else {
-            toast.error(response.data.message || "Product Not Added");
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        `http://localhost:3000/api/product/add`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: token,
+          },
         }
-    } catch (error) {
-        console.error("Error adding product:", error);
-        toast.error("Something went wrong. Please try again.");
-    }
-};
+      );
 
+      console.log("Server response:", response.data);
+
+      if (response.data.success) {
+        setData({
+          name: "",
+          description: "",
+          price: "",
+          category: "cake",
+        });
+        setImage(null);
+        toast.success("Product Added Successfully");
+      } else {
+        toast.error(response.data.message || "Product Not Added");
+      }
+    } catch (error) {
+      console.error("Error adding product:", error);
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
 
   return (
     <div className="add">
       <form className="flex-col" onSubmit={onSubmitHandler}>
-        {<div className="add-img-upload flex-col">
-          <p>Upload Image</p>
-          <br />
-          <label htmlFor="image">
-            <img
-              src={image ? URL.createObjectURL(image) : assets.upload_image}
-              alt=""
-              height={"100px"}
-              width={"100px"}
+        {
+          <div className="add-img-upload flex-col">
+            <p>Upload Image</p>
+            <br />
+            <label htmlFor="image">
+              <img
+                src={image ? URL.createObjectURL(image) : assets.upload_image}
+                alt=""
+                height={"100px"}
+                width={"100px"}
+              />
+            </label>
+            <input
+              onChange={(e) => setImage(e.target.files[0])}
+              type="file"
+              id="image"
+              hidden
+              required
             />
-          </label>
-          <input
-            onChange={(e) => setImage(e.target.files[0])}
-            type="file"
-            id="image"
-            hidden
-            required
-          />
-        </div>}
+          </div>
+        }
         <div className="add-product-name flex-col">
           <p>Product name</p>
           <input

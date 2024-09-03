@@ -18,7 +18,7 @@ const Product = ({ id, name, price, description, image }) => {
           />
         ) : (
           <div className="product-item-counter">
-            <img
+            {/* <img
               onClick={() => removeFromCart(id)}
               src={assets.remove_icon_red}
               alt=""
@@ -28,7 +28,8 @@ const Product = ({ id, name, price, description, image }) => {
               onClick={() => addToCart(id)}
               src={assets.add_icon_green}
               alt=""
-            />
+            /> */}
+            <h3>✅</h3>
           </div>
         )}
       </div>

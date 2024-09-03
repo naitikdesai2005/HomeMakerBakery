@@ -6,15 +6,15 @@ import "../HomeBaker.css";
 
 const ListItems = () => {
   const [list, setList] = useState([]);
-  const url = "http://localhost:3000"; // Define the base URL
+  const url = "http://localhost:3000";
 
   const fetchList = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(`${url}/api/product/bakerProduct`, {
         headers: {
-          "token": token,
-      },
+          token: token,
+        },
       });
       console.log(response.data);
       if (response.data.success) {
