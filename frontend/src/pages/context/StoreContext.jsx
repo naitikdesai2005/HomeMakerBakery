@@ -19,6 +19,10 @@ export const StoreContextProvider = (props) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
   };
 
+  const deleteFromCart = (itemId) => {
+    setCartItems((prev) => ({ ...prev, [itemId]: 0 }));
+  };
+
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
@@ -48,6 +52,7 @@ export const StoreContextProvider = (props) => {
     getTotalCartItems,
     isAuthenticated,
     setIsAuthenticated,
+    deleteFromCart,
   };
 
   return (
