@@ -26,7 +26,7 @@ const addItem=async(req,res)=>{
         const savedItem = await item.save();
         bakerData.products.push(savedItem._id);
         await bakerData.save();
-        res.status(200).json({ message: "Item added successfully" });
+        res.status(200).json({ success:true,message: "Item added successfully" });
     } catch (error) {
         console.log(error);
         res.json({success:false,message:"Something went Wrong!!!"})
