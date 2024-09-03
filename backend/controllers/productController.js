@@ -12,13 +12,14 @@ const addItem=async(req,res)=>{
 
         let bakerData = await bakerModel.findById(req.body.userId);
         let bakerId= await bakerData._id;
-
+        let image_filename = `${req.file.filename}`;
         const item = new productModel({
             name: req.body.name,
             price: req.body.price,
             description: req.body.description,
             category: req.body.category,
-            bakerid: bakerId
+            bakerid: bakerId,
+            image:image_filename
         })
 
         
@@ -117,6 +118,7 @@ const addItem=async(req,res)=>{
         return res.json({ success: false, message: "Item not found" });
       }
       if (item.bakerid.toString() === bakerData._id.toString()) {
+        fs.unlink(`uploads/${food.image}`,()=>{});
         await productModel.findByIdAndDelete(productId);
 
         bakerData.products = bakerData.products.filter(id => id.toString() !== productId);
