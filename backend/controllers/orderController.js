@@ -4,7 +4,7 @@ import productModel from "../models/productModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from "stripe";
 
-const stripe=new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // const createOrder = async (req, res) => {
 //   const frontend_url = "http://localhost:3000";
@@ -113,7 +113,7 @@ const stripe=new Stripe(process.env.STRIPE_SECRET_KEY);
 //   try {
 //     const orders=await orderModel.find({userId:req.body.userId});
 //     console.log(orders);
-    
+
 //     res.json({success:true,data:orders.items});
 //   } catch (error) {
 //     console.log(error);
@@ -176,9 +176,9 @@ const createOrder = async (req, res) => {
                     items: [{
                         productId: item.productId,
                         quantity: item.quantity,
-                        price:item.price
+                        price: item.price
                     }],
-                        status:"Pending"
+                    status: "Pending"
                 });
                 await baker.save();
             }

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./AddItems.css";
 import { assets } from "../../../images/assets";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 const AddItems = () => {
-  const url = "http://localhost:3000";
-  const [image, setImage] = useState(false);
   const [data, setData] = useState({
     name: "",
     description: "",
     price: "",
-    category: "Cake",
+    category: "cake",
   });
+
+  const [image, setImage] = useState(null);
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -27,27 +27,53 @@ const AddItems = () => {
     formData.append("description", data.description);
     formData.append("price", Number(data.price));
     formData.append("category", data.category);
-    // formData.append("image", image);
-    const response = await axios.post(`${url}/api/product/add`, formData);
-    if (response.data.success) {
-      setData({
-        name: "",
-        description: "",
-        price: "",
-        category: "Cake",
-      });
-      // setImage(false);
-      toast.success("Product Added Succesfully");
-    } else {
-      toast.error("Product Not Added");
+
+    // if (image) {
+    //   formData.append("image", image);
+    // }
+
+    console.log(
+      "Submitting form with data:",
+      Object.fromEntries(formData.entries())
+    );
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        `http://localhost:3000/api/product/add`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("Server response:", response.data);
+
+      if (response.data.success) {
+        setData({
+          name: "",
+          description: "",
+          price: "",
+          category: "cake",
+        });
+        // setImage(null);
+        toast.success("Product Added Successfully");
+      } else {
+        toast.error(response.data.message || "Product Not Added");
+      }
+    } catch (error) {
+      console.error("Error adding product:", error);
     }
   };
 
   return (
     <div className="add">
       <form className="flex-col" onSubmit={onSubmitHandler}>
-        <div className="add-img-upload flex-col">
-          {/* <p>Upload Image</p>
+        {/* <div className="add-img-upload flex-col">
+          <p>Upload Image</p>
           <br />
           <label htmlFor="image">
             <img
@@ -56,15 +82,15 @@ const AddItems = () => {
               height={"100px"}
               width={"100px"}
             />
-          </label> */}
-          {/* <input
+          </label>
+          <input
             onChange={(e) => setImage(e.target.files[0])}
             type="file"
             id="image"
             hidden
             required
-          /> */}
-        </div>
+          />
+        </div> */}
         <div className="add-product-name flex-col">
           <p>Product name</p>
           <input
@@ -73,6 +99,7 @@ const AddItems = () => {
             type="text"
             name="name"
             placeholder="Type here"
+            required
           />
         </div>
         <div className="add-product-description flex-col">
@@ -89,7 +116,12 @@ const AddItems = () => {
         <div className="add-category-price">
           <div className="add-category flex-col">
             <p>Product category</p>
-            <select onChange={onChangeHandler} name="category">
+            <select
+              onChange={onChangeHandler}
+              name="category"
+              value={data.category}
+              required
+            >
               <option value="cake">Cake</option>
               <option value="cupcake">Cup Cake</option>
               <option value="donat">Donuts</option>
@@ -103,9 +135,10 @@ const AddItems = () => {
             <input
               onChange={onChangeHandler}
               value={data.price}
-              type="Number"
+              type="number"
               name="price"
               placeholder="Rs.130"
+              required
             />
           </div>
         </div>

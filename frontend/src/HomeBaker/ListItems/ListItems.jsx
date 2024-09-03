@@ -5,11 +5,14 @@ import { toast } from "react-toastify";
 import "../HomeBaker.css";
 
 const ListItems = () => {
-  const url = "http://localhost:3000";
+  // const url = "http://localhost:3000";
   const [list, setList] = useState([]);
 
   const fetchList = async () => {
-    const response = await axios.get(`${url}/api/product/list`);
+    // const response = await axios.get(`${url}/api/product/list`);
+    const response = await axios.get(
+      `http://localhost:3000/api/product/bakerProduct`
+    );
     console.log(response.data);
     if (response.data.success) {
       setList(response.data.data);
