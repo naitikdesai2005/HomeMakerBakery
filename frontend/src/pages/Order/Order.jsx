@@ -9,6 +9,7 @@ const PlaceOrder = () => {
 
   return (
     <>
+      {isAuthenticated ? <UserNavbar /> : <Navbar />}
       <Navbar />
       <form className="place-order">
         <div className="place-order-left">
