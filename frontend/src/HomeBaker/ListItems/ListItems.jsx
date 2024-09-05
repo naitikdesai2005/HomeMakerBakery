@@ -106,7 +106,6 @@ const ListItems = () => {
       const token = localStorage.getItem("token");
       const response = await axios.delete(`${url}/api/product/delete`, {
         headers: {
-          "Content-Type": "multipart/form-data",
           token: token,
         },
       });
@@ -117,7 +116,6 @@ const ListItems = () => {
         toast.error(response.data.message || "Failed to delete food item.");
       }
     } catch (error) {
-      console.error("Error deleting food item:", error);
       toast.error("Something went wrong while deleting the item.");
     }
   };

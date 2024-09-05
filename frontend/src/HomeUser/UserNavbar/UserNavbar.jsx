@@ -1,14 +1,26 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState} from "react";
 import "./UserNavbar.css";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { assets } from "../../../images/assets";
 import { StoreContext } from "../../pages/context/StoreContext";
 
 const UserNavbar = () => {
   const [menu, setMenu] = useState("home");
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const { getTotalCartItems } = useContext(StoreContext);
   const cartItemCount = getTotalCartItems();
+  const navigate = useNavigate();
 
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleLogout = () => {
+    
+    localStorage.removeItem("token");
+    navigate("/"); 
+  };
+  
   return (
     <div>
       <nav className="navbar">
@@ -45,7 +57,7 @@ const UserNavbar = () => {
           <Link
             to="/contact"
             onClick={() => setMenu("Contact")}
-            className={menu === "Conatct" ? "active" : ""}
+            className={menu === "Contact" ? "active" : ""}
           >
             Contact
           </Link>
@@ -53,7 +65,7 @@ const UserNavbar = () => {
         <div className="nav">
           <div className="navbar-right">
             <div className="navbar-cart-icon">
-            <Link to="/cart">
+              <Link to="/cart">
                 <img src={assets.basket_icon} alt="Cart" height={"60px"} />
                 {cartItemCount > 0 && (
                   <span className="cart-count">{cartItemCount}</span>
@@ -63,9 +75,19 @@ const UserNavbar = () => {
             </div>
           </div>
           <div className="profile-button">
-          <a className="loginbutton" href="/profile">
-            <img src={assets.login_icon} alt="" />
-          </a>
+            <button className="loginbutton" onClick={toggleDropdown}>
+              <img src={assets.login_icon} alt="Profile" />
+            </button>
+            {dropdownVisible && (
+              <div className="dropdown-menu">
+                <Link to="/profile" className="dropdown-item">
+                   Profile
+                </Link>
+                <a onClick={handleLogout} className="dropdown-item">
+                Logout
+              </a>
+              </div>
+            )}
           </div>
         </div>
       </nav>
