@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs"
 import validator from "validator";
 import bakerModel from "../models/bakerModel.js";
 import cookie from "cookie"
+import fs from "fs"
 
 
 const addItem = async (req, res) => {
@@ -118,7 +119,11 @@ const deleteItem = async (req, res) => {
       return res.json({ success: false, message: "Item not found" });
     }
     if (item.bakerid.toString() === bakerData._id.toString()) {
-      fs.unlink(`uploads/${food.image}`, () => { });
+      fs.unlink(`uploads/${item.image}`, (err) => {
+        if (err) {
+          console.error("Failed to delete image:", err.message);
+        }
+      });
       await productModel.findByIdAndDelete(productId);
 
       bakerData.products = bakerData.products.filter(id => id.toString() !== productId);
