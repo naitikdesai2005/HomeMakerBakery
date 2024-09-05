@@ -98,23 +98,12 @@ const ListItems = () => {
   };
 
   const removeFood = async (foodId) => {
-    if (!window.confirm("Are you sure you want to delete this food item?")) {
-      return;
-    }
-
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.delete(`${url}/api/product/delete`, {
-        headers: {
-          token: token,
-        },
+      const response = await axios.post(`${url}/api/product/delete`, {
+        id: foodId,
       });
-      if (response.data.success) {
-        toast.success("Food item deleted successfully!");
-        await fetchList();
-      } else {
-        toast.error(response.data.message || "Failed to delete food item.");
-      }
+      await fetchList();
     } catch (error) {
       toast.error("Something went wrong while deleting the item.");
     }
