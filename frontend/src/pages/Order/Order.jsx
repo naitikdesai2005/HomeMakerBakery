@@ -28,7 +28,11 @@ const PlaceOrder = () => {
 
   return (
     <>
+<<<<<<< Updated upstream
       {isAuthenticated ? <UserNavbar /> : <Navbar />}
+=======
+      <Navbar />
+>>>>>>> Stashed changes
       <form className="place-order">
         <div className="place-order-left">
           <p className="title">Delivery Information</p>

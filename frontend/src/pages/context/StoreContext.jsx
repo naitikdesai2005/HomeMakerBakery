@@ -1,11 +1,13 @@
-import React, { createContext, useState } from "react";
-import food_list from "../../../images/assets";
-
+import axios from "axios";
+import React, { createContext, useEffect, useState } from "react";
 export const StoreContext = createContext(null);
 
 export const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
+  // const url = "http://localhost:3000";
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [food_list, setFoodList] = useState([]);
+  const [token, setToken] = useState();
 
   const addToCart = (itemId) => {
     if (!cartItems[itemId]) {
@@ -34,6 +36,13 @@ export const StoreContextProvider = (props) => {
     return totalAmount;
   };
 
+  const fedtchFoodList = async () => {
+    const response = await axios.get(
+      `http://localhost:3000/api/product/bakerProduct`
+    );
+    setFoodList(response.data.data);
+  };
+
   const getTotalCartItems = () => {
     let totalItems = 0;
     for (const item in cartItems) {
@@ -41,6 +50,16 @@ export const StoreContextProvider = (props) => {
     }
     return totalItems;
   };
+
+  useEffect(() => {
+    async function loadData() {
+      await fedtchFoodList();
+      if (localStorage.getItem("token")) {
+        setToken(localStorage.getItem("token"));
+      }
+    }
+    loadData();
+  }, []);
 
   const contextValue = {
     food_list,
@@ -53,6 +72,7 @@ export const StoreContextProvider = (props) => {
     isAuthenticated,
     setIsAuthenticated,
     deleteFromCart,
+    useEffect,
   };
 
   return (

@@ -20,6 +20,7 @@ const Cart = ({ id, image }) => {
   } = useContext(StoreContext);
 
   const navigate = useNavigate();
+  const url = "http://localhost:3000";
   const [emptyCartMessage, setEmptyCartMessage] = useState(false);
 
   const handleCheckout = () => {
@@ -51,7 +52,7 @@ const Cart = ({ id, image }) => {
               return (
                 <div key={index}>
                   <div className="cart-items-title cart-items-item">
-                    <img src={item.image} alt="" />
+                    <img src={url + "/uploads/" + item.image} alt="" />
                     <p>{item.name}</p>
                     <p>Rs. {item.price}</p>
                     <div className="quantity-control">
