@@ -22,6 +22,7 @@ import Payment from "./pages/Payment/Payment.jsx";
 import userOrder from "./HomeUser/UserOrders/UserOrder.jsx";
 import UserOrder from "./HomeUser/UserOrders/UserOrder.jsx";
 function App() {
+  const url = "http://localhost:3000";
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
@@ -53,7 +54,7 @@ function App() {
         <Route path="/product" element={<Product />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/productdisplay" element={<ProductDisplay />} />
-        <Route path="/additem" element={<AddItems />} />
+        <Route path="/additem" element={<AddItems url={url} />} />
         <Route path="/listitem" element={<ListItems />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/payment" element={<Payment />} />
