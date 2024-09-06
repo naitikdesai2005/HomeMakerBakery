@@ -43,7 +43,7 @@ const ListItems = () => {
       );
       if (response.data.success) {
         toast.success("Food item deleted successfully!");
-        await fetchList(); // Refresh the product list
+        await fetchList();
       } else {
         toast.error(response.data.message || "Failed to delete food item.");
       }
