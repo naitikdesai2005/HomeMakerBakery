@@ -21,6 +21,8 @@ import Profile from "./HomeUser/Profile/Profile.jsx";
 import Payment from "./pages/Payment/Payment.jsx";
 import userOrder from "./HomeUser/UserOrders/UserOrder.jsx";
 import UserOrder from "./HomeUser/UserOrders/UserOrder.jsx";
+import Verify from "./pages/Verify/Verify.jsx";
+
 function App() {
   const url = "http://localhost:3000";
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -59,6 +61,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/userOrder" element={<UserOrder />} />
+        <Route path="/verify" element={<Verify />} />
       </Routes>
     </>
   );
