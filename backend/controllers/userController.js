@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import validator from "validator";
 import bakerModel from "../models/bakerModel.js";
-import cookie from "cookie";
+// import cookie from "cookie";
 import productModel from "../models/productModel.js";
 
 // Create token
@@ -188,14 +188,16 @@ const allitem = async (req, res) => {
 };
 
 // Logout user
-const logoutUser = (req, res) => {
-    res.setHeader('Set-Cookie', cookie.serialize('token', '', {
-        httpOnly: true,
-        expires: new Date(0),
-        path: '/',
-    }));
+const logout=async (req,res)=> {
+    try {
+        // Remove the token from local storage
+        res.json({success:true,message:"Logout Successfuly"})
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Something went wrong" });
+    }
+}
 
-    res.json({ success: true, message: "Logged out successfully" });
-};
 
-export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logoutUser };
+
+export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout };
