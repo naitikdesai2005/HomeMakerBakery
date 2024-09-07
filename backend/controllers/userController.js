@@ -198,6 +198,17 @@ const logout=async (req,res)=> {
     }
 }
 
+//search bakery
+const search=async(req,res)=>{
+  try {
+    let bakeryName=req.body.bakeryName;
+    let items= await productModel.find({bakeryName:bakeryName});
+    res.json({success:true,data:items});
+} catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Something went wrong" });
+}
+}
 
 
-export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout };
+export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout ,search};
