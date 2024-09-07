@@ -1,6 +1,6 @@
-import React, { useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import "./UserNavbar.css";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { assets } from "../../../images/assets";
 import { StoreContext } from "../../pages/context/StoreContext";
 
@@ -16,11 +16,10 @@ const UserNavbar = () => {
   };
 
   const handleLogout = () => {
-    
     localStorage.removeItem("token");
-    navigate("/"); 
+    navigate("/");
   };
-  
+
   return (
     <div>
       <nav className="navbar">
@@ -71,7 +70,6 @@ const UserNavbar = () => {
                   <span className="cart-count">{cartItemCount}</span>
                 )}
               </Link>
-              {/* <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div> */}
             </div>
           </div>
           <div className="profile-button">
@@ -81,14 +79,14 @@ const UserNavbar = () => {
             {dropdownVisible && (
               <div className="dropdown-menu">
                 <Link to="/profile" className="dropdown-item">
-                   Profile
+                  Profile
                 </Link>
                 <Link to="/userOrder" className="dropdown-item">
-                   Orders
+                  Orders
                 </Link>
                 <a onClick={handleLogout} className="dropdown-item">
-                Logout
-              </a>
+                  Logout
+                </a>
               </div>
             )}
           </div>

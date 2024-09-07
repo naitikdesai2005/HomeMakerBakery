@@ -11,7 +11,8 @@ const Product = ({ id, name, price, description, image }) => {
       <div className="product-item-img-container">
         <img
           className="product-item-image"
-          src={`http://localhost:3000/uploads/${image}`}
+          // src={`http://localhost:3000/uploads/${image}`}
+          src={assets.image}
           alt={name}
         />
         {!cartItems[id] ? (

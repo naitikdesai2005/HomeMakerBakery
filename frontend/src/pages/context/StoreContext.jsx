@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 export const StoreContext = createContext(null);
+import food_list from "../../../images/assets";
 
 export const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
-  // const url = "http://localhost:3000";
+  const url = "http://localhost:3000";
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [food_list, setFoodList] = useState([]);
-  const [token, setToken] = useState();
+  // const [food_list, setFoodList] = useState([]);
+  // const [token, setToken] = useState();
 
   const addToCart = (itemId) => {
     if (!cartItems[itemId]) {
@@ -36,12 +37,12 @@ export const StoreContextProvider = (props) => {
     return totalAmount;
   };
 
-  const fedtchFoodList = async () => {
-    const response = await axios.get(
-      `http://localhost:3000/api/product/bakerProduct`
-    );
-    setFoodList(response.data.data);
-  };
+  // const fedtchFoodList = async () => {
+  //   const response = await axios.get(
+  //     `http://localhost:3000/api/product/bakerProduct`
+  //   );
+  //   setFoodList(response.data.data);
+  // };
 
   const getTotalCartItems = () => {
     let totalItems = 0;
@@ -51,15 +52,16 @@ export const StoreContextProvider = (props) => {
     return totalItems;
   };
 
-  useEffect(() => {
-    async function loadData() {
-      await fedtchFoodList();
-      if (localStorage.getItem("token")) {
-        setToken(localStorage.getItem("token"));
-      }
-    }
-    loadData();
-  }, []);
+  // useEffect(() => {
+  //   async function loadData() {
+  //     await fetchFoodList();
+  //     const storedToken = localStorage.getItem("token");
+  //     if (storedToken) {
+  //       setToken(storedToken);
+  //     }
+  //   }
+  //   loadData();
+  // }, []);
 
   const contextValue = {
     food_list,
@@ -73,6 +75,7 @@ export const StoreContextProvider = (props) => {
     setIsAuthenticated,
     deleteFromCart,
     useEffect,
+    // fedtchFoodList,
   };
 
   return (

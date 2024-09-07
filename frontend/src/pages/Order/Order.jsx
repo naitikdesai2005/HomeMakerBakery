@@ -11,28 +11,22 @@ const PlaceOrder = () => {
   const navigate = useNavigate();
 
   const handleProceedToPay = (event) => {
-    event.preventDefault(); // Prevent form from submitting
-
-    // Check if the form is valid
+    event.preventDefault();
     const form = event.target.closest("form");
     if (form.checkValidity()) {
       if (isAuthenticated) {
-        navigate("/payment"); // Navigate to payment if authenticated
+        navigate("/payment");
       } else {
-        navigate("/login"); // Navigate to login if not authenticated
+        navigate("/login");
       }
     } else {
-      form.reportValidity(); // This will trigger the browser's validation UI
+      form.reportValidity();
     }
   };
 
   return (
     <>
-<<<<<<< Updated upstream
       {isAuthenticated ? <UserNavbar /> : <Navbar />}
-=======
-      <Navbar />
->>>>>>> Stashed changes
       <form className="place-order">
         <div className="place-order-left">
           <p className="title">Delivery Information</p>
@@ -72,10 +66,7 @@ const PlaceOrder = () => {
                 </b>
               </div>
             </div>
-            <button
-              type="submit" 
-              onClick={handleProceedToPay} 
-            >
+            <button type="submit" onClick={handleProceedToPay}>
               PROCEED TO PAY
             </button>
           </div>

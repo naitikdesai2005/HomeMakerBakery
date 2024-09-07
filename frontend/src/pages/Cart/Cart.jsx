@@ -52,7 +52,8 @@ const Cart = ({ id, image }) => {
               return (
                 <div key={index}>
                   <div className="cart-items-title cart-items-item">
-                    <img src={url + "/uploads/" + item.image} alt="" />
+                    {/* <img src={url + "/uploads/" + item.image} alt="" /> */}
+                    <img src={item.image} alt="" />
                     <p>{item.name}</p>
                     <p>Rs. {item.price}</p>
                     <div className="quantity-control">
