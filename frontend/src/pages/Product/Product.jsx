@@ -5,14 +5,15 @@ import { StoreContext } from "../context/StoreContext";
 
 const Product = ({ id, name, price, description, image }) => {
   const { cartItems, addToCart } = useContext(StoreContext);
+  const url = "http://localhost:3000";
 
   return (
     <div className="product-item" id="product">
       <div className="product-item-img-container">
         <img
           className="product-item-image"
-          // src={`http://localhost:3000/uploads/${image}`}
-          src={assets.image}
+          src={`${url}/uploads/${item.image}`}
+          // src={assets.image}
           alt={name}
         />
         {!cartItems[id] ? (

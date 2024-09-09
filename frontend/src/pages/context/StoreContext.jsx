@@ -7,18 +7,25 @@ export const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const url = "http://localhost:3000";
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // const [food_list, setFoodList] = useState([]);
-  // const [token, setToken] = useState();
+  const [food_list, setFoodList] = useState([]);
+  const [token, setToken] = useState();
 
-  const addToCart = (itemId) => {
+  const addToCart = async (itemId) => {
     if (!cartItems[itemId]) {
       setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
     } else {
       setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     }
+    if (token) {
+      await axios.post(
+        url + "/api/cart/add",
+        { itemId },
+        { headers: { token } }
+      );
+    }
   };
 
-  const removeFromCart = (itemId) => {
+  const removeFromCart = async (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
   };
 
@@ -37,12 +44,12 @@ export const StoreContextProvider = (props) => {
     return totalAmount;
   };
 
-  // const fedtchFoodList = async () => {
-  //   const response = await axios.get(
-  //     `http://localhost:3000/api/product/bakerProduct`
-  //   );
-  //   setFoodList(response.data.data);
-  // };
+  const fedtchFoodList = async () => {
+    const response = await axios.get(
+      `http://localhost:3000/api/product/bakerProduct`
+    );
+    setFoodList(response.data.data);
+  };
 
   const getTotalCartItems = () => {
     let totalItems = 0;
@@ -52,16 +59,16 @@ export const StoreContextProvider = (props) => {
     return totalItems;
   };
 
-  // useEffect(() => {
-  //   async function loadData() {
-  //     await fetchFoodList();
-  //     const storedToken = localStorage.getItem("token");
-  //     if (storedToken) {
-  //       setToken(storedToken);
-  //     }
-  //   }
-  //   loadData();
-  // }, []);
+  useEffect(() => {
+    async function loadData() {
+      await fetchFoodList();
+      const storedToken = localStorage.getItem("token");
+      if (storedToken) {
+        setToken(storedToken);
+      }
+    }
+    loadData();
+  }, []);
 
   const contextValue = {
     food_list,
@@ -75,7 +82,7 @@ export const StoreContextProvider = (props) => {
     setIsAuthenticated,
     deleteFromCart,
     useEffect,
-    // fedtchFoodList,
+    fedtchFoodList,
   };
 
   return (
