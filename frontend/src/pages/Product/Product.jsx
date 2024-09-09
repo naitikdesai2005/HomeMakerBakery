@@ -12,7 +12,7 @@ const Product = ({ id, name, price, description, image }) => {
       <div className="product-item-img-container">
         <img
           className="product-item-image"
-          src={`${url}/uploads/${item.image}`}
+          src={url + "/uploads/" + image}
           // src={assets.image}
           alt={name}
         />
