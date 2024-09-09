@@ -20,9 +20,8 @@ const addItem = async (req, res) => {
       description: req.body.description,
       category: req.body.category,
       bakerid: bakerId,
-      image: image_filename,
-      bakeryName: bakerId.bakeryName
-    });
+      image: image_filename
+    })
 
 
     const savedItem = await item.save();
