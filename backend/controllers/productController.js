@@ -12,6 +12,7 @@ const addItem = async (req, res) => {
   try {
 
     let bakerData = await bakerModel.findById(req.body.userId);
+    let bn = bakerData.bakeryname;
     let bakerId = await bakerData._id;
     let image_filename = `${req.file.filename}`;
     const item = new productModel({
@@ -20,8 +21,9 @@ const addItem = async (req, res) => {
       description: req.body.description,
       category: req.body.category,
       bakerid: bakerId,
-      image: image_filename
-    })
+      image: image_filename,
+      bakeryName: bn
+    });
 
 
     const savedItem = await item.save();
