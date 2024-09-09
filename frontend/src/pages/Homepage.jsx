@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import Navbar from "./Navbar/Navbar.jsx";
 import Menu from "./menu/Menu.jsx";
 import Footer from "./Footer/Footer.jsx";
 import "./Home.css";
 import ProductDisplay from "./ProductDisplay/ProductDisplay.jsx";
+import { StoreContext } from "./context/StoreContext.jsx";
+import UserNavbar from "../HomeUser/UserNavbar/UserNavbar.jsx";
 
 function Homepage() {
   const [category, setCategory] = useState("All");
-
+  const {
+    isAuthenticated,
+  } = useContext(StoreContext);
   return (
     <div>
-      <Navbar />
+       {isAuthenticated ? <UserNavbar /> : <Navbar />}
       <div className="mainpage" id="home">
         <div className="mainpage-content">
           <h1>Delicious</h1>

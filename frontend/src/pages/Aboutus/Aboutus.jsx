@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Aboutus.css";
 import Navbar from "../Navbar/Navbar";
+import UserNavbar from "../../HomeUser/UserNavbar/UserNavbar";
+import { StoreContext } from "../context/StoreContext";
+
 const Aboutus = () => {
+  const {
+    isAuthenticated
+  }=useContext(StoreContext);
   return (
     <>
-      <Navbar />
+       {isAuthenticated ? <UserNavbar /> : <Navbar />}
       <div className="about-us-container">
       <div className="about-us-content">
         <div className="about-us-text">
