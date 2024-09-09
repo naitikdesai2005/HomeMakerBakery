@@ -3,11 +3,10 @@ import "./Contact.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { StoreContext } from "../context/StoreContext";
+import UserNavbar from "../../HomeUser/UserNavbar/UserNavbar";
 
 function ContactForm() {
-  const {
-    isAuthenticated,
-  }=useContext(StoreContext);
+  const { isAuthenticated } = useContext(StoreContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -30,7 +29,7 @@ function ContactForm() {
 
   return (
     <>
-       {isAuthenticated ? <UserNavbar /> : <Navbar />}
+      {isAuthenticated ? <UserNavbar /> : <Navbar />}
       <div className="contact-form-container">
         <form className="contact-form" onSubmit={handleSubmit}>
           <div className="cform-group">

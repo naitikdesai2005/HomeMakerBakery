@@ -16,25 +16,25 @@ export const StoreContextProvider = (props) => {
     } else {
       setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     }
-    if (token) {
-      await axios.post(
-        url + "/api/cart/addcart",
-        { itemId },
-        { headers: { token } }
-      );
-    }
+    // if (token) {
+    //   await axios.post(
+    //     url + "/api/cart/addcart",
+    //     { itemId },
+    //     { headers: { token } }
+    //   );
+    // }
   };
 
   const removeFromCart = async (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
 
-    if (token) {
-      await axios.post(
-        url + "/api/cart/removeCart",
-        { itemId },
-        { headers: { token } }
-      );
-    }
+    // if (token) {
+    //   await axios.post(
+    //     url + "/api/cart/removeCart",
+    //     { itemId },
+    //     { headers: { token } }
+    //   );
+    // }
   };
 
   const deleteFromCart = (itemId) => {
@@ -53,18 +53,20 @@ export const StoreContextProvider = (props) => {
   };
 
   const fetchFoodList = async () => {
-    const response = await axios.get(url + "/api/product/bakerProduct");
+    const response = await axios.get(
+      `http://localhost:3000/api/product/bakerProduct`
+    );
     setFoodList(response.data.data);
   };
 
-  const loadCartData = async (token) => {
-    const response = await axios.post(
-      url + "/api/cart/getcart",
-      {},
-      { headers: { token } }
-    );
-    setCartItems(response.data.cartData);
-  };
+  // const loadCartData = async (token) => {
+  //   const response = await axios.post(
+  //     url + "/api/cart/getcart",
+  //     {},
+  //     { headers: { token } }
+  //   );
+  //   setCartItems(response.data.cartData);
+  // };
 
   const getTotalCartItems = () => {
     let totalItems = 0;
@@ -80,7 +82,7 @@ export const StoreContextProvider = (props) => {
       const storedToken = localStorage.getItem("token");
       if (storedToken) {
         setToken(storedToken);
-        await loadCartData(localStorage.getItem("token"));
+        //await loadCartData(storedToken);
       }
     }
     loadData();

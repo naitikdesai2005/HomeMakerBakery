@@ -11,12 +11,12 @@ import "../Product/Product.css";
 const Cart = ({ id, image }) => {
   const {
     cartItems,
-    food_list,
     removeFromCart,
     addToCart,
     deleteFromCart,
     getTotalCartAmount,
     isAuthenticated,
+    food_list = [],
   } = useContext(StoreContext);
 
   const navigate = useNavigate();
@@ -53,7 +53,6 @@ const Cart = ({ id, image }) => {
                 <div key={index}>
                   <div className="cart-items-title cart-items-item">
                     <img src={url + "/uploads/" + item.image} alt="" />
-                    {/* <img src={item.image} alt="" /> */}
                     <p>{item.name}</p>
                     <p>Rs. {item.price}</p>
                     <div className="quantity-control">
@@ -65,7 +64,7 @@ const Cart = ({ id, image }) => {
                       >
                         ➕
                       </h1>
-                      <p>{cartItems[item._id]}</p>{" "}
+                      <p>{cartItems[item._id]}</p>
                       <h1
                         onClick={() => removeFromCart(item._id)}
                         className="quantity-button"
