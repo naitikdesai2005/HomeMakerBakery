@@ -16,25 +16,25 @@ export const StoreContextProvider = (props) => {
     } else {
       setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     }
-    // if (token) {
-    //   await axios.post(
-    //     url + "/api/cart/addcart",
-    //     { itemId },
-    //     { headers: { token } }
-    //   );
-    // }
+    if (token) {
+      await axios.post(
+        url + "/api/cart/addcart",
+        { itemId },
+        { headers: { token } }
+      );
+    }
   };
 
   const removeFromCart = async (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
 
-    // if (token) {
-    //   await axios.post(
-    //     url + "/api/cart/removeCart",
-    //     { itemId },
-    //     { headers: { token } }
-    //   );
-    // }
+    if (token) {
+      await axios.post(
+        url + "/api/cart/removeCart",
+        { itemId },
+        { headers: { token } }
+      );
+    }
   };
 
   const deleteFromCart = (itemId) => {
