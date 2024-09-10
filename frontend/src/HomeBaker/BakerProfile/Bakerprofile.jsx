@@ -1,9 +1,10 @@
 import React from "react";
+import HeaderBaker from "../HeaderBaker/HeaderBaker.jsx";
 
 const Bakerprofile = () => {
   return (
     <div>
-      <h1>baker profile</h1>
+      <HeaderBaker/>
     </div>
   );
 };
