@@ -173,6 +173,20 @@ const registerBaker = async (req, res) => {
 };
 
 // Get all items
+// const allitem = async (req, res) => {
+//     try {
+//         const items = await productModel.find();
+//         if (items.length > 0) {
+//             res.json({ success: true, data: items });
+//         } else {
+//             res.json({ success: true, message: "No items in inventory" });
+//         }
+//     } catch (error) {
+//         console.log(error);
+//         res.json({ success: false, message: "Something went wrong" });
+//     }
+// };
+
 const allitem = async (req, res) => {
     try {
         const items = await productModel.find();
@@ -186,6 +200,7 @@ const allitem = async (req, res) => {
         res.json({ success: false, message: "Something went wrong" });
     }
 };
+
 
 // Logout user
 const logout=async (req,res)=> {

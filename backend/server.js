@@ -23,8 +23,8 @@ connectDB()
 //api endpoints
 // app.use("/api/food",foodRouter)
 app.use("/uploads",express.static('uploads'))
+// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// app.use("/api/cart",cartRouter)
 app.use("/api/user",userRouter);
 app.use("/api/baker",bakerRouter);
 app.use("/api/product",productRouter);

@@ -35,10 +35,10 @@
 
 // export default ProductDisplay;
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ProductDisplay.css";
-import { StoreContext } from "../context/StoreContext";
 import Product from "../Product/Product";
+import axios from "axios";
 
 const ProductDisplay = ({ category }) => {
   const [products, setProducts] = useState([]);
@@ -49,11 +49,10 @@ const ProductDisplay = ({ category }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`${url}/api/product/bakerProduct`);
-        const data = await response.json();
+        const response = await axios.get(`${url}/api/user/getallitem`);
 
-        if (Array.isArray(data)) {
-          setProducts(data);
+        if (response.data.success && Array.isArray(response.data.data)) {
+          setProducts(response.data.data); 
         } else {
           setProducts([]);
         }
@@ -68,18 +67,6 @@ const ProductDisplay = ({ category }) => {
 
     fetchProducts();
   }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (!products || products.length === 0) {
-    return <div>No products available.</div>;
-  }
 
   return (
     <div className="product-display" id="product-display">
