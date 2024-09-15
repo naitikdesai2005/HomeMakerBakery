@@ -1,0 +1,66 @@
+.admin-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 4%;
+    margin-top: -10px;
+  }
+  
+  .admin-nav img {
+    margin-bottom: -10px;
+    margin-left: -40px;
+  }
+  
+  .admin-nav .profile{
+    margin-right: -30px;
+  }
+  /* HeaderBaker.css */
+  
+  .admin-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: white;
+    position: relative;
+  }
+  
+  .logo {
+    display: block;
+  }
+  
+  .loginbutton1 {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .profile {
+    border-radius: 50%;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dropdown-menu a {
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu a:hover {
+    background-color: #f1f1f1;
+  }
+  
