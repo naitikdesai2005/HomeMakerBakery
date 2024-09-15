@@ -59,14 +59,14 @@ export const StoreContextProvider = (props) => {
     setFoodList(response.data.data);
   };
 
-  // const loadCartData = async (token) => {
-  //   const response = await axios.post(
-  //     url + "/api/cart/getcart",
-  //     {},
-  //     { headers: { token } }
-  //   );
-  //   setCartItems(response.data.cartData);
-  // };
+  const loadCartData = async (token) => {
+    const response = await axios.post(
+      url + "/api/cart/getcart",
+      {},
+      { headers: { token } }
+    );
+    setCartItems(response.data.cartData);
+  };
 
   const getTotalCartItems = () => {
     let totalItems = 0;
@@ -82,7 +82,7 @@ export const StoreContextProvider = (props) => {
       const storedToken = localStorage.getItem("token");
       if (storedToken) {
         setToken(storedToken);
-        //await loadCartData(storedToken);
+        await loadCartData(storedToken);
       }
     }
     loadData();

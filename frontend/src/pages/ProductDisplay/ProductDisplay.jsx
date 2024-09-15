@@ -42,8 +42,6 @@ import axios from "axios";
 
 const ProductDisplay = ({ category }) => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const url = "http://localhost:3000";
 
   useEffect(() => {
@@ -52,11 +50,10 @@ const ProductDisplay = ({ category }) => {
         const response = await axios.get(`${url}/api/user/getallitem`);
 
         if (response.data.success && Array.isArray(response.data.data)) {
-          setProducts(response.data.data); 
+          setProducts(response.data.data);
         } else {
           setProducts([]);
         }
-
         setLoading(false);
       } catch (error) {
         console.error("Error fetching products data:", error);
