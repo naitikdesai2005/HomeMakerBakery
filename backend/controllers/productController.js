@@ -124,14 +124,14 @@ const deleteItem = async (req, res) => {
     // Check if the baker is the owner of the item
     if (item.bakerid.toString() === bakerData._id.toString()) {
       // Check if the product is part of any active orders
-      const activeOrders = await bakerModel.find({
-        'orders.items.productId': productId,
-        'orders.status': { $in: ['Pending', 'Processing'] }
-      });
+      // const activeOrders = await bakerModel.find({
+      //   'orders.items.productId': productId,
+      //   'orders.status': { $in: ['Pending', 'Processing'] }
+      // });
 
-      if (activeOrders.length > 0) {
-        return res.json({ success: false, message: "Product cannot be deleted, it is part of an active order" });
-      }
+      // if (activeOrders.length > 0) {
+      //   return res.json({ success: false, message: "Product cannot be deleted, it is part of an active order" });
+      // }
 
       // Delete the product image from the uploads folder
       fs.unlink(`uploads/${item.image}`, (err) => {
