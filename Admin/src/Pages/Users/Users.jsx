@@ -1,7 +1,7 @@
 import React from 'react'
 import AdminNavbar from '../AdminNavbar/AdminNavbar'
 
-const Order = () => {
+const Users = () => {
   return (
     <div>
       <AdminNavbar/>
@@ -9,4 +9,4 @@ const Order = () => {
   )
 }
 
-export default Order
+export default Users

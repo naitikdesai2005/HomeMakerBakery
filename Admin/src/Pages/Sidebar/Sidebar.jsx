@@ -28,9 +28,9 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/products" activeClassName="active">
+            <NavLink to="/users" activeClassName="active">
               <FaBox className="icon" />
-              <span>Products</span>
+              <span>Users</span>
             </NavLink>
           </li>
           <li>

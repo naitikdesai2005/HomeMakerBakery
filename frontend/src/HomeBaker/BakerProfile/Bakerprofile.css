@@ -1,0 +1,84 @@
+.baker-profile-container {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-pic img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 4px solid #f0f0f0;
+}
+
+.profile-details {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.profile-details h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.profile-details p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.edit-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-container label {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.edit-container input, .edit-container textarea {
+  margin-top: 5px;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.edit-container textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.edit-button, .save-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover, .save-button:hover {
+  background-color: #218838;
+}
+
+.profile-details button {
+  margin-top: 15px;
+}
+
+.save-button {
+  align-self: flex-start;
+}
