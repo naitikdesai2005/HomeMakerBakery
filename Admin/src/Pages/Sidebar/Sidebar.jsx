@@ -10,32 +10,32 @@ const Sidebar = () => {
       <nav>
         <ul>
           <li>
-            <NavLink to="/" activeClassName="active">
-              <FaHome className="icon" />
+            <NavLink to="/dashboard" activeClassName="active">
+              <FaHome className="icon1" />
               <span>Dashboard</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/order" activeClassName="active">
-              <FaClipboardList className="icon" />
+              <FaClipboardList className="icon1" />
               <span>Orders</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/bakers" activeClassName="active">
-              <FaUserFriends className="icon" />
+              <FaUserFriends className="icon1" />
               <span>Bakers</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/users" activeClassName="active">
-              <FaBox className="icon" />
+              <FaBox className="icon1" />
               <span>Users</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/analytics" activeClassName="active">
-              <FaChartBar className="icon" />
+              <FaChartBar className="icon1" />
               <span>Analytics</span>
             </NavLink>
           </li>
