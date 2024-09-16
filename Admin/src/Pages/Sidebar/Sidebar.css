@@ -26,7 +26,7 @@
     transition: background-color 0.3s ease;
   }
   
-  .sidebar nav ul li a .icon {
+  .sidebar nav ul li a .icon1 {
     font-size: 20px;
     margin-right: 10px;
   }
@@ -37,11 +37,14 @@
     font-weight: bold;
   }
   
-  .sidebar nav ul li a.active .icon {
+  .sidebar nav ul li a.active .icon1 {
     color: #ffffff;
   }
   
   .sidebar nav ul li a:hover {
     background-color: #f9b352;
   }
-  
+  .icon1{
+    height: 12%;
+    width: 12%;
+  }

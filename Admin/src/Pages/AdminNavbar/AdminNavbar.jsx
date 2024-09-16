@@ -36,7 +36,7 @@ const AdminNavbar = () => {
       </button>
       {dropdownVisible && (
         <div className="dropdown-menu">
-          <Link to="/adminProfile">
+          <Link to="/adminprofile">
             Profile
           </Link>
           <a onClick={handleLogout} className="dropdown-item">
