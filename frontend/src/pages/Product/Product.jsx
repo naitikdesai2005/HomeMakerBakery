@@ -33,7 +33,7 @@ const Product = ({ id, name, description, price, image }) => {
           <p>{name}</p>
         </div>
         <p className="product-item-desc">{description}</p>
-        <p className="product-item-price">${price}</p>
+        <p className="product-item-price">Rs.{price}</p>
       </div>
     </div>
   );

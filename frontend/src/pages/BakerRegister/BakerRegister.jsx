@@ -8,11 +8,11 @@ import {
   FaPhone,
   FaHome,
   FaCreditCard,
+  FaLink, // Added icon for Facebook/Instagram link
 } from "react-icons/fa";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar.jsx";
 import { useNavigate } from "react-router-dom";
-import Container from "postcss/lib/container";
 import { toast } from "react-toastify";
 
 function BakerRegister() {
@@ -23,15 +23,9 @@ function BakerRegister() {
   const [mobilenumber, setPhone] = useState("");
   const [bakeryaddress, setAddress] = useState("");
   const [bankAccNumber, setBankAccNumber] = useState("");
+  const [gender, setGender] = useState("");
+  const [bakerlink, setBakerLink] = useState(""); // Added state for bakerlink
   const navigate = useNavigate();
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log("Register SuccessFull! ", {
-  //     email,
-  //     password,
-  //   });
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,6 +38,8 @@ function BakerRegister() {
     setBakeryName("");
     setBankAccNumber("");
     setPhone("");
+    setGender("");
+    setBakerLink(""); // Clear bakerlink
 
     if (!email) {
       alert("Please enter your email.");
@@ -78,6 +74,10 @@ function BakerRegister() {
       alert("Please enter your Account Details.");
       valid = false;
     }
+    if (!gender) {
+      alert("Please select your gender.");
+      valid = false;
+    }
 
     if (!valid) return;
 
@@ -92,19 +92,21 @@ function BakerRegister() {
           mobilenumber,
           bakeryaddress,
           bankAccNumber,
+          bakerlink,
+          gender,
         }
       );
       if (response.data.success) {
-        toast.success("Register Succesfully");
+        toast.success("Register Successfully");
         console.log("Registration Successful!", response.data);
         localStorage.setItem("token", response.data.token);
         navigate("/login");
         console.log("baker");
       } else {
-        alert("Login failed: " + response.data.message);
+        alert("Registration failed: " + response.data.message);
       }
     } catch (error) {
-      console.error("An error occurred during login:", error);
+      console.error("An error occurred during registration:", error);
     }
   };
 
@@ -140,6 +142,41 @@ function BakerRegister() {
                     onChange={(e) => setBakeryName(e.target.value)}
                     required
                   />
+                </div>
+                <div className="register-form-group-full">
+                  <label>Gender</label>
+                  <div className="gender-options">
+                    <label>
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="Male"
+                        checked={gender === "Male"}
+                        onChange={(e) => setGender(e.target.value)}
+                      />{" "}
+                      Male
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="Female"
+                        checked={gender === "Female"}
+                        onChange={(e) => setGender(e.target.value)}
+                      />{" "}
+                      Female
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="Other"
+                        checked={gender === "Other"}
+                        onChange={(e) => setGender(e.target.value)}
+                      />{" "}
+                      Other
+                    </label>
+                  </div>
                 </div>
                 <div className="register-form-group">
                   <label>
@@ -180,6 +217,16 @@ function BakerRegister() {
                     value={bakeryaddress}
                     onChange={(e) => setAddress(e.target.value)}
                     required
+                  />
+                </div>
+                <div className="register-form-group-full">
+                  <label>
+                    <FaLink className="icon" /> Facebook / Instagram link - not required
+                  </label>
+                  <input
+                    type="text"
+                    value={bakerlink}
+                    onChange={(e) => setBakerLink(e.target.value)}
                   />
                 </div>
                 <div className="register-form-group-full">

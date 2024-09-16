@@ -123,6 +123,7 @@ function Signup() {
                   type="checkbox"
                   checked={termsAccepted}
                   onChange={(e) => setTermsAccepted(e.target.checked)}
+                  required
                 />
                 <label>I agree to the Terms and Conditions</label>
               </div>
