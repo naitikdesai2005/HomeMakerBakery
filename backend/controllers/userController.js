@@ -218,7 +218,11 @@ const search=async(req,res)=>{
   try {
     let bakeryName=req.body.bakeryName;
     let items= await productModel.find({bakeryName:bakeryName});
-    res.json({success:true,data:items});
+    if (items.length > 0) {
+        res.json({ success: true, data: items });
+    } else {
+        res.json({ success: true, message: "No items in inventory" });
+    }
 } catch (error) {
     console.log(error);
     res.json({ success: false, message: "Something went wrong" });
