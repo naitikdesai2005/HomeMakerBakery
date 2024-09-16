@@ -147,12 +147,10 @@ const deleteItem = async (req, res) => {
       // Remove product from the product collection
       await productModel.findByIdAndDelete(productId);
 
-      // Find users with the product in their cart and update
-      const users = await userModel.find({ [`cartData.${productId}`]: { $exists: true } });
-      for (const user of users) {
-        delete user.cartData[productId];
-        await user.save();
-      }
+      await userModel.updateMany(
+        { [`cartData.${productId}`]: { $exists: true } }, // Find all users with this product in their cart
+        { $unset: { [`cartData.${productId}`]: "" } }      // Remove the product from their cart
+      );
 
       return res.json({ success: true, message: "Item deleted successfully from baker and all carts" });
     } else {
