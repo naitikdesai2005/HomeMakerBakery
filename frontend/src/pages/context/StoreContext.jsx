@@ -53,7 +53,7 @@ export const StoreContextProvider = (props) => {
     return totalAmount;
   };
   const fetchFoodList = async () => {
-    const response = await axios.get(url + "/api/product/bakerProduct");
+    const response = await axios.get(url + "/api/user/getallitem");
     setFoodList(response.data.data);
   };
 
