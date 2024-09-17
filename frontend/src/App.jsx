@@ -22,6 +22,7 @@ import Payment from "./pages/Payment/Payment.jsx";
 import UserOrder from "./HomeUser/UserOrders/UserOrder.jsx";
 import Verify from "./pages/Verify/Verify.jsx";
 import Bakerprofile from "../../frontend/src/HomeBaker/BakerProfile/Bakerprofile.jsx";
+import MyOrders from "./HomeUser/Myorder/Myorder.jsx";
 
 function App() {
   const url = "http://localhost:3000";
@@ -63,6 +64,7 @@ function App() {
         <Route path="/userOrder" element={<UserOrder />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/bakerprofile" element={<Bakerprofile />} />
+        <Route path="/myorders" element={<MyOrders />} />
       </Routes>
     </>
   );

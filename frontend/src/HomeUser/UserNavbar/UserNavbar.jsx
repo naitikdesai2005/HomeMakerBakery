@@ -81,7 +81,7 @@ const UserNavbar = () => {
                 <Link to="/profile" className="dropdown-item">
                   Profile
                 </Link>
-                <Link to="/userOrder" className="dropdown-item">
+                <Link to="/myorders" className="dropdown-item">
                   Orders
                 </Link>
                 <a onClick={handleLogout} className="dropdown-item">
