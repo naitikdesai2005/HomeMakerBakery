@@ -12,6 +12,9 @@ const Bakerprofile = () => {
     address: "123 Baker Street, Food Town",
     password: "password123",
     profilePic: "https://via.placeholder.com/150",
+    gender: "Male",
+    facebookInstagramLink: "",
+    bankAccountNumber: "",
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -31,13 +34,35 @@ const Bakerprofile = () => {
     setIsEditing(false);
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUpdatedDetails({ ...updatedDetails, profilePic: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <>
       <HeaderBaker />
       <div className="baker-profile-container">
         <div className="profile-pic">
-          <img src="../../../../images/1.jpg" alt="Profile" />
-          {/* <img src={bakerDetails.profilePic} alt="Profile" /> */}
+          <img src={updatedDetails.profilePic} alt="Profile" />
+          {isEditing && (
+            <>
+              <input
+                type="file"
+                id="profilePicUpload"
+                onChange={handleFileChange}
+              />
+              <label htmlFor="profilePicUpload" className="upload-button">
+                Upload New Picture
+              </label>
+            </>
+          )}
         </div>
 
         <div className="profile-details">
@@ -91,6 +116,20 @@ const Bakerprofile = () => {
                 value={updatedDetails.bio}
                 onChange={handleInputChange}
               />
+              <label>Facebook / Instagram Link (Optional):</label>
+              <input
+                type="text"
+                name="facebookInstagramLink"
+                value={updatedDetails.facebookInstagramLink}
+                onChange={handleInputChange}
+              />
+              <label>Bank Account Number:</label>
+              <input
+                type="text"
+                name="bankAccountNumber"
+                value={updatedDetails.bankAccountNumber}
+                onChange={handleInputChange}
+              />
               <button onClick={handleSave} className="save-button">
                 Save
               </button>
@@ -102,6 +141,15 @@ const Bakerprofile = () => {
               <p>Phone: {bakerDetails.phone}</p>
               <p>Bakery: {bakerDetails.bakeryName}</p>
               <p>Address: {bakerDetails.address}</p>
+              <p>Gender: {bakerDetails.gender}</p>
+              <p>
+                Facebook / Instagram Link:{" "}
+                {bakerDetails.facebookInstagramLink || "Not Provided"}
+              </p>
+              <p>
+                Bank Account Number:{" "}
+                {bakerDetails.bankAccountNumber || "Not Provided"}
+              </p>
               <p>{bakerDetails.bio}</p>
               <button onClick={handleEditToggle} className="edit-button">
                 Edit Profile

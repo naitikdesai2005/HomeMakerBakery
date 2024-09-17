@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import Navbar from "./Navbar/Navbar.jsx";
 import Menu from "./menu/Menu.jsx";
 import Footer from "./Footer/Footer.jsx";
@@ -9,28 +9,24 @@ import UserNavbar from "../HomeUser/UserNavbar/UserNavbar.jsx";
 
 function Homepage() {
   const [category, setCategory] = useState("All");
-  const {
-    isAuthenticated,
-  } = useContext(StoreContext);
+  const { isAuthenticated } = useContext(StoreContext);
   return (
     <div>
-       {isAuthenticated ? <UserNavbar /> : <Navbar />}
+      {isAuthenticated ? <UserNavbar /> : <Navbar />}
       <div className="mainpage" id="home">
         <div className="mainpage-content">
-          <h1>Delicious</h1>
+          <h2>Baked With Love</h2>
           <br />
           <br />
-          <h1>&nbsp;&nbsp;Bakery</h1>
-          <h1>&nbsp;Shop!</h1>
+          <h2>Delivered With Care!</h2>
           <br />
           <h5>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate
-            impedit nihil totam error laborum! Modi dolore necessitatibus veniam
-            maxime distinctio!
+            Indulge in the sweetness of home-baked goodness, crafted with love
+            and passion by talented home bakers. Each treat is made to
+            perfection, just for you, bringing warmth and joy to every bite.
+            Discover the magic of homemade flavors delivered right to your
+            doorstep!
           </h5>
-          <a href="#menu">
-            <button className="know-button">Know more</button>
-          </a>
         </div>
         <img src="/images/home.jpg" alt="background" />
       </div>

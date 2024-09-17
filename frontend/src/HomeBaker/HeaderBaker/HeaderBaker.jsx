@@ -20,7 +20,7 @@ const HeaderBaker = () => {
     <div className="baker-nav">
       <img
         className="logo"
-        src={("../../../images/1.jpg")}  // Fix image path
+        src={"../../../images/Logo.png"} // Fix image path
         alt="Logo"
         height={"80px"}
         width={"250px"}
@@ -36,9 +36,7 @@ const HeaderBaker = () => {
       </button>
       {dropdownVisible && (
         <div className="dropdown-menu">
-          <Link to="/bakerprofile">
-            Profile
-          </Link>
+          <Link to="/bakerprofile">Profile</Link>
           <a onClick={handleLogout} className="dropdown-item">
             Logout
           </a>

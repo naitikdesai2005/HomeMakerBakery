@@ -77,6 +77,7 @@ const AddItems = () => {
           <div className="add-img-upload flex-col">
             <p>Upload Image</p>
             <br />
+            <br />
             <label htmlFor="image">
               <img
                 src={image ? URL.createObjectURL(image) : assets.upload_image}
@@ -85,6 +86,7 @@ const AddItems = () => {
                 width={"100px"}
               />
             </label>
+            <br />
             <input
               onChange={(e) => setImage(e.target.files[0])}
               type="file"

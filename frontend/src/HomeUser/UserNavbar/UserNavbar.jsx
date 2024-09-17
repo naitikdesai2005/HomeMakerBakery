@@ -25,7 +25,7 @@ const UserNavbar = () => {
       <nav className="navbar">
         <div className="navbar-logo">
           <Link to="/">
-            <img src="../../images/1.jpg" alt="" />
+            <img src="../../images/Logo.png" alt="" />
           </Link>
         </div>
         <div className="navbar-search">
