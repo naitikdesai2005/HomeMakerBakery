@@ -134,7 +134,7 @@ const registerAdmin = async (req, res) => {
 
 // Register baker
 const registerBaker = async (req, res) => {
-    const { name, password, email, bakeryname, bakeryaddress, bankAccNumber, mobilenumber } = req.body;
+    const { name, password, email, bakeryname, bakeryaddress, gender,bankAccNumber, mobilenumber } = req.body;
     try {
         const exists = await bakerModel.findOne({ email });
         if (exists) {
@@ -156,6 +156,7 @@ const registerBaker = async (req, res) => {
             name: name,
             email: email,
             password: hashedPassword,
+            gender:gender,
             bakeryname: bakeryname,
             bakeryaddress: bakeryaddress,
             bankAccNumber: bankAccNumber,
@@ -230,4 +231,45 @@ const search=async(req,res)=>{
 }
 
 
-export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout ,search};
+const bakerProfile = async (req, res) => {
+    try {
+        const { userId } = req.body;
+        const bakerData = await bakerModel.findById(userId);
+
+        if (!bakerData) {
+            return res.status(404).json({ success: false, message: "Baker data not found." });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: {
+                email: bakerData.email,
+                mobilenumber: bakerData.mobilenumber,
+                bakeryName: bakerData.bakeryname,
+                bakeryaddress: bakerData.bakeryaddress,
+                gender: bakerData.gender,
+                bankAccNumber: bakerData.bankAccNumber,
+            }
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: "Something went wrong" });
+    }
+}
+
+
+const updateBakerProfile=async (req,res)=>{
+   try {
+       const { userId } = req.body;
+       const bakerData = await bakerModel.findById(userId);
+
+       let profileImage = `${req.file.filename}`;
+
+
+   } catch (error) {
+    
+   }
+}
+
+export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout ,search,bakerProfile,updateBakerProfile};
