@@ -68,68 +68,87 @@ const Bakerprofile = () => {
         <div className="profile-details">
           {isEditing ? (
             <div className="edit-container">
-              <label>Name:</label>
-              <input
-                type="text"
-                name="name"
-                value={updatedDetails.name}
-                onChange={handleInputChange}
-              />
-              <label>Email:</label>
-              <input
-                type="email"
-                name="email"
-                value={updatedDetails.email}
-                onChange={handleInputChange}
-              />
-              <label>Phone:</label>
-              <input
-                type="text"
-                name="phone"
-                value={updatedDetails.phone}
-                onChange={handleInputChange}
-              />
-              <label>Bakery Name:</label>
-              <input
-                type="text"
-                name="bakeryName"
-                value={updatedDetails.bakeryName}
-                onChange={handleInputChange}
-              />
-              <label>Address:</label>
-              <input
-                type="text"
-                name="address"
-                value={updatedDetails.address}
-                onChange={handleInputChange}
-              />
-              <label>Password:</label>
-              <input
-                type="password"
-                name="password"
-                value={updatedDetails.password}
-                onChange={handleInputChange}
-              />
-              <label>Bio:</label>
-              <textarea
-                name="bio"
-                value={updatedDetails.bio}
-                onChange={handleInputChange}
-              />
-              <label>Facebook / Instagram Link (Optional):</label>
-              <input
-                type="text"
-                name="facebookInstagramLink"
-                value={updatedDetails.facebookInstagramLink}
-                onChange={handleInputChange}
-              />
-              <label>Bank Account Number:</label>
-              <input
-                type="text"
-                name="bankAccountNumber"
-                value={updatedDetails.bankAccountNumber}
-                onChange={handleInputChange}
-              />
+              <div className="input-group">
+                <label>Name:</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={updatedDetails.name}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="input-group">
+                <label>Email:</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={updatedDetails.email}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="input-group">
+                <label>Phone:</label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={updatedDetails.phone}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="input-group">
+                <label>Bakery Name:</label>
+                <input
+                  type="text"
+                  name="bakeryName"
+                  value={updatedDetails.bakeryName}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="input-group">
+                <label>Address:</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={updatedDetails.address}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="input-group">
+                <label>Password:</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={updatedDetails.password}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="input-group">
+                <label>Bio:</label>
+                <textarea
+                  name="bio"
+                  value={updatedDetails.bio}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="input-group">
+                <label>Facebook / Instagram Link (Optional):</label>
+                <input
+                  type="text"
+                  name="facebookInstagramLink"
+                  value={updatedDetails.facebookInstagramLink}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="input-group">
+                <label>Bank Account Number:</label>
+                <input
+                  type="text"
+                  name="bankAccountNumber"
+                  value={updatedDetails.bankAccountNumber}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <br />
               <button onClick={handleSave} className="save-button">
                 Save
               </button>
