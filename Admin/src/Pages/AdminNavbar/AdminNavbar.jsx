@@ -20,7 +20,7 @@ const AdminNavbar = () => {
     <div className="admin-nav">
       <img
         className="logo"
-        src={("../../../../Image/1.jpg")}  // Fix image path
+        src={("../../../../Image/Logo.png")} 
         alt="Logo"
         height={"80px"}
         width={"250px"}
