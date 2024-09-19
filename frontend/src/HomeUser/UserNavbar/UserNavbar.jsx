@@ -7,18 +7,18 @@ import { StoreContext } from "../../pages/context/StoreContext";
 const UserNavbar = () => {
   const [menu, setMenu] = useState("home");
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const { getTotalCartItems } = useContext(StoreContext);
+  const { getTotalCartItems, logout } = useContext(StoreContext);
   const cartItemCount = getTotalCartItems();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("token");
+  //   navigate("/");
+  // };
 
   return (
     <div>
@@ -84,7 +84,7 @@ const UserNavbar = () => {
                 <Link to="/myorders" className="dropdown-item">
                   Orders
                 </Link>
-                <a onClick={handleLogout} className="dropdown-item">
+                <a onClick={logout} className="dropdown-item">
                   Logout
                 </a>
               </div>

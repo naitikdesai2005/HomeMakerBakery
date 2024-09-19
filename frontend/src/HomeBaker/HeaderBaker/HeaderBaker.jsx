@@ -1,20 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./HeaderBaker.css";
 import { assets } from "../../../images/assets";
+import { StoreContext } from "../../pages/context/StoreContext";
 
 const HeaderBaker = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const navigate = useNavigate();
+  const { logout } = useContext(StoreContext);
+  // const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("token");
+  //   navigate("/");
+  // };
 
   return (
     <div className="baker-nav">
@@ -37,7 +39,7 @@ const HeaderBaker = () => {
       {dropdownVisible && (
         <div className="dropdown-menu">
           <Link to="/bakerprofile">Profile</Link>
-          <a onClick={handleLogout} className="dropdown-item">
+          <a onClick={logout} className="dropdown-item">
             Logout
           </a>
         </div>

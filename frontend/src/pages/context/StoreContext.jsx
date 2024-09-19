@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 export const StoreContext = createContext(null);
+import { useNavigate } from "react-router-dom";
 
 export const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
@@ -8,6 +9,7 @@ export const StoreContextProvider = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [food_list, setFoodList] = useState([]);
   const [token, setToken] = useState();
+  const navigate = useNavigate();
 
   const addToCart = async (itemId) => {
     if (!cartItems[itemId]) {
@@ -69,12 +71,11 @@ export const StoreContextProvider = (props) => {
   useEffect(() => {
     async function loadData() {
       await fetchFoodList();
-      if (localStorage.getItem("token")) {
-        setToken(localStorage.getItem("token"));
-        await loadCartData({ token: localStorage.getItem("token") });
-      }
-      if (token) {
+      const storedToken = localStorage.getItem("token");
+      if (storedToken) {
+        setToken(storedToken);
         setIsAuthenticated(true);
+        await loadCartData({ token: storedToken });
       }
     }
     loadData();
@@ -90,7 +91,9 @@ export const StoreContextProvider = (props) => {
 
   const logout = () => {
     localStorage.removeItem("token");
-    setIsAuthenticated(false);
+    setIsAuthenticated(false); 
+    navigate("/");
+    setToken(null);
   };
 
   const contextValue = {
