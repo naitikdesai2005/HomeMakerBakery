@@ -10,6 +10,7 @@ const bakerSchema = new mongoose.Schema({
     gender:{type:String,required:true},
     image:{type:String},
     link:{type:String},
+    bio:{type:String},
     role:{type:String,default:"baker"},
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'product' }],
     select:{type:Boolean,default:true},

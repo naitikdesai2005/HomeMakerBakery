@@ -248,6 +248,7 @@ const bakerProfile = async (req, res) => {
                 bakeryName: bakerData.bakeryname,
                 bakeryaddress: bakerData.bakeryaddress,
                 gender: bakerData.gender,
+                bio:bakerData.bio,
                 bankAccNumber: bakerData.bankAccNumber,
             }
         });
@@ -259,17 +260,34 @@ const bakerProfile = async (req, res) => {
 }
 
 
-const updateBakerProfile=async (req,res)=>{
-   try {
-       const { userId } = req.body;
-       const bakerData = await bakerModel.findById(userId);
+const updateBakerProfile = async (req, res) => {
+    try {
+        const { userId, name, password, email, bakeryname, bakeryaddress, gender, bankAccNumber, mobilenumber, bio, link } = req.body;
 
-       let profileImage = `${req.file.filename}`;
+        // Handle file upload (check if file exists)
+        let profileImage = req.file ? `${req.file.filename}` : undefined;
+ 
+        const updateData = await bakerModel.findByIdAndUpdate(userId, {
+            name,
+            password,
+            email,
+            bakeryname,
+            bakeryaddress,
+            gender,
+            bankAccNumber,
+            mobilenumber,
+            bio,
+            link,
+            ...(profileImage && { image: profileImage }) // Only update image if it's provided
+        }, { new: true });
 
+        await updateData.save();
 
-   } catch (error) {
-    
-   }
-}
+        return res.json({ success: true, message: "Profile updated successfully" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: "Something went wrong" });
+    }
+};
 
 export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout ,search,bakerProfile,updateBakerProfile};
