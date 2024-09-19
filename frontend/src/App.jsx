@@ -8,7 +8,6 @@ import BakerRegister from "./pages/BakerRegister/BakerRegister.jsx";
 import Cart from "./pages/Cart/Cart.jsx";
 import HomeUser from "../../frontend/src/HomeUser/HomeUser.jsx";
 import HomeBaker from "../../frontend/src/HomeBaker/HomeBaker.jsx";
-import HomeAdmin from "../../frontend/src/HomeAdmin/HomeAdmin.jsx";
 import PlaceOrder from "./pages/Order/Order.jsx";
 import ContactForm from "./pages/Contact/Contact.jsx";
 import Aboutus from "./pages/Aboutus/Aboutus.jsx";
@@ -50,7 +49,7 @@ function App() {
             )
           }
         />
-        <Route path="/homeadmin" element={<HomeAdmin />} />
+        
         <Route path="/order" element={<PlaceOrder />} />
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/aboutus" element={<Aboutus />} />

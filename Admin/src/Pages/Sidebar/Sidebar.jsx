@@ -1,4 +1,3 @@
-// Sidebar.js
 import React from "react";
 import "./Sidebar.css";
 import { NavLink } from "react-router-dom";

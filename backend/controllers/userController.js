@@ -134,7 +134,7 @@ const registerAdmin = async (req, res) => {
 
 // Register baker
 const registerBaker = async (req, res) => {
-    const { name, password, email, bakeryname, bakeryaddress, gender,bankAccNumber, mobilenumber } = req.body;
+    const { name, password, email, bakeryname, bakeryaddress, gender, bankAccNumber, mobilenumber } = req.body;
     try {
         const exists = await bakerModel.findOne({ email });
         if (exists) {
@@ -156,7 +156,7 @@ const registerBaker = async (req, res) => {
             name: name,
             email: email,
             password: hashedPassword,
-            gender:gender,
+            gender: gender,
             bakeryname: bakeryname,
             bakeryaddress: bakeryaddress,
             bankAccNumber: bankAccNumber,
@@ -204,10 +204,10 @@ const allitem = async (req, res) => {
 
 
 // Logout user
-const logout=async (req,res)=> {
+const logout = async (req, res) => {
     try {
         // Remove the token from local storage
-        res.json({success:true,message:"Logout Successfuly"})
+        res.json({ success: true, message: "Logout Successfuly" })
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: "Something went wrong" });
@@ -215,19 +215,19 @@ const logout=async (req,res)=> {
 }
 
 //search bakery
-const search=async(req,res)=>{
-  try {
-    let bakeryName=req.body.bakeryName;
-    let items= await productModel.find({bakeryName:bakeryName});
-    if (items.length > 0) {
-        res.json({ success: true, data: items });
-    } else {
-        res.json({ success: true, message: "No items in inventory" });
+const search = async (req, res) => {
+    try {
+        let bakeryName = req.body.bakeryName;
+        let items = await productModel.find({ bakeryName: bakeryName });
+        if (items.length > 0) {
+            res.json({ success: true, data: items });
+        } else {
+            res.json({ success: true, message: "No items in inventory" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Something went wrong" });
     }
-} catch (error) {
-    console.log(error);
-    res.json({ success: false, message: "Something went wrong" });
-}
 }
 
 
@@ -248,7 +248,7 @@ const bakerProfile = async (req, res) => {
                 bakeryName: bakerData.bakeryname,
                 bakeryaddress: bakerData.bakeryaddress,
                 gender: bakerData.gender,
-                bio:bakerData.bio,
+                bio: bakerData.bio,
                 bankAccNumber: bakerData.bankAccNumber,
             }
         });
@@ -266,7 +266,7 @@ const updateBakerProfile = async (req, res) => {
 
         // Handle file upload (check if file exists)
         let profileImage = req.file ? `${req.file.filename}` : undefined;
- 
+
         const updateData = await bakerModel.findByIdAndUpdate(userId, {
             name,
             password,
@@ -278,7 +278,7 @@ const updateBakerProfile = async (req, res) => {
             mobilenumber,
             bio,
             link,
-            ...(profileImage && { image: profileImage }) // Only update image if it's provided
+            ...(profileImage && { image: profileImage })
         }, { new: true });
 
         await updateData.save();
@@ -290,4 +290,4 @@ const updateBakerProfile = async (req, res) => {
     }
 };
 
-export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout ,search,bakerProfile,updateBakerProfile};
+export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout, search, bakerProfile, updateBakerProfile };

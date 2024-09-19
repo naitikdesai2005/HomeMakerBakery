@@ -118,7 +118,7 @@ function Signup() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <div className="form-group terms">
+              {/* <div className="form-group terms">
                 <input
                   type="checkbox"
                   checked={termsAccepted}
@@ -126,7 +126,7 @@ function Signup() {
                   required
                 />
                 <label>I agree to the Terms and Conditions</label>
-              </div>
+              </div> */}
               <button type="submit" className="submit-button">
                 Create Account
               </button>

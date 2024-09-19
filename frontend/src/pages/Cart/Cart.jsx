@@ -47,7 +47,6 @@ const Cart = ({ id, image }) => {
           </div>
           <hr />
           <br />
-          {/* Corrected: Wrapped food_list.map in curly braces */}
           {food_list.map((item, index) => {
             const quantity = cartItems[item._id] || 0;
             if (quantity > 0) {

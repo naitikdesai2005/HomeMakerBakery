@@ -1,45 +1,105 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HeaderBaker from "../HeaderBaker/HeaderBaker.jsx";
+import axios from "axios";
 import "./Bakerprofile.css";
 
 const Bakerprofile = () => {
   const [bakerDetails, setBakerDetails] = useState({
-    name: "John Baker",
-    email: "john@example.com",
-    bio: "Passionate baker specializing in artisan breads and pastries.",
-    phone: "123-456-7890",
-    bakeryName: "John's Artisan Bakery",
-    address: "123 Baker Street, Food Town",
-    password: "password123",
-    profilePic: "https://via.placeholder.com/150",
-    gender: "Male",
-    facebookInstagramLink: "",
-    bankAccountNumber: "",
+    name: "",
+    email: "",
+    bio: "",
+    mobilenumber: "",
+    bakeryname: "",
+    bakeryaddress: "",
+    password: "",
+    profilePic: "",
+    gender: "",
+    link: "",
+    bankAccNumber: "",
   });
 
   const [isEditing, setIsEditing] = useState(false);
   const [updatedDetails, setUpdatedDetails] = useState(bakerDetails);
 
+  // Fetching the baker profile
+  useEffect(() => {
+    const fetchBakerProfile = async () => {
+      try {
+        const response = await axios.get("/api/baker/profile", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        if (response.data.success) {
+          const profileData = response.data.data;
+          console.log("Profile data fetched:", profileData); // Debug log
+          setBakerDetails(profileData);
+          setUpdatedDetails(profileData);
+        } else {
+          console.error("Error fetching baker profile: Unsuccessful response");
+        }
+      } catch (error) {
+        console.error("Error fetching baker profile:", error);
+      }
+    };
+
+    fetchBakerProfile();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUpdatedDetails({ ...updatedDetails, [name]: value });
+    console.log(`Updated ${name}:`, value); // Debug log
   };
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
   };
 
-  const handleSave = () => {
-    setBakerDetails(updatedDetails);
-    setIsEditing(false);
+  // Saving the updated profile
+  const handleSave = async () => {
+    const formData = new FormData();
+    formData.append("name", updatedDetails.name);
+    formData.append("email", updatedDetails.email);
+    formData.append("bio", updatedDetails.bio);
+    formData.append("phone", updatedDetails.phone);
+    formData.append("bakeryName", updatedDetails.bakeryName);
+    formData.append("address", updatedDetails.address);
+    formData.append("password", updatedDetails.password);
+    formData.append("gender", updatedDetails.gender);
+    formData.append(
+      "facebookInstagramLink",
+      updatedDetails.facebookInstagramLink
+    );
+    formData.append("bankAccountNumber", updatedDetails.bankAccountNumber);
+
+    if (updatedDetails.profilePic instanceof File) {
+      formData.append("image", updatedDetails.profilePic);
+    }
+
+    try {
+      const response = await axios.post("/api/baker/updateProfile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log("Profile updated successfully", response.data); // Debug log
+      setBakerDetails(updatedDetails);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating baker profile:", error);
+    }
   };
 
+  // Handling file input for profile picture
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setUpdatedDetails({ ...updatedDetails, profilePic: reader.result });
+        console.log("Profile picture updated:", file); // Debug log
+        setUpdatedDetails({ ...updatedDetails, profilePic: file });
       };
       reader.readAsDataURL(file);
     }
@@ -50,7 +110,14 @@ const Bakerprofile = () => {
       <HeaderBaker />
       <div className="baker-profile-container">
         <div className="profile-pic">
-          <img src={updatedDetails.profilePic} alt="Profile" />
+          <img
+            src={
+              updatedDetails.profilePic instanceof File
+                ? URL.createObjectURL(updatedDetails.profilePic)
+                : updatedDetails.profilePic || "https://via.placeholder.com/150"
+            }
+            alt="Profile"
+          />
           {isEditing && (
             <>
               <input
