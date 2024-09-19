@@ -10,7 +10,8 @@
   border-radius: 8px;
   margin-top: 1px;
   margin-left: 20px;
-
+  overflow-x: auto;
+  /* Add horizontal scroll for small screens */
 }
 
 .title {
@@ -27,6 +28,8 @@
   font-size: 1.2rem;
   text-align: left;
   background-color: #f9f9f9;
+  min-width: 600px;
+  /* Ensure minimum width for small screens */
 }
 
 .baker-table th {
@@ -79,4 +82,70 @@
 
 .view-more-btn:hover {
   background-color: #ffffff;
+}
+
+/* Add media queries for responsiveness */
+@media screen and (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .container {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .baker-table {
+    font-size: 1rem;
+  }
+
+  .baker-table th,
+  .baker-table td {
+    padding: 8px;
+  }
+
+  .activate-btn,
+  .deactivate-btn {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .view-more-btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .baker-table {
+    font-size: 0.9rem;
+  }
+
+  .baker-table th,
+  .baker-table td {
+    padding: 6px;
+  }
+
+  .activate-btn,
+  .deactivate-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .view-more-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
 }
