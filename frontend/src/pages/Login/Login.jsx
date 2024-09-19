@@ -23,12 +23,12 @@ function Login() {
     setPasswordError("");
 
     if (!email) {
-      alert("Please enter your email.");
+      setEmailError("Please enter your email.");
       valid = false;
     }
 
     if (!password) {
-      alert("Please enter your password.");
+      setPasswordError("Please enter your password.");
       valid = false;
     }
 
@@ -37,32 +37,28 @@ function Login() {
     try {
       const response = await axios.post(
         "http://localhost:3000/api/user/login",
-        {
-          email,
-          password,
-        }
+        { email, password }
       );
+
       if (response.data.success) {
         console.log("Login Successful!", response.data);
-        console.log("email", email);
         localStorage.setItem("token", response.data.token);
         setIsAuthenticated(true);
-        toast.success("Login Successfully");
+        toast.success("Login Successful");
+
         if (response.data.message === "admin") {
           navigate("/homeadmin");
-          console.log("admin");
         } else if (response.data.message === "user") {
           navigate("/homeuser");
-          console.log("user");
         } else if (response.data.message === "baker") {
           navigate("/homebaker");
-          console.log("baker");
         }
       } else {
-        alert("Login failed: " + response.data.message);
+        toast.error("Login failed: " + response.data.message);
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
+      toast.error("An error occurred. Please try again.");
     }
   };
 

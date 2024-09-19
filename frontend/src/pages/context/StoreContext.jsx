@@ -73,6 +73,9 @@ export const StoreContextProvider = (props) => {
         setToken(localStorage.getItem("token"));
         await loadCartData({ token: localStorage.getItem("token") });
       }
+      if (token) {
+        setIsAuthenticated(true);
+      }
     }
     loadData();
   }, []);
@@ -83,6 +86,11 @@ export const StoreContextProvider = (props) => {
       totalItems += cartItems[item];
     }
     return totalItems;
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
   };
 
   const contextValue = {
@@ -97,6 +105,7 @@ export const StoreContextProvider = (props) => {
     setIsAuthenticated,
     deleteFromCart,
     fetchFoodList,
+    logout,
   };
 
   return (

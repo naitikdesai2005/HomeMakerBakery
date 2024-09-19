@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./HeaderBaker.css";
-import { assets } from "../../../images/assets"; // Assuming assets is correctly defined
+import { assets } from "../../../images/assets";
 
 const HeaderBaker = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -20,7 +20,7 @@ const HeaderBaker = () => {
     <div className="baker-nav">
       <img
         className="logo"
-        src={"../../../images/Logo.png"} // Fix image path
+        src={"../../../images/Logo.png"}
         alt="Logo"
         height={"80px"}
         width={"250px"}
@@ -28,7 +28,7 @@ const HeaderBaker = () => {
       <button className="loginbutton" onClick={toggleDropdown}>
         <img
           className="profile"
-          src={assets.login_icon} // Assuming this path is correct in assets
+          src={assets.login_icon}
           alt="Profile Icon"
           height={"30px"}
           width={"30px"}

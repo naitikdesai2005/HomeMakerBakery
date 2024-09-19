@@ -8,7 +8,7 @@ import {
   FaPhone,
   FaHome,
   FaCreditCard,
-  FaLink, // Added icon for Facebook/Instagram link
+  FaLink,
 } from "react-icons/fa";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar.jsx";
@@ -24,7 +24,7 @@ function BakerRegister() {
   const [bakeryaddress, setAddress] = useState("");
   const [bankAccNumber, setBankAccNumber] = useState("");
   const [gender, setGender] = useState("");
-  const [bakerlink, setBakerLink] = useState(""); // Added state for bakerlink
+  const [bakerlink, setBakerLink] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -39,7 +39,7 @@ function BakerRegister() {
     setBankAccNumber("");
     setPhone("");
     setGender("");
-    setBakerLink(""); // Clear bakerlink
+    setBakerLink("");
 
     if (!email) {
       alert("Please enter your email.");
@@ -221,7 +221,8 @@ function BakerRegister() {
                 </div>
                 <div className="register-form-group-full">
                   <label>
-                    <FaLink className="icon" /> Facebook / Instagram link - not required
+                    <FaLink className="icon" /> Facebook / Instagram link - not
+                    required
                   </label>
                   <input
                     type="text"

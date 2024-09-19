@@ -1,47 +1,49 @@
 .admin-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 4%;
-    margin-top: -10px;
-  }
-  
-  .admin-nav img {
-    margin-bottom: -10px;
-    margin-left: -19px;
-  }
-  
-  .admin-nav .profile{
-    margin-right: -30px;
-  }
-  /* HeaderBaker.css */
-  
-  .admin-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    color: white;
-    position: relative;
-  }
-  
-  .logo {
-    display: block;
-    height: 70px;
-    width: 230px;
-  }
-  
-  .loginbutton1 {
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: relative;
-  }
-  
-  .profile {
-    border-radius: 50%;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 4%;
+  margin-top: -10px;
+}
+
+.admin-nav img {
+  margin-bottom: -10px;
+  margin-left: 6px;
+}
+
+.admin-nav .profile {
+  margin-right: -30px;
+}
+
+.admin-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  color: white;
+  position: relative;
+}
+
+.logo {
+  display: block;
+  height: 70px;
+  width: 230px;
+}
+
+.loginbutton1 {
+  background: none;
+  border: none;
+  cursor: pointer;
+  /* position: relative; */
+  margin-left: 50px;
+  margin-right: 20px;
+}
+
+.profile {
+  border-radius: 50%;
+}
+
+/*   
   .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -65,4 +67,4 @@
   .dropdown-menu a:hover {
     background-color: #f1f1f1;
   }
-  
+   */

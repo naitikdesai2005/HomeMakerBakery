@@ -1,8 +1,14 @@
 // Sidebar.js
-import React from 'react';
-import './Sidebar.css';
-import { NavLink } from 'react-router-dom';
-import { FaHome, FaClipboardList, FaUserFriends, FaBox, FaChartBar } from 'react-icons/fa';
+import React from "react";
+import "./Sidebar.css";
+import { NavLink } from "react-router-dom";
+import {
+  FaHome,
+  FaClipboardList,
+  FaUserFriends,
+  FaBox,
+  FaChartBar,
+} from "react-icons/fa";
 
 const Sidebar = () => {
   return (

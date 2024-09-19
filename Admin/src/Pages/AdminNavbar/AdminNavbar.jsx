@@ -20,30 +20,28 @@ const AdminNavbar = () => {
     <div className="admin-nav">
       <img
         className="logo"
-        src={("../../../../Image/Logo.png")} 
+        src={"../../../../Image/Logo.png"}
         alt="Logo"
         height={"80px"}
         width={"250px"}
       />
-      <button className="loginbutton1" onClick={toggleDropdown}>
+      <Link className="loginbutton1" to="/">
         <img
           className="profile"
-          src={assets.login_icon} // Assuming this path is correct in assets
+          src="../Image/logout.jpeg"
           alt="Profile Icon"
           height={"30px"}
           width={"30px"}
         />
-      </button>
-      {dropdownVisible && (
+      </Link>
+      {/* {dropdownVisible && (
         <div className="dropdown-menu">
-          <Link to="/adminprofile">
-            Profile
-          </Link>
+          <Link to="/adminprofile">Profile</Link>
           <a onClick={handleLogout} className="dropdown-item">
             Logout
           </a>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
