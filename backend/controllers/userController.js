@@ -17,6 +17,7 @@ const loginUser = async (req, res) => {
     try {
         const user = await userModel.findOne({ email });
         const baker = await bakerModel.findOne({ email });
+       
 
         if (!user && !baker) {
             return res.json({ success: false, message: "User or baker not exists" });
@@ -25,7 +26,7 @@ const loginUser = async (req, res) => {
         if (user) {
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                return res.json({ success: false, message: "Invalid Password" });
+                return res.json({ success: false, message: "Invalid Password",data: user });
             }
 
             if (user.role === "admin") {

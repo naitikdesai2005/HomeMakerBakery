@@ -19,9 +19,9 @@ import ListItems from "./HomeBaker/ListItems/ListItems.jsx";
 import Profile from "./HomeUser/Profile/Profile.jsx";
 import Payment from "./pages/Payment/Payment.jsx";
 import UserOrder from "./HomeUser/UserOrders/UserOrder.jsx";
-import Verify from "./pages/Verify/Verify.jsx";
 import Bakerprofile from "../../frontend/src/HomeBaker/BakerProfile/Bakerprofile.jsx";
 import MyOrders from "./HomeUser/Myorder/Myorder.jsx";
+import Allproduct from "./pages/AllProducts/Allproducts.jsx";
 
 function App() {
   const url = "http://localhost:3000";
@@ -49,7 +49,7 @@ function App() {
             )
           }
         />
-        
+
         <Route path="/order" element={<PlaceOrder />} />
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/aboutus" element={<Aboutus />} />
@@ -61,9 +61,9 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/userOrder" element={<UserOrder />} />
-        <Route path="/verify" element={<Verify />} />
         <Route path="/bakerprofile" element={<Bakerprofile />} />
         <Route path="/myorders" element={<MyOrders />} />
+        <Route path="/allproduct" element={<Allproduct />} />
       </Routes>
     </>
   );

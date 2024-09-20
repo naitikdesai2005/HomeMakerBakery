@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 export const StoreContext = createContext(null);
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 export const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState(() => {
@@ -19,7 +20,15 @@ export const StoreContextProvider = (props) => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  const getToken = token;
+
   const addToCart = async (itemId) => {
+    console.log(getToken);
+    const decode = jwtDecode(getToken);
+    const u_id = decode.id;
+    console.log(u_id);
+    console.log(decode);
+
     if (!cartItems[itemId]) {
       setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
     } else {
@@ -28,7 +37,7 @@ export const StoreContextProvider = (props) => {
     if (token) {
       await axios.post(
         url + "/api/cart/addCart",
-        { itemId },
+        { itemId, u_id },
         { headers: { token } }
       );
     }
@@ -36,11 +45,12 @@ export const StoreContextProvider = (props) => {
 
   const removeFromCart = async (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
-
+    const u_id = decode.id;
+    console.log(u_id);
     if (token) {
       await axios.post(
         url + "/api/cart/removeCart",
-        { itemId },
+        { itemId, u_id },
         { headers: { token } }
       );
     }
@@ -108,8 +118,8 @@ export const StoreContextProvider = (props) => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
     navigate("/");
-    setToken(null);
-    setCartItems({});
+    // setToken(null);
+    // setCartItems({});
   };
 
   const contextValue = {
@@ -125,6 +135,7 @@ export const StoreContextProvider = (props) => {
     deleteFromCart,
     fetchFoodList,
     logout,
+    getToken,
   };
 
   return (

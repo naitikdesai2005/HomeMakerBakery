@@ -6,6 +6,7 @@ import { StoreContext } from "../context/StoreContext";
 const Product = ({ id, name, description, price, image }) => {
   const { cartItems, addToCart } = useContext(StoreContext);
   const url = "http://localhost:3000";
+  console.log(id);
 
   return (
     <div className="product-item" id="product">
