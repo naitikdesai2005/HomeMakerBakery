@@ -28,7 +28,10 @@ const HomeUser = () => {
           </div>
           <img src="/images/home.jpg" alt="background" />
         </div>
-        <Menu category={category} setCategory={setCategory} />
+        <Menu category={category} setCategory={setCategory} />\
+        <a className="viewmore" href="/allproduct">
+          view more »»
+        </a>
         <ProductDisplay category={category} />
         <Footer />
       </div>

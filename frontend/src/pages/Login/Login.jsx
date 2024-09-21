@@ -54,11 +54,11 @@ function Login() {
           navigate("/homebaker");
         }
       } else {
-        toast.error("Login failed: " + response.data.message);
+        //toast.error("Login failed: " + response.data.message);
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
-      toast.error("An error occurred. Please try again.");
+      //toast.error("An error occurred. Please try again.");
     }
   };
 

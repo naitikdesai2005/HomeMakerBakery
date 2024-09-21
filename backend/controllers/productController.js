@@ -105,6 +105,63 @@ const listItem = async (req, res) => {
   }
 }
 
+// const deleteItem = async (req, res) => {
+//   try {
+//     const { productId } = req.body;
+
+//     // Fetch the baker data
+//     let bakerData = await bakerModel.findById(req.body.userId);
+//     if (!bakerData) {
+//       return res.json({ success: false, message: "Baker not found" });
+//     }
+
+//     // Fetch the product item data
+//     const item = await productModel.findById(productId);
+//     if (!item) {
+//       return res.json({ success: false, message: "Item not found" });
+//     }
+
+//     // Check if the baker is the owner of the item
+//     if (item.bakerid.toString() === bakerData._id.toString()) {
+//       // Check if the product is part of any active orders
+//       // const activeOrders = await bakerModel.find({
+//       //   'orders.items.productId': productId,
+//       //   'orders.status': { $in: ['Pending', 'Processing'] }
+//       // });
+
+//       // if (activeOrders.length > 0) {
+//       //   return res.json({ success: false, message: "Product cannot be deleted, it is part of an active order" });
+//       // }
+
+//       // Delete the product image from the uploads folder
+//       fs.unlink(`uploads/${item.image}`, (err) => {
+//         if (err) {
+//           console.error("Failed to delete image:", err.message);
+//         }
+//       });
+
+//       // Remove product from baker's product list
+//       bakerData.products = bakerData.products.filter(id => id.toString() !== productId);
+//       await bakerData.save();
+
+//       // Remove product from the product collection
+//       await productModel.findByIdAndDelete(productId);
+
+//       await userModel.updateMany(
+//         { [`cartData.${productId}`]: { $exists: true } }, // Find all users with this product in their cart
+//         { $unset: { [`cartData.${productId}`]: "" } }      // Remove the product from their cart
+//       );
+
+//       return res.json({ success: true, message: "Item deleted successfully from baker and all carts" });
+//     } else {
+//       return res.json({ success: false, message: "Baker is not verified for this item" });
+//     }
+//   } catch (error) {
+//     console.error(error.message);
+//     res.json({ success: false, message: "Error deleting item" });
+//   }
+// }
+
 const deleteItem = async (req, res) => {
   try {
     const { productId } = req.body;
@@ -123,34 +180,25 @@ const deleteItem = async (req, res) => {
 
     // Check if the baker is the owner of the item
     if (item.bakerid.toString() === bakerData._id.toString()) {
-      // Check if the product is part of any active orders
-      // const activeOrders = await bakerModel.find({
-      //   'orders.items.productId': productId,
-      //   'orders.status': { $in: ['Pending', 'Processing'] }
-      // });
-
-      // if (activeOrders.length > 0) {
-      //   return res.json({ success: false, message: "Product cannot be deleted, it is part of an active order" });
-      // }
-
       // Delete the product image from the uploads folder
-      fs.unlink(`uploads/${item.image}`, (err) => {
-        if (err) {
-          console.error("Failed to delete image:", err.message);
-        }
-      });
+      await fs.promises.unlink(`uploads/${item.image}`);
 
       // Remove product from baker's product list
       bakerData.products = bakerData.products.filter(id => id.toString() !== productId);
       await bakerData.save();
 
       // Remove product from the product collection
-      await productModel.findByIdAndDelete(productId);
+      const deletedProduct = await productModel.findByIdAndDelete(productId);
+      if (!deletedProduct) {
+        return res.json({ success: false, message: "Failed to delete product" });
+      }
 
-      await userModel.updateMany(
-        { [`cartData.${productId}`]: { $exists: true } }, // Find all users with this product in their cart
-        { $unset: { [`cartData.${productId}`]: "" } }      // Remove the product from their cart
+      // Remove the product from users' carts
+      const updatedUsers = await userModel.updateMany(
+        { [`cartData.${productId}`]: { $exists: true } },
+        { $unset: { [`cartData.${productId}`]: "" } }
       );
+      console.log('Users updated:', updatedUsers);
 
       return res.json({ success: true, message: "Item deleted successfully from baker and all carts" });
     } else {
@@ -160,6 +208,6 @@ const deleteItem = async (req, res) => {
     console.error(error.message);
     res.json({ success: false, message: "Error deleting item" });
   }
-}
+};
 
 export { addItem, listItem, deleteItem };
