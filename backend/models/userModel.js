@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
     password:{type:String,required:true},
     role:{type:String,default:"user"},
     cartData:{type:Object,default:{}},
-
+    orders:{type:Object,default:{}}
 },{minimize:false})
 
 const userModel = mongoose.models.user || mongoose.model("user",userSchema);
