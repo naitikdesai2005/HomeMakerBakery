@@ -127,6 +127,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // import bakerModel from "../models/bakerModel.js";
 // import productModel from "../models/productModel.js";
 
+const getBakerOrders = async (req, res) => {
+    try {
+      const bakerId = req.body.bakerId;
+      const orders = await orderModel.find({ bakerId: bakerId });
+      res.json({ success: true, orders: orders });
+    } catch (error) {
+      console.error(error);
+      res.json({ success: false, message: "Error retrieving orders" });
+    }
+  };
 
 const createOrder = async (req, res) => {
     try {
@@ -225,4 +235,4 @@ const updateOrderStatus = async (req, res) => {
     }
 };
 
-export { createOrder, updateOrderStatus };
+export { createOrder, updateOrderStatus ,getBakerOrders};
