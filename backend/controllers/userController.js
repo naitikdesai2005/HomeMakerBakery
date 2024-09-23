@@ -263,18 +263,13 @@ const bakerProfile = async (req, res) => {
 
 const updateBakerProfile = async (req, res) => {
     try {
-        const { userId, name, password, email, bakeryname, bakeryaddress, gender, bankAccNumber, mobilenumber, bio, link } = req.body;
-
-        // Hashing user password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt); 
+        const { userId, name, email, bakeryname, bakeryaddress, gender, bankAccNumber, mobilenumber, bio, link } = req.body;
 
         // Handle file upload (check if file exists)
         let profileImage = req.file ? `${req.file.filename}` : undefined;
 
         const updateData = await bakerModel.findByIdAndUpdate(userId, {
             name,
-            password:hashedPassword,
             email,
             bakeryname,
             bakeryaddress,
