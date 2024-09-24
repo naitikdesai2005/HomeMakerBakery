@@ -1,3 +1,4 @@
+import productModel from "../models/productModel.js";
 import userModel from "../models/userModel.js";
 import { createOrder } from "./orderController.js";
 
@@ -42,27 +43,57 @@ const addToCart = async (req, res) => {
   }
 };
 
-// Fetch user cart data
+
 const getCart = async (req, res) => {
   try {
     const { userId } = req.body;
 
+    // Check if userId is provided
     if (!userId) {
       return res.json({ success: false, message: "Missing userId" });
     }
 
+    // Find the user by userId
     let userData = await userModel.findById(userId);
-    if (!userData || !userData.cartData) {
+    if (!userData || !userData.cartData || typeof userData.cartData !== 'object') {
       return res.json({ success: false, message: "No cart data found" });
     }
 
-    let cartData = userData.cartData;
-    res.json({ success: true, cartData });
+    // Convert cartData object to array (assuming each key is a productId)
+    const cartArray = Object.keys(userData.cartData).map(productId => ({
+      productId, // Key from the object
+      quantity: userData.cartData[productId].quantity || 0// Get quantity from the object
+    }));
+
+    console.log();
+    
+
+    // Extract product IDs from the cart array
+    const productIds = cartArray.map(item => item.productId);
+
+    // Fetch product information (name, description) for each productId
+    const products = await productModel.find({ _id: { $in: productIds } }, 'name description');
+
+    // Combine cart data with product information and user-specific quantity
+    const enrichedCartData = cartArray.map(item => {
+      const product = products.find(p => p._id.toString() === item.productId);
+      return {
+        productId: item.productId,
+        name: product ? product.name : 'Unknown Product',
+        description: product ? product.description : 'No description available',
+        quantity: userData.cartData[item.productId].quantity || 0, // Quantity from user's cartData
+      };
+    });
+
+    // Return the enriched cart data
+    res.json({ success: true, cartData: enrichedCartData });
   } catch (error) {
     console.error(error);
     res.json({ success: false, message: "Error retrieving cart" });
   }
 };
+
+
 
 // Remove items from the user cart
 const removeFromCart = async (req, res) => {
