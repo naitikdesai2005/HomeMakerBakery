@@ -62,17 +62,14 @@ const getCart = async (req, res) => {
     // Convert cartData object to array (assuming each key is a productId)
     const cartArray = Object.keys(userData.cartData).map(productId => ({
       productId, // Key from the object
-      quantity: userData.cartData[productId].quantity || 0// Get quantity from the object
+      quantity: userData.cartData[productId] // Get quantity from the object
     }));
-
-    console.log();
-    
 
     // Extract product IDs from the cart array
     const productIds = cartArray.map(item => item.productId);
 
-    // Fetch product information (name, description) for each productId
-    const products = await productModel.find({ _id: { $in: productIds } }, 'name description');
+    // Fetch product information (name, description, price, image) for each productId
+    const products = await productModel.find({ _id: { $in: productIds } }, 'name description price image');
 
     // Combine cart data with product information and user-specific quantity
     const enrichedCartData = cartArray.map(item => {
@@ -81,7 +78,9 @@ const getCart = async (req, res) => {
         productId: item.productId,
         name: product ? product.name : 'Unknown Product',
         description: product ? product.description : 'No description available',
-        quantity: userData.cartData[item.productId].quantity || 0, // Quantity from user's cartData
+        price: product ? product.price : 0,
+        image: product ? product.image : '',
+        quantity: item.quantity // Quantity from user's cartData
       };
     });
 
