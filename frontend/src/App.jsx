@@ -21,7 +21,7 @@ import Payment from "./pages/Payment/Payment.jsx";
 import UserOrder from "./HomeUser/UserOrders/UserOrder.jsx";
 import Bakerprofile from "../../frontend/src/HomeBaker/BakerProfile/Bakerprofile.jsx";
 import MyOrders from "./HomeUser/Myorder/Myorder.jsx";
-import Allproduct from "./pages/AllProducts/Allproducts.jsx";
+import AllProducts from "./pages/AllProducts/Allproducts.jsx";
 
 function App() {
   const url = "http://localhost:3000";
@@ -55,7 +55,7 @@ function App() {
         <Route path="/aboutus" element={<Aboutus />} />
         <Route path="/product" element={<Product />} />
         <Route path="/menu" element={<Menu />} />
-        <Route path="/productdisplay" element={<ProductDisplay />} />
+        <Route path="/productdisplay" element={<ProductDisplay category="All"/>} />
         <Route path="/additem" element={<AddItems url={url} />} />
         <Route path="/listitem" element={<ListItems />} />
         <Route path="/profile" element={<Profile />} />
@@ -63,7 +63,7 @@ function App() {
         <Route path="/userOrder" element={<UserOrder />} />
         <Route path="/bakerprofile" element={<Bakerprofile />} />
         <Route path="/myorders" element={<MyOrders />} />
-        <Route path="/allproduct" element={<Allproduct />} />
+        <Route path="/allproduct" element={<AllProducts />} />
       </Routes>
     </>
   );
