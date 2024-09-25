@@ -23,14 +23,34 @@ const Cart = ({ id, image }) => {
   const url = "http://localhost:3000";
   const [emptyCartMessage, setEmptyCartMessage] = useState(false);
 
-  const handleCheckout = () => {
+  // const handleCheckout = () => {
+  //   if (getTotalCartAmount() === 0) {
+  //     setEmptyCartMessage(true);
+  //   } else {
+  //     setEmptyCartMessage(false);
+  //     navigate("/order");
+  //   }
+  // };
+
+  const handleCheckout = async () => {
     if (getTotalCartAmount() === 0) {
       setEmptyCartMessage(true);
     } else {
       setEmptyCartMessage(false);
-      navigate("/order");
+  
+      const decode = jwtDecode(token); // Decode token to get userId
+      const u_id = decode.id; // Extract user ID
+  
+      await axios.post(
+        url + "/api/cart/checkout",
+        { userId: u_id }, // Send userId to backend
+        { headers: { token } }
+      );
+  
+      navigate("/order"); // Navigate to the order page after checkout
     }
   };
+  
 
   return (
     <>

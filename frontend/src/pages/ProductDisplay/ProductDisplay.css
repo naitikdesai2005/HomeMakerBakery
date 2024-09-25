@@ -16,3 +16,8 @@
   margin: auto;
   margin-top: 20px;
 }
+.view-more-btn{
+  justify-content: right;
+  margin-left: 1280px;
+  font-size: 18px;
+}
