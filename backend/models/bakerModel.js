@@ -14,6 +14,8 @@ const bakerSchema = new mongoose.Schema({
     role:{type:String,default:"baker"},
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'product' }],
     select:{type:Boolean,default:true},
+    resetCode:{type:String},
+    resetCodeExpires:{type:String},
     orders: [
         {
             orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'order', required: true },

@@ -2,8 +2,9 @@ import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import validator from "validator";
+import nodemailer  from "nodemailer";
+import crypto  from "crypto";
 import bakerModel from "../models/bakerModel.js";
-// import cookie from "cookie";
 import productModel from "../models/productModel.js";
 
 // Create token
@@ -56,6 +57,99 @@ const loginUser = async (req, res) => {
         return res.json({ success: false, message: "Error" });
     }
 };
+
+
+//for sending code via email
+const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const user = await userModel.findOne({ email });
+        const baker = await bakerModel.findOne({ email });
+
+        if (!user && !baker) {
+            return res.json({ success: false, message: "User or baker not exists" });
+        }
+
+        const uniqueCode = crypto.randomBytes(3).toString('hex');
+        const expirationTime = Date.now() + 3600000; // Code expires in 1 hour
+
+        if (user) {
+            user.resetCode = uniqueCode;
+            user.resetCodeExpires = expirationTime;
+            await user.save();
+        } else if (baker) {
+            baker.resetCode = uniqueCode;
+            baker.resetCodeExpires = expirationTime;
+            await baker.save();
+        }
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail', 
+            auth: {
+                user: 'bakenest9@gmail.com', // Your email
+                pass: 'aghm pbse asnm gbwv' // Your email password or app password
+            }
+        });
+
+        const mailOptions = {
+            from: 'bakenest9@gmail.com',
+            to: email,
+            subject: 'Password Reset Code',
+            text: `Your password reset code is: ${uniqueCode}. It will expire in 1 hour.`
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            return res.json({ success: true, message: "Password reset code sent to email." });
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.json({ success: false, message: "Error resetting password." });
+    }
+};
+
+// Function to verify the code and reset the password
+const verifyCodeAndResetPassword = async (req, res) => {
+    const { email, code, password, confirmPassword } = req.body;
+
+    try {
+        const user = await userModel.findOne({ email });
+        const baker = await bakerModel.findOne({ email });
+
+        if (!user && !baker) {
+            return res.json({ success: false, message: "User or baker not exists" });
+        }
+
+        let targetUser = user || baker;
+
+        if (targetUser.resetCode !== code || Date.now() > targetUser.resetCodeExpires) {
+            return res.json({ success: false, message: "Invalid or expired code." });
+        }
+
+        if (password !== confirmPassword) {
+            return res.json({ success: false, message: "Passwords do not match." });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        targetUser.password = hashedPassword;
+        targetUser.resetCode = undefined; // Clear the reset code
+        targetUser.resetCodeExpires = undefined; // Clear the expiration time
+        await targetUser.save();
+
+        return res.json({ success: true, message: "Password reset successful." });
+
+    } catch (error) {
+        console.error(error);
+        return res.json({ success: false, message: "Error resetting password." });
+    }
+};
+
+
 
 // Register user
 const registerUser = async (req, res) => {
@@ -290,4 +384,4 @@ const updateBakerProfile = async (req, res) => {
     }
 };
 
-export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout, search, bakerProfile, updateBakerProfile };
+export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout, search, bakerProfile, updateBakerProfile,forgotPassword,verifyCodeAndResetPassword };

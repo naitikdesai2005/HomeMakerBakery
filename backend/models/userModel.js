@@ -5,6 +5,8 @@ const userSchema = new mongoose.Schema({
     password:{type:String,required:true},
     role:{type:String,default:"user"},
     cartData:{type:Object,default:{}},
+    resetCode:{type:String},
+    resetCodeExpires:{type:String},
     orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'order' }],
 },{minimize:false})
 
