@@ -7,8 +7,10 @@ import Footer from "../Footer/Footer";
 import { assets } from "../../../images/assets";
 import { useNavigate } from "react-router-dom";
 import "../Product/Product.css";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
-const Cart = ({ id, image }) => {
+const Cart = () => {
   const {
     cartItems = {},
     removeFromCart,
@@ -17,40 +19,41 @@ const Cart = ({ id, image }) => {
     getTotalCartAmount,
     isAuthenticated,
     food_list = [],
+    token,
   } = useContext(StoreContext);
 
   const navigate = useNavigate();
   const url = "http://localhost:3000";
   const [emptyCartMessage, setEmptyCartMessage] = useState(false);
 
-  // const handleCheckout = () => {
-  //   if (getTotalCartAmount() === 0) {
-  //     setEmptyCartMessage(true);
-  //   } else {
-  //     setEmptyCartMessage(false);
-  //     navigate("/order");
-  //   }
-  // };
-
   const handleCheckout = async () => {
+    const storedToken = localStorage.getItem("token"); // Retrieve the token
+    // try {
+    //   const decode = jwtDecode(storedToken); // Decode the valid token
+    //   const u_id = decode.id;
+    //   console.log(decode)
+    //   // Proceed with your checkout logic using u_id...
+    // } catch (error) {
+    //   console.error("Error decoding token:", error);
+    //   // Handle decoding error appropriately
+    // }
     if (getTotalCartAmount() === 0) {
       setEmptyCartMessage(true);
     } else {
       setEmptyCartMessage(false);
-  
-      const decode = jwtDecode(token); // Decode token to get userId
-      const u_id = decode.id; // Extract user ID
-  
+
+      const decode = jwtDecode(storedToken);
+      const u_id = decode.id;
+
       await axios.post(
-        url + "/api/cart/checkout",
-        { userId: u_id }, // Send userId to backend
+        url + "/api/order/create",
+        { userId: u_id },
         { headers: { token } }
       );
-  
-      navigate("/order"); // Navigate to the order page after checkout
+
+      navigate("/order");
     }
   };
-  
 
   return (
     <>
@@ -73,7 +76,7 @@ const Cart = ({ id, image }) => {
               return (
                 <div key={index}>
                   <div className="cart-items-title cart-items-item">
-                    <img src={url + "/uploads/" + item.image} alt={item.name} />
+                    <img src={`${url}/uploads/${item.image}`} alt={item.name} />
                     <p>{item.name}</p>
                     <p>Rs. {item.price}</p>
                     <div className="quantity-control">

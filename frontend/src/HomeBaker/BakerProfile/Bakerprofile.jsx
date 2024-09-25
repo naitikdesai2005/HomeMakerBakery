@@ -11,7 +11,6 @@ const Bakerprofile = () => {
     mobilenumber: "",
     bakeryname: "",
     bakeryaddress: "",
-    password: "",
     profilePic: "",
     gender: "",
     link: "",
@@ -21,20 +20,17 @@ const Bakerprofile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [updatedDetails, setUpdatedDetails] = useState(bakerDetails);
 
-  // Fetching the baker profile
+  // Fetch baker profile on load
   useEffect(() => {
     const fetchBakerProfile = async () => {
       try {
         const response = await axios.get("/api/baker/profile", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `${localStorage.getItem("token")}`,
           },
         });
         if (response.data.success) {
-          const profileData = response.data.data;
-          console.log("Profile data fetched:", profileData); // Debug log
-          setBakerDetails(profileData);
-          setUpdatedDetails(profileData);
+          setBakerDetails(response.data.data);
         } else {
           console.error("Error fetching baker profile: Unsuccessful response");
         }
@@ -46,33 +42,33 @@ const Bakerprofile = () => {
     fetchBakerProfile();
   }, []);
 
+  useEffect(() => {
+    setUpdatedDetails(bakerDetails);
+  }, [bakerDetails]);
+
+  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUpdatedDetails({ ...updatedDetails, [name]: value });
-    console.log(`Updated ${name}:`, value); // Debug log
   };
 
+  // Toggle edit mode
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
   };
 
-  // Saving the updated profile
+  // Handle profile save
   const handleSave = async () => {
     const formData = new FormData();
     formData.append("name", updatedDetails.name);
     formData.append("email", updatedDetails.email);
-    formData.append("bio", updatedDetails.bio);
-    formData.append("phone", updatedDetails.phone);
-    formData.append("bakeryName", updatedDetails.bakeryName);
-    formData.append("address", updatedDetails.address);
-    formData.append("password", updatedDetails.password);
+    formData.append("mobilenumber", updatedDetails.mobilenumber);
+    formData.append("bakeryname", updatedDetails.bakeryname);
+    formData.append("bakeryaddress", updatedDetails.bakeryaddress);
     formData.append("gender", updatedDetails.gender);
-    formData.append(
-      "facebookInstagramLink",
-      updatedDetails.facebookInstagramLink
-    );
-    formData.append("bankAccountNumber", updatedDetails.bankAccountNumber);
-
+    formData.append("bankAccNumber", updatedDetails.bankAccNumber);
+    if (updatedDetails.bio) formData.append("bio", updatedDetails.bio);
+    if (updatedDetails.link) formData.append("link", updatedDetails.link);
     if (updatedDetails.profilePic instanceof File) {
       formData.append("image", updatedDetails.profilePic);
     }
@@ -81,10 +77,9 @@ const Bakerprofile = () => {
       const response = await axios.post("/api/baker/updateProfile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `${localStorage.getItem("token")}`,
         },
       });
-      console.log("Profile updated successfully", response.data); // Debug log
       setBakerDetails(updatedDetails);
       setIsEditing(false);
     } catch (error) {
@@ -92,32 +87,26 @@ const Bakerprofile = () => {
     }
   };
 
-  // Handling file input for profile picture
+  // Handle profile picture change
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        console.log("Profile picture updated:", file); // Debug log
-        setUpdatedDetails({ ...updatedDetails, profilePic: file });
-      };
-      reader.readAsDataURL(file);
+      setUpdatedDetails({ ...updatedDetails, profilePic: file });
     }
   };
+
+  // Profile picture URL
+  const profilePicSrc =
+    updatedDetails.profilePic instanceof File
+      ? URL.createObjectURL(updatedDetails.profilePic)
+      : updatedDetails.profilePic || "https://via.placeholder.com/150";
 
   return (
     <>
       <HeaderBaker />
       <div className="baker-profile-container">
         <div className="profile-pic">
-          <img
-            src={
-              updatedDetails.profilePic instanceof File
-                ? URL.createObjectURL(updatedDetails.profilePic)
-                : updatedDetails.profilePic || "https://via.placeholder.com/150"
-            }
-            alt="Profile"
-          />
+          <img src={profilePicSrc} alt="Profile" />
           {isEditing && (
             <>
               <input
@@ -157,8 +146,8 @@ const Bakerprofile = () => {
                 <label>Phone:</label>
                 <input
                   type="text"
-                  name="phone"
-                  value={updatedDetails.phone}
+                  name="mobilenumber"
+                  value={updatedDetails.mobilenumber}
                   onChange={handleInputChange}
                 />
               </div>
@@ -166,8 +155,8 @@ const Bakerprofile = () => {
                 <label>Bakery Name:</label>
                 <input
                   type="text"
-                  name="bakeryName"
-                  value={updatedDetails.bakeryName}
+                  name="bakeryname"
+                  value={updatedDetails.bakeryname}
                   onChange={handleInputChange}
                 />
               </div>
@@ -175,17 +164,8 @@ const Bakerprofile = () => {
                 <label>Address:</label>
                 <input
                   type="text"
-                  name="address"
-                  value={updatedDetails.address}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="input-group">
-                <label>Password:</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={updatedDetails.password}
+                  name="bakeryaddress"
+                  value={updatedDetails.bakeryaddress}
                   onChange={handleInputChange}
                 />
               </div>
@@ -201,8 +181,8 @@ const Bakerprofile = () => {
                 <label>Facebook / Instagram Link (Optional):</label>
                 <input
                   type="text"
-                  name="facebookInstagramLink"
-                  value={updatedDetails.facebookInstagramLink}
+                  name="link"
+                  value={updatedDetails.link}
                   onChange={handleInputChange}
                 />
               </div>
@@ -210,8 +190,8 @@ const Bakerprofile = () => {
                 <label>Bank Account Number:</label>
                 <input
                   type="text"
-                  name="bankAccountNumber"
-                  value={updatedDetails.bankAccountNumber}
+                  name="bankAccNumber"
+                  value={updatedDetails.bankAccNumber}
                   onChange={handleInputChange}
                 />
               </div>
@@ -224,17 +204,16 @@ const Bakerprofile = () => {
             <div>
               <h2>{bakerDetails.name}</h2>
               <p>Email: {bakerDetails.email}</p>
-              <p>Phone: {bakerDetails.phone}</p>
-              <p>Bakery: {bakerDetails.bakeryName}</p>
-              <p>Address: {bakerDetails.address}</p>
+              <p>Phone: {bakerDetails.mobilenumber}</p>
+              <p>Bakery: {bakerDetails.bakeryname}</p>
+              <p>Address: {bakerDetails.bakeryaddress}</p>
               <p>Gender: {bakerDetails.gender}</p>
               <p>
-                Facebook / Instagram Link:{" "}
-                {bakerDetails.facebookInstagramLink || "Not Provided"}
+                Facebook / Instagram Link: {bakerDetails.link || "Not Provided"}
               </p>
               <p>
                 Bank Account Number:{" "}
-                {bakerDetails.bankAccountNumber || "Not Provided"}
+                {bakerDetails.bankAccNumber || "Not Provided"}
               </p>
               <p>{bakerDetails.bio}</p>
               <button onClick={handleEditToggle} className="edit-button">

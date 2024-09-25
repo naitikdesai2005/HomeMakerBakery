@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./ProductDisplay.css";
 import Product from "../Product/Product";
 import axios from "axios";
-import { Link } from "react-router-dom"; // Import Link for navigation
 
 const ProductDisplay = ({ category }) => {
   const [products, setProducts] = useState([]);
@@ -29,7 +28,7 @@ const ProductDisplay = ({ category }) => {
   return (
     <div className="product-display" id="product-display">
       <div className="product-display-list">
-        {products.slice(0, 6).map((item, index) => { // Display only first 6 products
+        {products.slice(0, 8).map((item, index) => {
           if (category === "All" || category === item.category) {
             return (
               <Product
@@ -45,12 +44,9 @@ const ProductDisplay = ({ category }) => {
           return null;
         })}
       </div>
-      {/* View More button */}
-      <div className="view-more-container">
-        <Link className="view-more-btn" to="/allproduct">
-          <button>View More</button>
-        </Link>
-      </div>
+      <a className="viewmore" href="/allproduct">
+        view more »»
+      </a>
     </div>
   );
 };

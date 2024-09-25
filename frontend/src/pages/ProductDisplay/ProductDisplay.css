@@ -16,7 +16,8 @@
   margin: auto;
   margin-top: 20px;
 }
-.view-more-btn{
+
+.viewmore {
   justify-content: right;
   margin-left: 1280px;
   font-size: 18px;

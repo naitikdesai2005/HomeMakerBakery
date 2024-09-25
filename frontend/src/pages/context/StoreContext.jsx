@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 export const StoreContext = createContext(null);
 import { useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState(() => {
@@ -120,9 +120,7 @@ export const StoreContextProvider = (props) => {
           let itemInfo = food_list.find((product) => product._id === item);
           totalAmount += itemInfo.price * cartItems[item];
         }
-      } catch (error) {
-        console.error("Error calculating total amount:", error);
-      }
+      } catch (error) {}
     }
     return totalAmount;
   };

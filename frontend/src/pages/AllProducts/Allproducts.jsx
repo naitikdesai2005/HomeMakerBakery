@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Allproducts.css";
 import Product from "../Product/Product";
 import axios from "axios";
+import Navbar from "../Navbar/Navbar";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -26,21 +27,23 @@ const AllProducts = () => {
   }, []);
 
   return (
-    <div className="all-products-container">
-      <h1>All Products</h1>
-      <div className="all-products-list">
-        {products.map((item, index) => (
-          <Product
-            key={index}
-            id={item._id}
-            name={item.name}
-            description={item.description}
-            price={item.price}
-            image={item.image}
-          />
-        ))}
+    <>
+      <Navbar />
+      <div className="all-products-container">
+        <div className="all-products-list">
+          {products.map((item, index) => (
+            <Product
+              key={index}
+              id={item._id}
+              name={item.name}
+              description={item.description}
+              price={item.price}
+              image={item.image}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

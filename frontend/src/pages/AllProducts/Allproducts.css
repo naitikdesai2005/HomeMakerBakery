@@ -1,18 +1,29 @@
-.product-display {
+.all-product-display {
   margin-top: 30px;
   margin-bottom: 20px;
 }
 
-.product-display h2 {
+.all-product-display h2 {
   font-size: max(2vw, 24px);
   font-weight: 600;
 }
 
-.product-display-list {
+.all-products-list {
   display: grid;
   grid-template-columns: repeat(4, 20fr);
   gap: 30px;
   max-width: 1290px;
   margin: auto;
   margin-top: 20px;
+}
+
+.all-product-search input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  margin-left: 115px;
+  outline: none;
+  width: 350px;
+  transition: width 0.3s ease-in-out;
+  margin-top: 25px;
 }
