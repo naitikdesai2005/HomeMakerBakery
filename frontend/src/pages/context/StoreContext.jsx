@@ -118,13 +118,38 @@ export const StoreContextProvider = (props) => {
   };
 
   // Delete item from the cart completely on frontend
-  const deleteFromCart = async (itemId) => {
-    setCartItems((prev) => {
-      const newCart = { ...prev };
-      delete newCart[itemId];
-      return newCart;
-    });
-  };
+  // const deleteFromCart = async (itemId) => {
+  //   setCartItems((prev) => {
+  //     const newCart = { ...prev };
+  //     delete newCart[itemId];
+  //     return newCart;
+  //   });
+  // };
+
+// Delete item from the cart completely on frontend and backend
+const deleteFromCart = async (itemId) => {
+  const decode = jwtDecode(token);
+  const u_id = decode.id;
+
+  // Update frontend state
+  setCartItems((prev) => {
+    const newCart = { ...prev };
+    delete newCart[itemId];
+    return newCart;
+  });
+
+  // Update backend to delete the item from the user's cart
+  try {
+    await axios.post(
+      `${url}/api/cart/deleteItem`,
+      { itemId, userId: u_id },
+      { headers: { token } }
+    );
+  } catch (error) {
+    console.error("Error deleting item from cart:", error);
+  }
+};
+
 
   // Get total amount in the cart
   const getTotalCartAmount = () => {

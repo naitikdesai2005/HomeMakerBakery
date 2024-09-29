@@ -129,4 +129,35 @@ const removeFromCart = async (req, res) => {
   }
 };
 
-export { addToCart, getCart, removeFromCart, checkout };
+// Delete item from the user cart completely
+const deleteItemFromCart = async (req, res) => {
+  try {
+    const { userId, itemId } = req.body;
+
+    if (!userId || !itemId) {
+      return res.json({ success: false, message: "Missing userId or itemId" });
+    }
+
+    let userData = await userModel.findById(userId);
+
+    if (!userData) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    let cartData = userData.cartData || {}; // Ensure cartData is initialized
+
+    if (cartData[itemId]) {
+      delete cartData[itemId]; // Delete the item from the cart
+
+      await userModel.findByIdAndUpdate(userId, { cartData });
+      return res.json({ success: true, message: "Item deleted from cart" });
+    } else {
+      return res.json({ success: false, message: "Item not found in cart" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Error deleting item from cart" });
+  }
+};
+
+export { addToCart, getCart, removeFromCart, checkout, deleteItemFromCart };
