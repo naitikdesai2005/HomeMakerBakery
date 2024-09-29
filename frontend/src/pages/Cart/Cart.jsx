@@ -96,7 +96,7 @@ const Cart = () => {
                     </div>
                     <p>Rs. {item.price * quantity}</p>
                     <button
-                      onClick={() => deleteFromCart(item._id)}
+                      onClick={() => removeFromCart(item._id)}
                       className="cross"
                     >
                       <img src={assets.cross_icon} alt="Remove item" />

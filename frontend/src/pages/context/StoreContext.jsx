@@ -21,7 +21,6 @@ export const StoreContextProvider = (props) => {
   const navigate = useNavigate();
   const url = "http://localhost:3000";
 
-  // Sync cartItems to localStorage whenever cart changes
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -41,6 +40,7 @@ export const StoreContextProvider = (props) => {
     const savedCart = localStorage.getItem(`cartItems_${u_id}`);
     if (savedCart) {
       setCartItems(JSON.parse(savedCart));
+      [];
     } else {
       try {
         const response = await axios.post(
@@ -78,32 +78,47 @@ export const StoreContextProvider = (props) => {
     }
   };
 
-  // Remove item from cart
   const removeFromCart = async (itemId) => {
     const decode = jwtDecode(token);
     const u_id = decode.id;
 
-    // Update frontend state
+    // Check if the item exists in the cart and decrement or delete it
     if (cartItems[itemId] > 1) {
-      setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
-    } else {
-      deleteFromCart(itemId);
-    }
+      // Update frontend state to reduce item quantity
+      setCartItems((prev) => ({
+        ...prev,
+        [itemId]: prev[itemId] - 1,
+      }));
 
-    // Update backend
-    try {
-      await axios.post(
-        `${url}/api/cart/removeCart`,
-        { itemId, userId: u_id },
-        { headers: { token } }
-      );
-    } catch (error) {
-      console.error("Error removing from cart:", error);
+      // Update backend to decrement the item quantity
+      try {
+        await axios.post(
+          `${url}/api/cart/removeCart`,
+          { itemId, userId: u_id },
+          { headers: { token } }
+        );
+      } catch (error) {
+        console.error("Error removing item from cart:", error);
+      }
+    } else {
+      // If quantity is 1, delete the item entirely from the cart
+      deleteFromCart(itemId);
+
+      // Remove the item from the backend as well
+      try {
+        await axios.post(
+          `${url}/api/cart/deleteItem`,
+          { itemId, userId: u_id },
+          { headers: { token } }
+        );
+      } catch (error) {
+        console.error("Error deleting item from cart:", error);
+      }
     }
   };
 
-  // Delete item from cart completely
-  const deleteFromCart = (itemId) => {
+  // Delete item from the cart completely on frontend
+  const deleteFromCart = async (itemId) => {
     setCartItems((prev) => {
       const newCart = { ...prev };
       delete newCart[itemId];

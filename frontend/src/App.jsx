@@ -22,6 +22,8 @@ import UserOrder from "./HomeUser/UserOrders/UserOrder.jsx";
 import Bakerprofile from "../../frontend/src/HomeBaker/BakerProfile/Bakerprofile.jsx";
 import MyOrders from "./HomeUser/Myorder/Myorder.jsx";
 import AllProducts from "./pages/AllProducts/Allproducts.jsx";
+import ResetPassword from "./pages/Resetpass/Resetpass.jsx";
+import ForgetPassword from "./pages/Forgetpass/Forgetpass.jsx";
 
 function App() {
   const url = "http://localhost:3000";
@@ -55,7 +57,10 @@ function App() {
         <Route path="/aboutus" element={<Aboutus />} />
         <Route path="/product" element={<Product />} />
         <Route path="/menu" element={<Menu />} />
-        <Route path="/productdisplay" element={<ProductDisplay category="All"/>} />
+        <Route
+          path="/productdisplay"
+          element={<ProductDisplay category="All" />}
+        />
         <Route path="/additem" element={<AddItems url={url} />} />
         <Route path="/listitem" element={<ListItems />} />
         <Route path="/profile" element={<Profile />} />
@@ -64,6 +69,8 @@ function App() {
         <Route path="/bakerprofile" element={<Bakerprofile />} />
         <Route path="/myorders" element={<MyOrders />} />
         <Route path="/allproduct" element={<AllProducts />} />
+        <Route path="/forgetpass" element={<ForgetPassword />} />
+        <Route path="/resetpass" element={<ResetPassword />} />
       </Routes>
     </>
   );
