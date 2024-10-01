@@ -16,7 +16,8 @@ const orderSchema = new mongoose.Schema({
             price:{type:Number,required:true},
             status: { type: String, default: "Pending" }
         }
-    ]
+    ],
+    payment:{type:Boolean,default:false}
 }, { minimize: false });
 
 const orderModel = mongoose.models.order || mongoose.model("order", orderSchema);
