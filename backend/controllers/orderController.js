@@ -233,4 +233,27 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
-export { createOrder, updateOrderStatus, getBakerOrders ,verifyOrder};
+// Get user orders with baker details
+const getUserOrders = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    // Find orders placed by the user
+    const userOrders = await orderModel.find({ userId }).populate({
+      path: 'items.bakerId', // Populate the baker details for each order
+      select: 'bakeryname'
+    });
+
+    if (userOrders.length === 0) {
+      return res.json({ success: false, message: "No orders found for the user" });
+    }
+
+    // Respond with the user's orders including the baker details
+    res.json({ success: true, orders: userOrders });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Error retrieving orders" });
+  }
+};
+
+export { createOrder, updateOrderStatus, getBakerOrders ,verifyOrder,getUserOrders};

@@ -1,12 +1,14 @@
 import express from 'express';
 import reviewModel from '../models/reviewModel';
+import jwt from 'jsonwebtoken';
 
 const createReview = async (req, res) => {
   try {
-    const { rating, description, bakerID } = req.body;
+    const userId = req.user._id;
+    const { rating, description, bakerId } = req.body;
     const review = new reviewModel({
-      userId: req.user._id,
-      bakerID,
+      userId,
+      bakerId,
       rating,
       description,
     });
