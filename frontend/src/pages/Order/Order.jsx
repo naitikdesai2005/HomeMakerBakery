@@ -9,14 +9,8 @@ import { useState } from "react";
 import axios from "axios";
 
 const PlaceOrder = () => {
-  const {
-    getTotalCartAmount,
-    isAuthenticated,
-    token,
-    food_list,
-    cartItems,
-    url,
-  } = useContext(StoreContext);
+  const { getTotalCartAmount, isAuthenticated, token, food_list, cartItems } =
+    useContext(StoreContext);
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -38,40 +32,41 @@ const PlaceOrder = () => {
   const placeOrder = async (event) => {
     event.preventDefault();
     let orderItems = [];
-    food_list.map((item) => {
-      if (cartItems[item._id > 0]) {
-        let itemInfo = item;
-        itemInfo["quantity"] = cartItems[item._id];
+
+    food_list.forEach((item) => {
+      if (cartItems[item._id]) {
+        let itemInfo = { ...item, quantity: cartItems[item._id] };
         orderItems.push(itemInfo);
       }
     });
-    let orderData = {
-      address: data,
-      items: orderItems,
-      amount: getTotalCartAmount() + 2,
-    };
-    let response = await axios.post(url + "/api/order/create", orderData, {
-      headers: { token },
-    });
-    if (response.data.success) {
-      const { session_url } = response.data;
-      window.location.replace(session_url);
-    } else {
-      alert("Error");
-    }
-  };
 
-  const handleProceedToPay = (event) => {
-    event.preventDefault();
-    const form = event.target.closest("form");
-    if (form.checkValidity()) {
-      if (isAuthenticated) {
-        navigate("/payment");
+    let orderData = {
+      firstname: data.firstName,
+      lastname: data.lastName,
+      email: data.email,
+      address: data.street,
+      phone: data.phone,
+      items: orderItems,
+    };
+
+    try {
+      let response = await axios.post(
+        "http://localhost:3000/api/order/create",
+        orderData,
+        {
+          headers: { token: localStorage.getItem("token") },
+        }
+      );
+
+      if (response.data.success) {
+        const { session_url } = response.data;
+        window.location.href = session_url;
       } else {
-        navigate("/login");
+        alert("Error creating order: " + response.data.message);
       }
-    } else {
-      form.reportValidity();
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("There was an error placing your order.");
     }
   };
 
@@ -115,7 +110,7 @@ const PlaceOrder = () => {
             placeholder="Street"
             required
           />
-          <div className="multi-field">
+          {/* <div className="multi-field">
             <input
               onChange={onChangeHandler}
               value={data.city}
@@ -134,7 +129,7 @@ const PlaceOrder = () => {
               placeholder="Zip code"
               required
             />
-          </div>
+          </div> */}
           <input
             onChange={onChangeHandler}
             value={data.phone}
@@ -166,7 +161,7 @@ const PlaceOrder = () => {
                 </b>
               </div>
             </div>
-            <button type="submit" onClick={handleProceedToPay}>
+            <button type="submit" onClick={placeOrder}>
               PROCEED TO PAY
             </button>
           </div>

@@ -15,9 +15,10 @@ export const StoreContextProvider = (props) => {
     }
   });
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [isAuthenticated, setIsAuthenticated] = useState(!!token);
+
   const [food_list, setFoodList] = useState([]);
-  const [token, setToken] = useState(null);
   const navigate = useNavigate();
   const url = "http://localhost:3000";
 
@@ -25,18 +26,15 @@ export const StoreContextProvider = (props) => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // Fetch the food list on component mount
   const fetchFoodList = async () => {
     const response = await axios.get(`${url}/api/user/getallitem`);
     setFoodList(response.data.data);
   };
 
-  // Fetch user's cart data from the backend and sync with frontend state
   const loadCartData = async (token) => {
     const decode = jwtDecode(token);
     const u_id = decode.id;
 
-    // Fetch cart data from localStorage or backend
     const savedCart = localStorage.getItem(`cartItems_${u_id}`);
     if (savedCart) {
       setCartItems(JSON.parse(savedCart));
@@ -55,18 +53,15 @@ export const StoreContextProvider = (props) => {
     }
   };
 
-  // Add item to cart
   const addToCart = async (itemId) => {
     const decode = jwtDecode(token);
     const u_id = decode.id;
 
-    // Update frontend state
     setCartItems((prev) => ({
       ...prev,
       [itemId]: (prev[itemId] || 0) + 1,
     }));
 
-    // Update backend
     try {
       await axios.post(
         `${url}/api/cart/addCart`,
@@ -82,15 +77,12 @@ export const StoreContextProvider = (props) => {
     const decode = jwtDecode(token);
     const u_id = decode.id;
 
-    // Check if the item exists in the cart and decrement or delete it
     if (cartItems[itemId] > 1) {
-      // Update frontend state to reduce item quantity
       setCartItems((prev) => ({
         ...prev,
         [itemId]: prev[itemId] - 1,
       }));
 
-      // Update backend to decrement the item quantity
       try {
         await axios.post(
           `${url}/api/cart/removeCart`,
@@ -101,10 +93,7 @@ export const StoreContextProvider = (props) => {
         console.error("Error removing item from cart:", error);
       }
     } else {
-      // If quantity is 1, delete the item entirely from the cart
       deleteFromCart(itemId);
-
-      // Remove the item from the backend as well
       try {
         await axios.post(
           `${url}/api/cart/deleteItem`,
@@ -117,41 +106,27 @@ export const StoreContextProvider = (props) => {
     }
   };
 
-  // Delete item from the cart completely on frontend
-  // const deleteFromCart = async (itemId) => {
-  //   setCartItems((prev) => {
-  //     const newCart = { ...prev };
-  //     delete newCart[itemId];
-  //     return newCart;
-  //   });
-  // };
+  const deleteFromCart = async (itemId) => {
+    const decode = jwtDecode(token);
+    const u_id = decode.id;
 
-// Delete item from the cart completely on frontend and backend
-const deleteFromCart = async (itemId) => {
-  const decode = jwtDecode(token);
-  const u_id = decode.id;
+    setCartItems((prev) => {
+      const newCart = { ...prev };
+      delete newCart[itemId];
+      return newCart;
+    });
 
-  // Update frontend state
-  setCartItems((prev) => {
-    const newCart = { ...prev };
-    delete newCart[itemId];
-    return newCart;
-  });
+    try {
+      await axios.post(
+        `${url}/api/cart/deleteItem`,
+        { itemId, userId: u_id },
+        { headers: { token } }
+      );
+    } catch (error) {
+      console.error("Error deleting item from cart:", error);
+    }
+  };
 
-  // Update backend to delete the item from the user's cart
-  try {
-    await axios.post(
-      `${url}/api/cart/deleteItem`,
-      { itemId, userId: u_id },
-      { headers: { token } }
-    );
-  } catch (error) {
-    console.error("Error deleting item from cart:", error);
-  }
-};
-
-
-  // Get total amount in the cart
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
@@ -165,7 +140,6 @@ const deleteFromCart = async (itemId) => {
     return totalAmount;
   };
 
-  // Get total items count in the cart
   const getTotalCartItems = () => {
     let totalItems = 0;
     for (const item in cartItems) {
@@ -174,7 +148,6 @@ const deleteFromCart = async (itemId) => {
     return totalItems;
   };
 
-  // Sync cart data when the user logs in
   useEffect(() => {
     async function loadData() {
       await fetchFoodList();
@@ -189,17 +162,15 @@ const deleteFromCart = async (itemId) => {
     loadData();
   }, []);
 
-  // Logout user
   const logout = () => {
     if (token) {
       const decode = jwtDecode(token);
       const u_id = decode.id;
       localStorage.setItem(`cartItems_${u_id}`, JSON.stringify(cartItems));
     }
-
-    localStorage.removeItem("token");
+    setToken("");
     setIsAuthenticated(false);
-    setToken(null);
+    localStorage.removeItem("token");
     setCartItems({});
     navigate("/");
   };
@@ -212,6 +183,8 @@ const deleteFromCart = async (itemId) => {
     deleteFromCart,
     getTotalCartAmount,
     getTotalCartItems,
+    token,
+    setToken,
     isAuthenticated,
     setIsAuthenticated,
     logout,

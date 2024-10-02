@@ -24,6 +24,7 @@ import MyOrders from "./HomeUser/Myorder/Myorder.jsx";
 import AllProducts from "./pages/AllProducts/Allproducts.jsx";
 import ResetPassword from "./pages/Resetpass/Resetpass.jsx";
 import ForgetPassword from "./pages/Forgetpass/Forgetpass.jsx";
+import Verify from "./pages/Verify/Verify.jsx";
 
 function App() {
   const url = "http://localhost:3000";
@@ -71,6 +72,7 @@ function App() {
         <Route path="/allproduct" element={<AllProducts />} />
         <Route path="/forgetpass" element={<ForgetPassword />} />
         <Route path="/resetpass" element={<ResetPassword />} />
+        <Route path="/verify" element={<Verify />} />
       </Routes>
     </>
   );
