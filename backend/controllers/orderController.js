@@ -74,8 +74,8 @@ const createOrder = async (req, res) => {
         product_data: {
           name: item.name,
         },
-        //for inr
-        unit_amount: item.price * 100 ,
+
+        unit_amount: item.price * 100,
       },
       quantity: item.quantity,
     }));
@@ -86,7 +86,7 @@ const createOrder = async (req, res) => {
         product_data: {
           name: "Delivery Charges",
         },
-        unit_amount: 40 * 100 ,
+        unit_amount: 40 * 100,
       },
       quantity: 1,
     });
@@ -256,4 +256,4 @@ const getUserOrders = async (req, res) => {
   }
 };
 
-export { createOrder, updateOrderStatus, getBakerOrders ,verifyOrder,getUserOrders};
+export { createOrder, updateOrderStatus, getBakerOrders, verifyOrder, getUserOrders };
