@@ -53,7 +53,6 @@ const getCart = async (req, res) => {
       return res.json({ success: false, message: "Missing userId" });
     }
 
-    // Find the user by userId
     let userData = await userModel.findById(userId);
     if (!userData || !userData.cartData || typeof userData.cartData !== 'object') {
       return res.json({ success: false, message: "No cart data found" });
@@ -61,8 +60,8 @@ const getCart = async (req, res) => {
 
     // Convert cartData object to array (assuming each key is a productId)
     const cartArray = Object.keys(userData.cartData).map(productId => ({
-      productId, // Key from the object
-      quantity: userData.cartData[productId] // Get quantity from the object
+      productId, 
+      quantity: userData.cartData[productId] 
     }));
 
     // Extract product IDs from the cart array
@@ -80,11 +79,10 @@ const getCart = async (req, res) => {
         description: product ? product.description : 'No description available',
         price: product ? product.price : 0,
         image: product ? product.image : '',
-        quantity: item.quantity // Quantity from user's cartData
+        quantity: item.quantity 
       };
     });
 
-    // Return the enriched cart data
     res.json({ success: true, cartData: enrichedCartData });
   } catch (error) {
     console.error(error);

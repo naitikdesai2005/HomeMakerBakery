@@ -75,7 +75,7 @@ const createOrder = async (req, res) => {
           name: item.name,
         },
         //for inr
-        unit_amount: item.price * 100 * 80,
+        unit_amount: item.price * 100 ,
       },
       quantity: item.quantity,
     }));
@@ -86,7 +86,7 @@ const createOrder = async (req, res) => {
         product_data: {
           name: "Delivery Charges",
         },
-        unit_amount: 2 * 100 * 80,
+        unit_amount: 40 * 100 ,
       },
       quantity: 1,
     });
@@ -101,7 +101,7 @@ const createOrder = async (req, res) => {
 
     res.json({ success: true, session_url: session.url });
   } catch (error) {
-    console.error("Error creating order:", error.message);
+    // console.error("Error creating order:", error.message);
     res.json({ success: false, message: "Error creating order" });
   }
 };
