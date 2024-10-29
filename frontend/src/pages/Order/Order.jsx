@@ -1,17 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Order.css";
 import { StoreContext } from "../context/StoreContext";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import UserNavbar from "../../HomeUser/UserNavbar/UserNavbar";
-import { useState } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const PlaceOrder = () => {
   const { getTotalCartAmount, isAuthenticated, token, food_list, cartItems } =
     useContext(StoreContext);
   const navigate = useNavigate();
+
+  const decode = jwtDecode(token);
+  const u_id = decode.id;
 
   const [data, setData] = useState({
     firstName: "",
@@ -41,6 +44,7 @@ const PlaceOrder = () => {
     });
 
     let orderData = {
+      userId: u_id,
       firstname: data.firstName,
       lastname: data.lastName,
       email: data.email,
@@ -54,7 +58,7 @@ const PlaceOrder = () => {
         "http://localhost:3000/api/order/create",
         orderData,
         {
-          headers: { token: localStorage.getItem("token") },
+          headers: { token },
         }
       );
 
@@ -110,26 +114,6 @@ const PlaceOrder = () => {
             placeholder="Street"
             required
           />
-          {/* <div className="multi-field">
-            <input
-              onChange={onChangeHandler}
-              value={data.city}
-              name="city"
-              type="text"
-              placeholder="City"
-              required
-            />
-          </div>
-          <div className="multi-field">
-            <input
-              onChange={onChangeHandler}
-              value={data.zipcode}
-              name="zipcode"
-              type="text"
-              placeholder="Zip code"
-              required
-            />
-          </div> */}
           <input
             onChange={onChangeHandler}
             value={data.phone}
@@ -161,7 +145,7 @@ const PlaceOrder = () => {
                 </b>
               </div>
             </div>
-            <button type="submit" onClick={placeOrder}>
+            <button type="submit">
               PROCEED TO PAY
             </button>
           </div>

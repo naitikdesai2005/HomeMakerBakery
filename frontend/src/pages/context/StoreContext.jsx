@@ -42,7 +42,7 @@ export const StoreContextProvider = (props) => {
     } else {
       try {
         const response = await axios.post(
-          `${url}/api/cart/getCart`,
+          `http://localhost:3000/api/cart/getCart`,
           { userId: u_id },
           { headers: { token } }
         );
@@ -64,7 +64,7 @@ export const StoreContextProvider = (props) => {
 
     try {
       await axios.post(
-        `${url}/api/cart/addCart`,
+       `${url}/api/cart/addCart`,
         { itemId, userId: u_id },
         { headers: { token } }
       );
@@ -175,6 +175,10 @@ export const StoreContextProvider = (props) => {
     navigate("/");
   };
 
+  const clearCart = () => {
+    setCartItems({});
+  };
+
   const contextValue = {
     food_list,
     cartItems,
@@ -184,6 +188,7 @@ export const StoreContextProvider = (props) => {
     getTotalCartAmount,
     getTotalCartItems,
     token,
+    clearCart,
     setToken,
     isAuthenticated,
     setIsAuthenticated,

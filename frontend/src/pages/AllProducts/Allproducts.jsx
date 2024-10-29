@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Allproducts.css";
 import Product from "../Product/Product";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
+import UserNavbar from "../../HomeUser/UserNavbar/UserNavbar";
+import { StoreContext } from "../context/StoreContext";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const url = "http://localhost:3000";
+  const { isAuthenticated } = useContext(StoreContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -28,7 +31,7 @@ const AllProducts = () => {
 
   return (
     <>
-      <Navbar />
+      {isAuthenticated ? <UserNavbar /> : <Navbar />}
       <div className="all-products-container">
         <div className="all-products-list">
           {products.map((item, index) => (

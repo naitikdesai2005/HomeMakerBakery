@@ -1,35 +1,25 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
+import { FaEnvelope, FaUser, FaLock } from "react-icons/fa";
 import "./Signup.css";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import { toast } from "react-toastify";
+import { Password } from "primereact/password";
+import { FloatLabel } from "primereact/floatlabel";
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false);
   const navigate = useNavigate();
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log("Form submitted", {
-  //     name,
-  //     email,
-  //     password,
-  //     termsAccepted,
-  //   });
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     let valid = true;
-
-    setEmail("");
-    setPassword("");
-    setName("");
 
     if (!email) {
       alert("Please enter your email.");
@@ -60,7 +50,7 @@ function Signup() {
       if (response.data.success) {
         console.log("SignUp Successful!", response.data);
         localStorage.setItem("token", response.data.token);
-        toast.success("Sign up Succesfully");
+        toast.success("Sign up Successfully");
         if (response.data.message === "user") {
           navigate("/homeuser");
           console.log("user");
@@ -112,21 +102,15 @@ function Signup() {
                 <label>
                   <FaLock className="icon" /> Password
                 </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <FloatLabel>
+                  <Password
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    toggleMask
+                  />
+                  {/* <label htmlFor="password">Password</label> */}
+                </FloatLabel>
               </div>
-              {/* <div className="form-group terms">
-                <input
-                  type="checkbox"
-                  checked={termsAccepted}
-                  onChange={(e) => setTermsAccepted(e.target.checked)}
-                  required
-                />
-                <label>I agree to the Terms and Conditions</label>
-              </div> */}
               <button type="submit" className="submit-button">
                 Create Account
               </button>
