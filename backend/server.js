@@ -7,7 +7,7 @@ import productRouter from './routes/productRoute.js'
 import 'dotenv/config'
 import cartRouter from './routes/cartRoute.js'
 import orderRouter from './routes/orderRoute.js'
-
+import reviewRouter from './routes/reviewRoute.js';
 
 //app config
 const app = express()
@@ -30,6 +30,7 @@ app.use("/api/baker",bakerRouter);
 app.use("/api/product",productRouter);
 app.use("/api/cart",cartRouter);
 app.use("/api/order",orderRouter);
+app.use('/api/reviews', reviewRouter);
 
 app.get("/",(req,res)=>{
     res.send("API Working...!!!")
