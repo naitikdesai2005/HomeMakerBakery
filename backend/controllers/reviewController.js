@@ -5,7 +5,7 @@ import bakerModel from '../models/bakerModel.js';
 export const createReview = async (req, res) => {
     try {
         const { bakerId, rating, description } = req.body;
-        const userId = req.user._id;
+        const userId = req.body.userId;
 
         const newReview = new reviewModel({
             userId,
@@ -24,7 +24,7 @@ export const createReview = async (req, res) => {
 
 export const getUserReviews = async (req, res) => {
     try {
-        const userId = req.user._id;
+        const userId = req.body.userId;
         const reviews = await reviewModel.find({ userId }).populate('bakerId', 'bakeryname');
         res.status(200).json({ success: true, reviews });
     } catch (error) {
@@ -35,7 +35,7 @@ export const getUserReviews = async (req, res) => {
 
 export const getBakerReviews = async (req, res) => {
     try {
-        const bakerId = req.user._id;
+        const bakerId = req.body.userId;
         const reviews = await reviewModel.find({ bakerId }).populate('userId', 'name');
         res.status(200).json({ success: true, reviews });
     } catch (error) {
