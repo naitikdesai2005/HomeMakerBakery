@@ -111,22 +111,80 @@ const createOrder = async (req, res) => {
   }
 };
 
+
 const getBakerOrders = async (req, res) => {
   try {
-    const orders = await orderModel.find({ bakerId: req.body.bakerId })
-      .populate({
-        path: 'userId',
-        select: 'firstName lastName address phone',
-      })
-      .populate({
-        path: 'items.productId',
-        select: 'name price image',
-      });
+    const bakerId = req.body.userId;
 
-    res.json({ success: true, data: orders });
+    const baker = await bakerModel.findById(bakerId);
+    if (!baker) {
+      return res.status(404).json({ success: false, message: "Baker not found" });
+    }
+
+    const formattedOrders = [];
+
+    for (const orderInfo of baker.orders) {
+      const order = await orderModel.findById(orderInfo.orderId).populate('items.productId', 'name price image');
+
+      if (!order) continue;
+
+      const orderDetails = {
+        user: {
+          name: order.firstname + ' ' + order.lastname,
+          email: order.email,
+          phone: order.phone,
+          address: order.address
+        },
+        items: order.items.map(item => ({
+          name: item.productId.name,
+          quantity: item.quantity,
+          price: item.productId.price,
+          image: item.productId.image,
+        })),
+        totalPrice: order.totalPrice,
+        status: order.status
+      };
+
+      formattedOrders.push(orderDetails);
+    }
+
+    res.json({ success: true, data: formattedOrders });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Error retrieving orders" });
+  }
+};
+
+
+const updateOrderStatus = async (req, res) => {
+  try {
+    const bakerId = req.body.userId; // Get the baker's ID from the request body populated by middleware
+    const { orderId, status } = req.body;
+
+    // Validate incoming request
+    if (!orderId || !status) {
+      return res.status(400).json({ success: false, message: "Order ID and status are required." });
+    }
+
+    // Find the order to check if it exists
+    const order = await orderModel.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order not found." });
+    }
+
+    // Check if the order belongs to the baker
+    // if (order.bakerId.toString() !== bakerId) {
+    //   return res.status(403).json({ success: false, message: "Forbidden. You do not have permission to update this order." });
+    // }
+
+    // Update the order status
+    order.status = status; // Update the status field
+    await order.save(); // Save the updated order
+
+    res.json({ success: true, message: "Status updated successfully." });
+  } catch (error) {
+    console.error("Error updating order status:", error.message);
+    res.status(500).json({ success: false, message: "Error updating order status." });
   }
 };
 
@@ -144,17 +202,6 @@ const getUserOrders = async (req, res) => {
     res.json({ success: false, message: "Error retrieving orders" });
   }
 };
-
-const updateOrderStatus = async (req, res) => {
-  console.log(req.body);
-  try {
-    await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status });
-    res.json({ success: true, message: "Status Updated" })
-  } catch (error) {
-    res.json({ success: false, message: "Error" })
-  }
-
-}
 
 const verifyOrder = async (req, res) => {
   const { orderId, success } = req.body;
