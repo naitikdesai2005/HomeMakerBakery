@@ -1,5 +1,5 @@
 import express from "express"
-import { loginUser,registerAdmin,registerUser,allitem, logout,search, forgotPassword, verifyCodeAndResetPassword } from "../controllers/userController.js"
+import { loginUser,registerAdmin,registerUser,allitem, logout,search,createContactUs, forgotPassword, verifyCodeAndResetPassword } from "../controllers/userController.js"
 
 const userRouter = express.Router()
 
@@ -11,5 +11,5 @@ userRouter.get("/logout",logout)
 userRouter.post("/searchBakery",search)
 userRouter.post("/forgotPassword",forgotPassword)
 userRouter.post("/resetPassword",verifyCodeAndResetPassword)
-
+userRouter.post("/createContactus",createContactUs)
 export default userRouter;

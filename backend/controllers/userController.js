@@ -6,7 +6,7 @@ import nodemailer  from "nodemailer";
 import crypto  from "crypto";
 import bakerModel from "../models/bakerModel.js";
 import productModel from "../models/productModel.js";
-
+import contactusModel from "../models/contactusModel.js"
 // Create token
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET);
@@ -384,4 +384,38 @@ const updateBakerProfile = async (req, res) => {
     }
 };
 
-export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout, search, bakerProfile, updateBakerProfile,forgotPassword,verifyCodeAndResetPassword };
+const createContactUs = async(req,res) => {
+    try {
+        const { name,email,phone,message} = req.body;
+        const newContact = new contactusModel({
+            name: name,
+            email: email,
+            phone: phone,
+            message: message
+        });
+
+        const contactus = await newUser.save();
+        res.json({ success: true,message: "submitted", contactus});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: "Something went wrong" });
+    }
+};
+
+const deleteContactUs = async(req,res) => {
+    try {
+        const { userId, contactusId } = req.body;
+        
+        const deleteResult = await contactusModel.findOne({ _id: contactusId});
+        if (deleteResult) {
+            const deleteResult = await contactusModel.deleteOne({ _id: contactusId});
+            console.log('Deleted contactus');
+        } else {
+            console.log('No document found to delete.');
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: "Something went wrong" });
+    }
+};
+export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout, search, bakerProfile,createContactUs, updateBakerProfile,forgotPassword,verifyCodeAndResetPassword };
