@@ -6,7 +6,6 @@
   display: flex;
   height: 560px;
   flex-direction: row;
-  align-items: center;
   overflow: hidden;
   margin-top: -180px;
 }
@@ -51,13 +50,14 @@
 }
 
 .forml-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   text-align: left;
 }
 
 .forml-group label {
   display: block;
   margin-bottom: 5px;
+  color: #99221f;
 }
 
 .forml-group input[type="text"],
@@ -68,6 +68,7 @@
   padding: 10px;
   border: none;
   border-bottom: 1px solid black;
+  margin-bottom: 10px;
 }
 
 .forml-group select {
@@ -112,4 +113,21 @@
 
 .icon {
   margin-right: 8px;
+}
+
+.p-float-label .p-inputtext {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+.p-float-label label {
+  color: #99221f;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }

@@ -7,6 +7,7 @@ import Navbar from "../Navbar/Navbar";
 import { toast } from "react-toastify";
 import { Password } from "primereact/password";
 import { FloatLabel } from "primereact/floatlabel";
+import { InputText } from "primereact/inputtext";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -80,35 +81,43 @@ function Signup() {
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>
-                  <FaUser className="icon" /> Name
+                  {/* <FaUser className="icon" /> Name */}
                 </label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
+                <FloatLabel>
+                  <InputText
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <label htmlFor="name">Enter Your Name</label>
+                </FloatLabel>
               </div>
               <div className="form-group">
                 <label>
-                  <FaEnvelope className="icon" /> Email
+                  {/* <FaEnvelope className="icon" /> Email */}
                 </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                <FloatLabel>
+                  <InputText
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <label htmlFor="email">Enter Your Email</label>
+                </FloatLabel>
               </div>
-              <div className="form-group">
+              <div className="form-group-pass">
                 <label>
-                  <FaLock className="icon" /> Password
+                  {/* <FaLock className="icon" /> Password */}
                 </label>
                 <FloatLabel>
                   <Password
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     toggleMask
+                    id="password"
                   />
-                  {/* <label htmlFor="password">Password</label> */}
+                  <label htmlFor="password">Password</label>
                 </FloatLabel>
               </div>
               <button type="submit" className="submit-button">

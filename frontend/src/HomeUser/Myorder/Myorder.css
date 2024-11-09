@@ -17,7 +17,12 @@
   gap: 20px;
 }
 
+.container h2{
+  margin-top: -110px;
+}
+
 .my-orders-order {
+  margin-top: -110px;
   position: relative;
   border: 1px solid #ddd;
   padding: 20px;

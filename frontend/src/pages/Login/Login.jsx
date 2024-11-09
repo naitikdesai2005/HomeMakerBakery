@@ -7,6 +7,10 @@ import Navbar from "../Navbar/Navbar";
 import { toast } from "react-toastify";
 import { StoreContext } from "../context/StoreContext";
 
+// Import PrimeReact components
+import { InputText } from "primereact/inputtext";
+import { FloatLabel } from "primereact/floatlabel";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -74,29 +78,31 @@ function Login() {
               className="cookies-image"
             />
           </div>
-          <div className="form-container">
+          <div className="forml-container">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>
-                  <FaEnvelope className="icon" /> Email
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+              <div className="forml-group">
+                <FloatLabel>
+                  <InputText
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    id="email"
+                  />
+                  <label htmlFor="email">Email</label>
+                </FloatLabel>
                 {emailError && <p className="error">{emailError}</p>}
               </div>
-              <div className="form-group">
-                <label>
-                  <FaLock className="icon" /> Password
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+              <div className="forml-group">
+                <FloatLabel>
+                  <InputText
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    id="password"
+                  />
+                  <label htmlFor="password">Password</label>
+                </FloatLabel>
                 {passwordError && <p className="error">{passwordError}</p>}
               </div>
               <button type="submit" className="Login-button">

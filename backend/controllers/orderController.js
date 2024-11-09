@@ -7,32 +7,35 @@ import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const createOrder = async (req, res) => {
-  const frontend_url = "http://localhost:5173";
+  const frontend_URL = "http://localhost:5173";
+  const deliveryCharge = 40;
+  const currency = "inr";
+
   try {
     const user = await userModel.findById(req.body.userId);
     if (!user) {
       return res.json({ success: false, message: "User not found" });
     }
 
-    const cartData = user.cartData;
     const { firstname, lastname, email, address, phone } = req.body;
+    const cartData = user.cartData;
     let items = [];
     let totalPrice = 0;
-    let bakerItemsMap = {}; // To group items by baker ID
+    let bakerItemsMap = {};
 
     for (let itemId in cartData) {
       const product = await productModel.findById(itemId);
       if (product) {
         const quantity = cartData[itemId];
+        const itemPrice = product.price * quantity;
         items.push({
           productId: product._id,
           bakerId: product.bakerid,
           quantity,
           price: product.price,
         });
-        totalPrice += product.price * quantity;
+        totalPrice += itemPrice;
 
-        // Grouping items by bakerId
         if (!bakerItemsMap[product.bakerid]) {
           bakerItemsMap[product.bakerid] = [];
         }
@@ -51,35 +54,31 @@ const createOrder = async (req, res) => {
       email,
       address,
       phone,
-      totalPrice,
+      totalPrice: totalPrice + deliveryCharge,
       items,
     });
-
     const savedOrder = await newOrder.save();
 
-    // Update each baker with only their specific items
     for (let bakerId in bakerItemsMap) {
       const baker = await bakerModel.findById(bakerId);
       if (baker) {
         baker.orders.push({
           orderId: savedOrder._id,
-          items: bakerItemsMap[bakerId], // Only items for this baker
+          items: bakerItemsMap[bakerId],
           status: "Pending",
         });
         await baker.save();
       }
     }
 
-    // Clear the user’s cart
     user.cartData = {};
     await user.save();
 
-    // Stripe session setup
     const line_items = items.map((item) => ({
       price_data: {
-        currency: "inr",
+        currency: currency,
         product_data: {
-          name: item.productId, // Make sure `product.name` is available for each item
+          name: item.productId.toString(),
         },
         unit_amount: item.price * 100,
       },
@@ -88,8 +87,11 @@ const createOrder = async (req, res) => {
 
     line_items.push({
       price_data: {
-        product_data: { name: "Delivery Charges" },
-        unit_amount: 40 * 100,
+        currency: currency,
+        product_data: {
+          name: "Delivery Charge",
+        },
+        unit_amount: deliveryCharge * 100,
       },
       quantity: 1,
     });
@@ -98,145 +100,42 @@ const createOrder = async (req, res) => {
       payment_method_types: ["card"],
       line_items,
       mode: "payment",
-      success_url: `${frontend_url}/verify?success=true&orderId=${savedOrder._id}`,
-      cancel_url: `${frontend_url}/verify?success=false&orderId=${savedOrder._id}`,
+      success_url: `${frontend_URL}/verify?success=true&orderId=${savedOrder._id}`,
+      cancel_url: `${frontend_URL}/verify?success=false&orderId=${savedOrder._id}`,
     });
 
     res.json({ success: true, session_url: session.url });
   } catch (error) {
+    console.error(error);
     res.json({ success: false, message: "Error creating order" });
   }
 };
 
-
-// const verifyOrder = async (req, res) => {
-//   const { orderId, success } = req.body;
-//   try {
-//     if (success === "true") {
-//       await orderModel.findByIdAndUpdate(orderId, { payment: true });
-//       const order = await orderModel.findById(orderId); // Retrieve order details
-//       res.json({ success: true, message: "Paid", order }); // Return order details
-//     } else {
-//       await orderModel.findByIdAndDelete(orderId);
-//       res.json({ success: false, message: "Not Paid" });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     res.json({ success: false, message: "Error" });
-//   }
-// };
-
-// // Fetch user orders
-// const getUserOrders = async (req, res) => {
-//   try {
-//     const userId = req.user._id;
-
-//     const userOrders = await orderModel.find({ userId }).populate({
-//       path: 'items.bakerId',
-//       select: 'bakeryname'
-//     });
-
-//     if (userOrders.length === 0) {
-//       return res.json({ success: false, message: "No orders found for the user" });
-//     }
-//     res.json({ success: true, orders: userOrders });
-//   } catch (error) {
-//     console.error(error);
-//     res.json({ success: false, message: "Error retrieving orders" });
-//   }
-// };
-
-// const getBakerOrders = async (req, res) => {
-//   try {
-//     const bakerId = req.body.bakerId;
-//     const orders = await orderModel.find({ bakerId: bakerId });
-//     res.json({ success: true, orders: orders });
-//   } catch (error) {
-//     console.error(error);
-//     res.json({ success: false, message: "Error retrieving orders" });
-//   }
-// };
-
-// // Update Order Status
-// const updateOrderStatus = async (req, res) => {
-//   try {
-//     const { orderId, status } = req.body;
-//     const order = await orderModel.findById(orderId);
-//     if (!order) {
-//       return res.json({ success: false, message: "Order not found" });
-//     }
-
-//     order.status = status;
-
-//     const baker = await bakerModel.findOne({ "orders.orderId": orderId });
-//     if (baker) {
-//       for (let orderItem of baker.orders) {
-//         if (orderItem.orderId.toString() === orderId.toString()) {
-//           orderItem.status = status;
-//           break;
-//         }
-//       }
-//       await baker.save();
-//     }
-
-//     await order.save();
-
-//     res.json({ success: true, message: "Order status updated" });
-//   } catch (error) {
-//     console.log(error);
-//     res.json({ success: false, message: "Error updating order status" });
-//   }
-// };
-
-
-const placeOrderCod = async (req, res) => {
-
-  try {
-    const newOrder = new orderModel({
-      userId: req.body.userId,
-      items: req.body.items,
-      amount: req.body.amount,
-      address: req.body.address,
-      payment: true,
-    })
-    await newOrder.save();
-    await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
-
-    res.json({ success: true, message: "Order Placed" });
-
-  } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: "Error" })
-  }
-}
-
-// Listing Order for Admin panel
 const getBakerOrders = async (req, res) => {
   try {
-    const orders = await orderModel.find({});
-    res.json({ success: true, data: orders })
+    const orders = await orderModel.find({ bakerId: req.body.bakerId })
+      .populate({
+        path: 'userId',
+        select: 'firstName lastName address phone',
+      })
+      .populate({
+        path: 'items.productId',
+        select: 'name price image',
+      });
+
+    res.json({ success: true, data: orders });
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: "Error" })
+    res.status(500).json({ success: false, message: "Error retrieving orders" });
   }
-}
+};
 
-// User Orders for Frontend
-// const getUserOrders = async (req, res) => {
-//   try {
-//     const orders = await orderModel.find({ userId: req.body.userId });
-//     res.json({ success: true, data: orders })
-//   } catch (error) {
-//     console.log(error);
-//     res.json({ success: false, message: "Error" })
-//   }
-// }
 
 const getUserOrders = async (req, res) => {
   try {
     const orders = await orderModel.find({ userId: req.body.userId }).populate({
       path: 'items.productId',
-      select: 'name price image', 
+      select: 'name price image',
     });
 
     res.json({ success: true, data: orders });
@@ -271,7 +170,6 @@ const verifyOrder = async (req, res) => {
   } catch (error) {
     res.json({ success: false, message: "Not  Verified" })
   }
-
 }
 
 export { createOrder, updateOrderStatus, getBakerOrders, verifyOrder, getUserOrders };

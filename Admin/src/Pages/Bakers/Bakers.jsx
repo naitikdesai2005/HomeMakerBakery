@@ -1,264 +1,253 @@
 import React, { useState } from "react";
-import "./Bakers.css";
-import AdminNavbar from "../AdminNavbar/AdminNavbar";
-import Sidebar from "../Sidebar/Sidebar";
-import { useNavigate } from "react-router-dom";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  Legend,
-  ResponsiveContainer,
-  Cell,
-} from "recharts";
+import { Search } from "react-feather";
+import Sidebar from "../Sidebar/Sidebar.jsx";
 
 const Bakers = () => {
-  const bakersList = [
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
+  const orders = [
     {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      phone: "123-456-7890",
-      active: true,
+      id: "#1001",
+      name: "Camera Lens",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      phone: "987-654-3210",
-      active: false,
+      id: "#1002",
+      name: "Black Sleep Dress",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 3,
-      name: "Robert Johnson",
-      email: "robert@example.com",
-      phone: "456-789-1234",
-      active: true,
+      id: "#1003",
+      name: "Argan Oil",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 4,
-      name: "Lucy Brown",
-      email: "lucy@example.com",
-      phone: "654-321-9876",
-      active: false,
+      id: "#1004",
+      name: "EAU DE Parfum",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 5,
-      name: "Emily White",
-      email: "emily@example.com",
-      phone: "111-222-3333",
-      active: true,
+      id: "#1005",
+      name: "Perfume",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 6,
-      name: "David Lee",
-      email: "david@example.com",
-      phone: "444-555-6666",
-      active: true,
+      id: "#1006",
+      name: "Lipstick",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 7,
-      name: "Sarah Green",
-      email: "sarah@example.com",
-      phone: "777-888-9999",
-      active: false,
+      id: "#1007",
+      name: "Sunglasses",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 8,
-      name: "Daniel King",
-      email: "daniel@example.com",
-      phone: "222-333-4444",
-      active: true,
+      id: "#1008",
+      name: "Watch",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 9,
-      name: "Laura Black",
-      email: "laura@example.com",
-      phone: "333-444-5555",
-      active: false,
+      id: "#1001",
+      name: "Camera Lens",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 10,
-      name: "Michael Blue",
-      email: "michael@example.com",
-      phone: "666-777-8888",
-      active: true,
+      id: "#1002",
+      name: "Black Sleep Dress",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 11,
-      name: "Jessica Brown",
-      email: "jessica@example.com",
-      phone: "999-000-1111",
-      active: false,
+      id: "#1003",
+      name: "Argan Oil",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 12,
-      name: "Paul Adams",
-      email: "paul@example.com",
-      phone: "555-666-7777",
-      active: true,
+      id: "#1004",
+      name: "EAU DE Parfum",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 13,
-      name: "Grace Miller",
-      email: "grace@example.com",
-      phone: "111-222-4444",
-      active: true,
+      id: "#1005",
+      name: "Perfume",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 14,
-      name: "Tom Moore",
-      email: "tom@example.com",
-      phone: "555-888-9999",
-      active: false,
+      id: "#1006",
+      name: "Lipstick",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 15,
-      name: "Anna Martin",
-      email: "anna@example.com",
-      phone: "222-111-5555",
-      active: true,
+      id: "#1007",
+      name: "Sunglasses",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
     {
-      id: 16,
-      name: "Ryan Davis",
-      email: "ryan@example.com",
-      phone: "888-999-7777",
-      active: false,
-    },
-    {
-      id: 17,
-      name: "Eva White",
-      email: "eva@example.com",
-      phone: "000-555-1111",
-      active: true,
-    },
-    {
-      id: 18,
-      name: "Aaron Scott",
-      email: "aaron@example.com",
-      phone: "333-111-6666",
-      active: false,
-    },
-    {
-      id: 19,
-      name: "Linda Walker",
-      email: "linda@example.com",
-      phone: "999-555-4444",
-      active: true,
-    },
-    {
-      id: 20,
-      name: "James Evans",
-      email: "james@example.com",
-      phone: "888-222-3333",
-      active: true,
+      id: "#1008",
+      name: "Watch",
+      email: "abc@gmail.com",
+      Total_Items: "789",
+      Total_Order: "1236",
     },
   ];
 
-  const [visibleBakers, setVisibleBakers] = useState(bakersList.slice(0, 4));
-  const [showAll, setShowAll] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(""); // Add state for search input
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
 
-  const toggleStatus = (id) => {
-    const updatedBakers = visibleBakers.map((baker) =>
-      baker.id === id ? { ...baker, active: !baker.active } : baker
-    );
-    setVisibleBakers(updatedBakers);
-  };
+  // Filter orders based on search query
+  const filteredOrders = orders.filter(
+    (order) =>
+      order.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.id.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-  const handleViewMore = () => {
-    navigate("/baker-details");
-  };
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
 
-  const navigate = useNavigate();
+  // Get the current page's items
+  const currentItems = filteredOrders.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
-  const graphData = [
-    { month: "January", bakers: 5 },
-    { month: "February", bakers: 6 },
-    { month: "March", bakers: 4 },
-    { month: "April", bakers: 7 },
-    { month: "May", bakers: 8 },
-    { month: "June", bakers: 9 },
-    { month: "July", bakers: 5 },
-    { month: "August", bakers: 10 },
-    { month: "September", bakers: 6 },
-    { month: "October", bakers: 8 },
-    { month: "November", bakers: 7 },
-    { month: "December", bakers: 9 },
-  ];
+  // Handle page navigation
+  const goToNextPage = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const goToPreviousPage = () =>
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  const goToPage = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <>
-      <AdminNavbar />
-      <div className="layout">
-        <Sidebar />
-        <div className="container">
-          <table className="baker-table">
-            <thead>
-              <tr>
-                <th>Baker Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {visibleBakers.map((baker) => (
-                <tr key={baker.id}>
-                  <td>{baker.name}</td>
-                  <td>{baker.email}</td>
-                  <td>{baker.phone}</td>
-                  <td>{baker.active ? "Active" : "Inactive"}</td>
-                  <td>
-                    <button
-                      className={
-                        baker.active ? "deactivate-btn" : "activate-btn"
-                      }
-                      onClick={() => toggleStatus(baker.id)}
-                    >
-                      {baker.active ? "❌" : "✔️"}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="min-h-screen bg-gray-50">
+      {/* Sidebar */}
+      <Sidebar visible={isSidebarVisible} />
 
-          <div className="view-more-container">
-            <button className="view-more-btn" onClick={handleViewMore}>
-              View More »»
-            </button>
+      <div className="bg-white p-6 rounded-xl shadow-md ml-64">
+        {" "}
+        {/* Added ml-64 for left margin */}
+        <div className="flex justify-between items-center mb-4 m-10">
+          <h2 className="text-xl font-semibold text-gray-800">Bakers List</h2>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search here"
+              className="w-full lg:w-64 pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 focus:border-blue-400"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)} // Update search query on input change
+            />
+            <Search className="absolute right-3 top-2 text-gray-500 w-5 h-5" />
           </div>
-
-          <div className="chart-container">
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart
-                data={graphData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+        </div>
+        {/* Orders Table */}
+        <table className="w-full text-left">
+          <thead>
+            <tr className="text-gray-500 text-sm">
+              <th className="py-2 px-3">
+                <input type="checkbox" className="rounded border-gray-300" />
+              </th>
+              <th className="py-2 px-3">Baker Id</th>
+              <th className="py-2 px-3">Baker Name</th>
+              <th className="py-2 px-3">Email</th>
+              <th className="py-2 px-3">Total Items</th>
+              <th className="py-2 px-3">Total Orders</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.map((order, index) => (
+              <tr
+                key={order.id}
+                className={`text-gray-700 ${
+                  index % 2 !== 0 ? "bg-gray-50" : ""
+                }`}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#f5f5f5",
-                    border: "none",
-                    borderRadius: "10px",
-                  }}
-                  itemStyle={{ color: "#333" }}
-                />
-                <Legend />
-                <Bar dataKey="bakers" fill="#8884d8" />
-              </BarChart>
-            </ResponsiveContainer>
+                <td className="py-3 px-3">
+                  <input type="checkbox" className="rounded border-gray-300" />
+                </td>
+                <td className="py-3 px-3">{order.id}</td>
+                <td className="py-3 px-3 flex items-center">
+                  <img
+                    src={order.image}
+                    alt={order.name}
+                    className="w-8 h-8 rounded-full mr-2"
+                  />
+                  {order.name}
+                </td>
+                <td className="py-3 px-3">{order.email}</td>
+                <td className="py-3 px-3">{order.Total_Items}</td>
+                <td className="py-3 px-3">{order.Total_Order}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* Pagination */}
+        <div className="flex justify-between items-center mt-4 text-gray-600">
+          <span>
+            {(currentPage - 1) * itemsPerPage + 1}-{" "}
+            {Math.min(currentPage * itemsPerPage, filteredOrders.length)} of{" "}
+            {filteredOrders.length}
+          </span>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={goToPreviousPage}
+              className="p-2 hover:bg-gray-100 rounded-full"
+              disabled={currentPage === 1}
+            >
+              &lt;
+            </button>
+            {[...Array(totalPages)].map((_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => goToPage(index + 1)}
+                className={`w-8 h-8 flex items-center justify-center rounded-full ${
+                  currentPage === index + 1
+                    ? "bg-blue-500 text-white"
+                    : "hover:bg-gray-200"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              onClick={goToNextPage}
+              className="p-2 hover:bg-gray-100 rounded-full"
+              disabled={currentPage === totalPages}
+            >
+              &gt;
+            </button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

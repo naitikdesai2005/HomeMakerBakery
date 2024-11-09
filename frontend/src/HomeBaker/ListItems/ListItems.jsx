@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./Listitems.css";
 import axios from "axios";
 import { toast } from "react-toastify";
-import "../HomeBaker.css";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { Button } from "primereact/button";
 
 const ListItems = () => {
   const [list, setList] = useState([]);
@@ -18,7 +20,6 @@ const ListItems = () => {
           token: token,
         },
       });
-      console.log(response.data);
       if (response.data.success) {
         setList(response.data.data);
         setFilteredItems(response.data.data);
@@ -26,7 +27,6 @@ const ListItems = () => {
         toast.error(response.data.message || "Error fetching products");
       }
     } catch (error) {
-      console.error("Error fetching list:", error);
       toast.error("Something went wrong. Please try again.");
     }
   };
@@ -54,7 +54,7 @@ const ListItems = () => {
       );
       if (response.data.success) {
         toast.success("Food item deleted successfully!");
-        await fetchList(); // Refresh the list to reflect changes
+        await fetchList();
       } else {
         toast.error(response.data.message || "Failed to delete food item.");
       }
@@ -67,35 +67,72 @@ const ListItems = () => {
     fetchList();
   }, []);
 
+  const imageBodyTemplate = (rowData) => {
+    return (
+      <img
+        src={`${url}/uploads/${rowData.image}`}
+        alt={rowData.name}
+        className="product-image"
+      />
+    );
+  };
+
+  const priceBodyTemplate = (rowData) => {
+    return <p>Rs.{rowData.price}</p>;
+  };
+
+  const ratingBodyTemplate = (rowData) => {
+    return <p>{rowData.rating} stars</p>;
+  };
+
+  const statusBodyTemplate = (rowData) => {
+    return (
+      <Button
+        label="Delete"
+        icon="pi pi-times"
+        className="p-button-danger"
+        onClick={() => removeFood(rowData._id)}
+      />
+    );
+  };
+
+  const header = (
+    <div className="table-header">
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Search for a food item"
+        value={searchQuery}
+        onChange={handleSearch}
+      />
+    </div>
+  );
+
+  const footer = (
+    <div className="table-footer">
+      <span>Displaying {filteredItems.length} items</span>
+    </div>
+  );
+
   return (
-    <div className="list add flex-col">
-      <h1>All Foods List</h1>
-      <div className="navbar-search-baker">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={handleSearch} // Trigger search on input change
-        />
-      </div>
-      <div className="list-table">
-        <div className="list-table-format title">
-          <b>Image</b>
-          <b>Name</b>
-          <b>Price</b>
-          <b>Action</b>
-        </div>
-        {filteredItems.map((item, index) => (
-          <div key={index} className="list-table-format">
-            <img src={`${url}/uploads/${item.image}`} alt={item.name} />
-            <p>{item.name}</p>
-            <p>Rs.{item.price}</p>
-            <p onClick={() => removeFood(item._id)} className="cursor">
-              X
-            </p>
-          </div>
-        ))}
-      </div>
+    <div className="list-items-container">
+      {/* <h1 className="title">All Foods List</h1> */}
+      <DataTable
+        value={filteredItems}
+        header={header}
+        footer={footer}
+        tableStyle={{ minWidth: "70rem" }}
+        paginator
+        rows={10}
+        rowsPerPageOptions={[5, 10, 15, 20]}
+      >
+        <Column field="name" header="Name"></Column>
+        <Column header="Image" body={imageBodyTemplate}></Column>
+        <Column field="price" header="Price" body={priceBodyTemplate}></Column>
+        <Column field="category" header="Category"></Column>
+        {/* <Column field="rating" header="Reviews" body={ratingBodyTemplate}></Column> */}
+        <Column header="Status" body={statusBodyTemplate}></Column>
+      </DataTable>
     </div>
   );
 };
