@@ -1,8 +1,8 @@
+import "./Home.css";
 import React, { useState, useContext } from "react";
 import Navbar from "./Navbar/Navbar.jsx";
 import Menu from "./menu/Menu.jsx";
 import Footer from "./Footer/Footer.jsx";
-import "./Home.css";
 import ProductDisplay from "./ProductDisplay/ProductDisplay.jsx";
 import { StoreContext } from "./context/StoreContext.jsx";
 import UserNavbar from "../HomeUser/UserNavbar/UserNavbar.jsx";
@@ -10,31 +10,51 @@ import UserNavbar from "../HomeUser/UserNavbar/UserNavbar.jsx";
 function Homepage() {
   const [category, setCategory] = useState("All");
   const { isAuthenticated } = useContext(StoreContext);
+
   return (
-    <div>
+    <div className="font-sans bg-white">
+      {/* Navbar */}
       {isAuthenticated ? <UserNavbar /> : <Navbar />}
-      <div className="mainpage" id="home">
-        <div className="mainpage-content">
-          <h2>Baked With Love</h2>
-          <br />
-          <br />
-          <h2>Delivered With Care!</h2>
-          <br />
-          <h5>
+
+      {/* Mainpage Section with Text and Image */}
+      <div className="mainpage flex justify-between items-center mb-12 mt-[-50px]">
+        {/* Left Content Section */}
+        <div className="mainpage-content text-center mx-8 md:mx-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#58231f] inline-block animate-fadeIn">
+            Baked With Love
+          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-[#58231f] inline-block animate-fadeIn ml-2">
+            Delivered With Care!
+          </h2>
+          <p className="mt-4 text-lg text-gray-800 max-w-4xl mx-auto animate-fadeIn">
             Indulge in the sweetness of home-baked goodness, crafted with love
             and passion by talented home bakers. Each treat is made to
             perfection, just for you, bringing warmth and joy to every bite.
             Discover the magic of homemade flavors delivered right to your
             doorstep!
-          </h5>
+          </p>
+          <button className="know-button mt-8 py-3 px-6 text-black bg-white border-2 border-[#58231f] rounded-full cursor-pointer transition duration-300 hover:bg-[#58231f] hover:text-white">
+            Learn More
+          </button>
         </div>
-        <img src="/images/home.jpg" alt="background" />
+
+        {/* Image Section */}
+        <div className="mainpage-image hidden md:block mr-24">
+          <img
+            src="/images/home.jpg"
+            alt="background"
+            className="w-[750px] h-[500px] object-cover rounded-lg"
+          />
+        </div>
       </div>
+
+      {/* Menu Section */}
       <Menu category={category} setCategory={setCategory} />
-      {/* <a className="viewmore" href="/allproduct">
-        view more »»
-      </a> */}
+
+      {/* Product Display Section */}
       <ProductDisplay category={category} />
+
+      {/* Footer */}
       <Footer />
     </div>
   );

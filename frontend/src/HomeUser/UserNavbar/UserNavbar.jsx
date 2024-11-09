@@ -1,98 +1,108 @@
 import React, { useContext, useState } from "react";
-import "./UserNavbar.css";
-import { Link, useNavigate } from "react-router-dom";
-import { assets } from "../../../images/assets";
+import { Link } from "react-router-dom";
+import { FaShoppingBasket } from "react-icons/fa";
 import { StoreContext } from "../../pages/context/StoreContext";
+import { assets } from "../../../images/assets";
 
 const UserNavbar = () => {
   const [menu, setMenu] = useState("home");
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { getTotalCartItems, logout } = useContext(StoreContext);
   const cartItemCount = getTotalCartItems();
-  // const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  // const handleLogout = () => {
-  //   localStorage.removeItem("token");
-  //   navigate("/");
-  // };
-
   return (
-    <div>
-      <nav className="navbar">
-        <div className="navbar-logo">
-          <Link to="/">
-            <img src="../../images/Logo.png" alt="" />
-          </Link>
-        </div>
-        <div className="navbar-search">
-          <input type="text" placeholder="Search..." />
-        </div>
-        <div className="navbar-menu">
-          <Link
-            to="/"
-            onClick={() => setMenu("home")}
-            className={menu === "home" ? "active" : ""}
-          >
-            Home
-          </Link>
-          <Link
-            to="/aboutus"
-            onClick={() => setMenu("About")}
-            className={menu === "About" ? "active" : ""}
-          >
-            About
-          </Link>
-          <a
-            href="#menu"
-            onClick={() => setMenu("Product")}
-            className={menu === "Product" ? "active" : ""}
-          >
-            Products
-          </a>
-          <Link
-            to="/contact"
-            onClick={() => setMenu("Contact")}
-            className={menu === "Contact" ? "active" : ""}
-          >
-            Contact
-          </Link>
-        </div>
-        <div className="nav">
-          <div className="navbar-right">
-            <div className="navbar-cart-icon">
-              <Link to="/cart">
-                <img src={assets.basket_icon} alt="Cart" height={"60px"} />
-                {cartItemCount > 0 && (
-                  <span className="cart-count">{cartItemCount}</span>
-                )}
-              </Link>
-            </div>
+    <nav className="flex justify-between items-center bg-white py-4 mb-20 px-4 md:px-16">
+      {/* Logo */}
+      <div className="flex items-center">
+        <Link to="/" onClick={() => setMenu("home")}>
+          <img src="../../images/Logo.png" alt="Logo" className="h-20 w-60" />
+        </Link>
+      </div>
+
+      {/* Search Bar */}
+      <div className="flex items-center w-80 md:w-96">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="w-full py-2 px-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#58231f] transition-all duration-300"
+        />
+      </div>
+
+      {/* Navigation Links */}
+      <div className="flex space-x-6 text-gray-800">
+        <Link
+          to="/"
+          onClick={() => setMenu("home")}
+          className={`hover:text-[#f79c3e] ${menu === "home" ? "text-[#f79c3e]" : ""}`}
+        >
+          Home
+        </Link>
+        <Link
+          to="/aboutus"
+          onClick={() => setMenu("About")}
+          className={`hover:text-[#f79c3e] ${menu === "About" ? "text-[#f79c3e]" : ""}`}
+        >
+          About
+        </Link>
+        <Link
+          to="/products"
+          onClick={() => setMenu("Product")}
+          className={`hover:text-[#f79c3e] ${menu === "Product" ? "text-[#f79c3e]" : ""}`}
+        >
+          Products
+        </Link>
+        <Link
+          to="/contact"
+          onClick={() => setMenu("Contact")}
+          className={`hover:text-[#f79c3e] ${menu === "Contact" ? "text-[#f79c3e]" : ""}`}
+        >
+          Contact
+        </Link>
+      </div>
+
+      {/* Cart Icon with Badge */}
+      <div className="relative">
+        <Link to="/cart">
+          <FaShoppingBasket className="h-8 w-8 text-gray-800 hover:text-[#f79c3e]" />
+          {cartItemCount > 0 && (
+            <span className="absolute top-0 right-0 bg-black text-white text-xs font-bold rounded-full px-2 py-1">
+              {cartItemCount}
+            </span>
+          )}
+        </Link>
+      </div>
+
+      {/* Profile Button and Dropdown */}
+      <div className="relative">
+        <button onClick={toggleDropdown} className="text-gray-800">
+          <img
+            src={assets.login_icon}
+            alt="Profile"
+            className="h-8 w-8 rounded-full"
+          />
+        </button>
+        {dropdownVisible && (
+          <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
+            <Link to="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+              Profile
+            </Link>
+            <Link to="/myorders" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+              Orders
+            </Link>
+            <a
+              onClick={logout}
+              className="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
+            >
+              Logout
+            </a>
           </div>
-          <div className="profile-button">
-            <button className="loginbutton" onClick={toggleDropdown}>
-              <img src={assets.login_icon} alt="Profile" />
-            </button>
-            {dropdownVisible && (
-              <div className="dropdown-menu">
-                <Link to="/profile" className="dropdown-item">
-                  Profile
-                </Link>
-                <Link to="/myorders" className="dropdown-item">
-                  Orders
-                </Link>
-                <a onClick={logout} className="dropdown-item">
-                  Logout
-                </a>
-              </div>
-            )}
-          </div>
-        </div>
-      </nav>
-    </div>
+        )}
+      </div>
+    </nav>
   );
 };
 
