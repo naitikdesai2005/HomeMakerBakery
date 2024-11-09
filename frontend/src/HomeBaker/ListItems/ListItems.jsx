@@ -123,8 +123,8 @@ const ListItems = () => {
         footer={footer}
         tableStyle={{ minWidth: "70rem" }}
         paginator
-        rows={10}
-        rowsPerPageOptions={[5, 10, 15, 20]}
+        rows={3}
+        rowsPerPageOptions={[5, 8]}
       >
         <Column field="name" header="Name"></Column>
         <Column header="Image" body={imageBodyTemplate}></Column>
