@@ -33,6 +33,11 @@ const AllProducts = () => {
     <>
       {isAuthenticated ? <UserNavbar /> : <Navbar />}
       <div className="all-products-container">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <div className="all-products-list">
           {products.map((item, index) => (
             <Product

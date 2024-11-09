@@ -111,7 +111,6 @@ const createOrder = async (req, res) => {
   }
 };
 
-
 const getBakerOrders = async (req, res) => {
   try {
     const bakerId = req.body.userId;
@@ -124,16 +123,19 @@ const getBakerOrders = async (req, res) => {
     const formattedOrders = [];
 
     for (const orderInfo of baker.orders) {
-      const order = await orderModel.findById(orderInfo.orderId).populate('items.productId', 'name price image');
+      // Find each order and populate both items and user details
+      const order = await orderModel.findById(orderInfo.orderId)
+        .populate('items.productId', 'name price image')
+        .populate('userId', 'firstName lastName email phone address');
 
       if (!order) continue;
 
       const orderDetails = {
         user: {
-          name: order.firstname + ' ' + order.lastname,
-          email: order.email,
-          phone: order.phone,
-          address: order.address
+          name: `${order.userId.firstName} ${order.userId.lastName}`,
+          email: order.userId.email,
+          phone: order.userId.phone,
+          address: order.userId.address,
         },
         items: order.items.map(item => ({
           name: item.productId.name,
@@ -142,7 +144,7 @@ const getBakerOrders = async (req, res) => {
           image: item.productId.image,
         })),
         totalPrice: order.totalPrice,
-        status: order.status
+        status: order.status,
       };
 
       formattedOrders.push(orderDetails);
@@ -154,6 +156,7 @@ const getBakerOrders = async (req, res) => {
     res.status(500).json({ success: false, message: "Error retrieving orders" });
   }
 };
+
 
 
 const updateOrderStatus = async (req, res) => {

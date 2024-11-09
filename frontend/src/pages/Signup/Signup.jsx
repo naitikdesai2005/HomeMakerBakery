@@ -1,145 +1,5 @@
-// import React, { useState } from "react";
-// import { Link, useNavigate } from "react-router-dom";
-// import { FaEnvelope, FaUser, FaLock } from "react-icons/fa";
-// import "./Signup.css";
-// import axios from "axios";
-// import Navbar from "../Navbar/Navbar";
-// import { toast } from "react-toastify";
-// import { Password } from "primereact/password";
-// import { FloatLabel } from "primereact/floatlabel";
-// import { InputText } from "primereact/inputtext";
-// import "primereact/resources/themes/saga-blue/theme.css";
-// import "primereact/resources/primereact.min.css";
-// import "primeicons/primeicons.css";
-
-// function Signup() {
-//   const [name, setName] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const navigate = useNavigate();
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     let valid = true;
-
-//     if (!email) {
-//       alert("Please enter your email.");
-//       valid = false;
-//     }
-
-//     if (!password) {
-//       alert("Please enter your password.");
-//       valid = false;
-//     }
-
-//     if (!name) {
-//       alert("Please enter your Name.");
-//       valid = false;
-//     }
-
-//     if (!valid) return;
-
-//     try {
-//       const response = await axios.post(
-//         "http://localhost:3000/api/user/registerUser",
-//         {
-//           email,
-//           password,
-//           name,
-//         }
-//       );
-//       if (response.data.success) {
-//         console.log("SignUp Successful!", response.data);
-//         localStorage.setItem("token", response.data.token);
-//         toast.success("Sign up Successfully");
-//         if (response.data.message === "user") {
-//           navigate("/homeuser");
-//           console.log("user");
-//         }
-//       } else {
-//         alert("Login failed: " + response.data.message);
-//       }
-//     } catch (error) {
-//       console.error("An error occurred during login:", error);
-//     }
-//   };
-
-//   return (
-//     <>
-//       <Navbar />
-//       <div className="signup-container">
-//         <div className="signup-form">
-//           <div className="image-container">
-//             <img
-//               src="/images/bac.jpg"
-//               alt="Cookies"
-//               className="cookies-image"
-//             />
-//           </div>
-//           <div className="form-container">
-//             <h2>Sign Up</h2>
-//             <form onSubmit={handleSubmit}>
-//               <div className="form-group">
-//                 <label>
-//                   {/* <FaUser className="icon" /> Name */}
-//                 </label>
-//                 <FloatLabel>
-//                   <InputText
-//                     id="name"
-//                     value={name}
-//                     onChange={(e) => setName(e.target.value)}
-//                   />
-//                   <label htmlFor="name">Enter Your Name</label>
-//                 </FloatLabel>
-//               </div>
-//               <div className="form-group">
-//                 <label>
-//                   {/* <FaEnvelope className="icon" /> Email */}
-//                 </label>
-//                 <FloatLabel>
-//                   <InputText
-//                     id="email"
-//                     type="email"
-//                     value={email}
-//                     onChange={(e) => setEmail(e.target.value)}
-//                   />
-//                   <label htmlFor="email">Enter Your Email</label>
-//                 </FloatLabel>
-//               </div>
-//               <div className="form-group-pass">
-//                 <label>
-//                   {/* <FaLock className="icon" /> Password */}
-//                 </label>
-//                 <FloatLabel>
-//                   <Password
-//                     value={password}
-//                     onChange={(e) => setPassword(e.target.value)}
-//                     toggleMask
-//                     id="password"
-//                   />
-//                   <label htmlFor="password">Password</label>
-//                 </FloatLabel>
-//               </div>
-//               <button type="submit" className="submit-button">
-//                 Create Account
-//               </button>
-//               <h4 className="account">
-//                 Already Have an Account? <Link to="/login">Login</Link>
-//               </h4>
-//             </form>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
-// export default Signup;
-
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaEnvelope, FaUser, FaLock } from "react-icons/fa";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import { toast } from "react-toastify";
@@ -154,65 +14,73 @@ function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     let valid = true;
 
+    // Reset error messages
+    setNameError("");
+    setEmailError("");
+    setPasswordError("");
+
+    // Validation checks
+    if (!name) {
+      setNameError("Please enter your name.");
+      valid = false;
+    }
+
     if (!email) {
-      alert("Please enter your email.");
+      setEmailError("Please enter your email.");
       valid = false;
     }
 
     if (!password) {
-      alert("Please enter your password.");
-      valid = false;
-    }
-
-    if (!name) {
-      alert("Please enter your Name.");
+      setPasswordError("Please enter your password.");
       valid = false;
     }
 
     if (!valid) return;
 
+    // API call to submit the form data
     try {
       const response = await axios.post(
         "http://localhost:3000/api/user/registerUser",
-        {
-          email,
-          password,
-          name,
-        }
+        { email, password, name }
       );
+
       if (response.data.success) {
         console.log("SignUp Successful!", response.data);
         localStorage.setItem("token", response.data.token);
         toast.success("Sign up Successfully");
         if (response.data.message === "user") {
           navigate("/homeuser");
-          console.log("user");
         }
       } else {
-        alert("Login failed: " + response.data.message);
+        alert("Sign up failed: " + response.data.message);
       }
     } catch (error) {
-      console.error("An error occurred during login:", error);
+      console.error("An error occurred during sign-up:", error);
     }
   };
 
   return (
     <>
-      {/* <Navbar /> */}
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-800">
-        <div className="bg-white rounded-2xl shadow-xl flex w-full max-w-4xl transform transition-all duration-500 hover:scale-105">
+      <Navbar />
+      <br />
+      <br />
+      <div className="pt-1 flex items-center justify-center min-h-screen">
+        <div className="bg-white flex w-full max-w-4xl transform transition-all duration-500 hover:scale-105">
           {/* Left Side - Image */}
-          <div className="hidden md:flex items-center justify-center w-1/2 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-l-2xl">
+          <div className="hidden md:flex items-center justify-center w-1/2 rounded-l-2xl overflow-hidden">
             <img
-              src="/images/bac.jpg"
+              src="/images/bg login.jpg"
               alt="Cookies"
-              className="w-3/4 h-auto rounded-full shadow-lg transform transition-all duration-300 hover:rotate-12"
+              className="w-full h-full object-cover"
             />
           </div>
 
@@ -220,7 +88,9 @@ function Signup() {
           <div className="w-full md:w-1/2 p-8">
             <div className="text-center mb-6">
               <h2 className="text-4xl font-bold text-gray-800">Sign Up</h2>
-              <p className="text-gray-600 text-sm">Please sign up to continue.</p>
+              <p className="text-gray-600 text-sm">
+                Please sign up to continue.
+              </p>
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -231,12 +101,15 @@ function Signup() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     id="name"
-                    className="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+                    className="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f79c3e] transition-all duration-300"
                   />
                   <label htmlFor="name" className="text-gray-500">
                     Name
                   </label>
                 </FloatLabel>
+                {nameError && (
+                  <p className="text-red-500 text-sm mt-1">{nameError}</p>
+                )}
               </div>
 
               <div className="mb-6">
@@ -246,12 +119,15 @@ function Signup() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     id="email"
-                    className="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+                    className="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f79c3e] transition-all duration-300"
                   />
                   <label htmlFor="email" className="text-gray-500">
                     Email
                   </label>
                 </FloatLabel>
+                {emailError && (
+                  <p className="text-red-500 text-sm mt-1">{emailError}</p>
+                )}
               </div>
 
               <div className="mb-6">
@@ -261,17 +137,20 @@ function Signup() {
                     onChange={(e) => setPassword(e.target.value)}
                     toggleMask
                     id="password"
-                    className="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+                    className="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f79c3e] transition-all duration-300"
                   />
                   <label htmlFor="password" className="text-gray-500">
                     Password
                   </label>
                 </FloatLabel>
+                {passwordError && (
+                  <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+                )}
               </div>
 
               <button
                 type="submit"
-                className="w-full p-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-indigo-500 transition-all duration-300"
+                className="w-full p-4 bg-gradient-to-r from-[#f79c3e] to-[#f79c3e] text-white font-semibold rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-[#f79c3e] transition-all duration-300"
               >
                 Create Account
               </button>

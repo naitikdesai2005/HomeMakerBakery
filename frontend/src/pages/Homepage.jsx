@@ -12,12 +12,13 @@ function Homepage() {
   const { isAuthenticated } = useContext(StoreContext);
 
   return (
-    <div className="font-sans bg-white">
+    <div className="font-sans bg-white pt-40">
+      {" "}
+      {/* Adjust pt-20 based on navbar height */}
       {/* Navbar */}
       {isAuthenticated ? <UserNavbar /> : <Navbar />}
-
       {/* Mainpage Section with Text and Image */}
-      <div className="mainpage flex justify-between items-center mb-12 mt-[-50px]">
+      <div className="mainpage flex justify-between items-center mb-10 mt-[-50px]">
         {/* Left Content Section */}
         <div className="mainpage-content text-center mx-8 md:mx-16">
           <h2 className="text-4xl md:text-5xl font-bold text-[#58231f] inline-block animate-fadeIn">
@@ -40,6 +41,7 @@ function Homepage() {
 
         {/* Image Section */}
         <div className="mainpage-image hidden md:block mr-24">
+          <br />
           <img
             src="/images/home.jpg"
             alt="background"
@@ -47,13 +49,11 @@ function Homepage() {
           />
         </div>
       </div>
-
+      <br />
       {/* Menu Section */}
-      <Menu category={category} setCategory={setCategory} />
-
+      {/* <Menu category={category} setCategory={setCategory} /> */}
       {/* Product Display Section */}
       <ProductDisplay category={category} />
-
       {/* Footer */}
       <Footer />
     </div>

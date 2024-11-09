@@ -11,7 +11,7 @@ function Homepage() {
   const { isAuthenticated } = useContext(StoreContext);
 
   return (
-    <div className="font-sans bg-white">
+    <div className="font-sans bg-white pt-40">
       {/* Navbar */}
       {isAuthenticated ? <UserNavbar /> : <Navbar />}
 

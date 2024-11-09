@@ -9,7 +9,7 @@ const Navbar = () => {
   const cartItemCount = getTotalCartItems();
 
   return (
-    <nav className="flex justify-around items-center bg-white py-4 mb-20">
+    <nav className="fixed top-0 w-full z-50 flex justify-between items-center bg-white py-4 px-4 md:px-16">
       {/* Logo */}
       <div className="flex items-center">
         <Link to="/" onClick={() => setMenu("home")}>
@@ -27,7 +27,7 @@ const Navbar = () => {
       </div>
 
       {/* Navigation Links */}
-      <div className="flex space-x-4 text-gray-800">
+      <div className="flex space-x-8 text-gray-800">
         <Link
           to="/"
           onClick={() => setMenu("home")}

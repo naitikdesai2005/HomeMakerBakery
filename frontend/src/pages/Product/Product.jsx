@@ -1,12 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./Product.css";
 import { assets } from "../../../images/assets";
 import { StoreContext } from "../context/StoreContext";
+import { Image } from "primereact/image";
 
 const Product = ({ id, name, description, price, image }) => {
   const { cartItems, addToCart } = useContext(StoreContext);
+  const [showPreview, setShowPreview] = useState(false);
   const url = "http://localhost:3000";
-  console.log(id);
+
+  const togglePreview = () => {
+    setShowPreview(!showPreview); 
+  };
 
   return (
     <div className="product-item" id="product">
@@ -15,6 +20,7 @@ const Product = ({ id, name, description, price, image }) => {
           className="product-item-image"
           src={url + "/uploads/" + image}
           alt={name}
+          onClick={togglePreview} 
         />
         {!cartItems[id] ? (
           <img
@@ -29,6 +35,20 @@ const Product = ({ id, name, description, price, image }) => {
           </div>
         )}
       </div>
+
+      {/* Image Preview Modal */}
+      {showPreview && (
+        <div className="image-preview-modal" onClick={togglePreview}>
+          <Image
+            src={url + "/uploads/" + image}
+            alt={name}
+            preview
+            width="500" 
+            className="product-image-preview"
+          />
+        </div>
+      )}
+
       <div className="product-item-info">
         <div className="product-item-name-rating">
           <p>{name}</p>
