@@ -12,7 +12,8 @@ const Order = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/order/baker-orders"
+        "http://localhost:3000/api/order/baker-orders",
+        { headers: { token: localStorage.getItem("token") } } // Include token for authentication
       );
       if (response.data.success) {
         setOrders(response.data.data.reverse());
@@ -28,14 +29,27 @@ const Order = () => {
 
   const statusHandler = async (event, orderId) => {
     const status = event.target.value;
+  
+    // Log the values being sent
+    console.log("Updating order status:", { orderId, status });
+  
+    // Validate that orderId and status are defined
+    if (!orderId || !status) {
+      console.error("Order ID or status is missing.");
+      toast.error("Order ID and status are required.");
+      return;
+    }
+  
     try {
       const response = await axios.post(
         "http://localhost:3000/api/order/update-status",
         {
           orderId,
           status,
-        }
+        },
+        { headers: { token: localStorage.getItem("token") } } // Include token for authentication
       );
+  
       if (response.data.success) {
         toast.success("Order status updated successfully.");
         fetchAllOrders();
@@ -43,7 +57,8 @@ const Order = () => {
         toast.error("Failed to update order status.");
       }
     } catch (error) {
-      console.error("Error updating order status:", error);
+      // Log the error response for debugging
+      console.error("Error updating order status:", error.response.data);
       toast.error("An error occurred while updating the status.");
     }
   };
@@ -53,60 +68,53 @@ const Order = () => {
   }, []);
 
   return (
-    <div className="order-container">
-      <h3>Order Management</h3>
-      <div className="order-list">
-        {loading ? (
-          <p>Loading orders...</p>
-        ) : orders.length === 0 ? (
-          <p>No orders found.</p>
-        ) : (
-          orders.map((order) => {
-            const totalAmount = order.items.reduce((total, item) => {
-              return total + item.quantity * (item.productId.price || 0);
-            }, 0);
-
-            return (
-              <div key={order._id} className="order-item">
-                <div className="order-item-details">
-                  {order.items.map((item, idx) => (
-                    <div key={idx} className="order-product-details">
-                      <img
-                        src={`http://localhost:3000/uploads/${item.productId.image}`}
-                        alt={item.productId.name}
-                        className="product-image"
-                      />
-                      <p className="product-name">
-                        {item.productId.name} x {item.quantity}
-                      </p>
-                    </div>
-                  ))}
-                  <p className="order-item-name">
-                    {order.userId.firstName} {order.userId.lastName}
-                  </p>
-                  <div className="order-item-address">
-                    <p>{order.userId.address}</p>
-                  </div>
-                  <p className="order-item-phone">{order.userId.phone}</p>
+    <div className="order-list">
+      {loading ? (
+        <p>Loading orders...</p>
+      ) : orders.length === 0 ? (
+        <p>No orders found.</p>
+      ) : (
+        orders.map((order) => {
+          console.log("Order object:", order); // Debugging log
+          return (
+            <div key={order._id} className="order-item"> {/* Ensure this key is unique */}
+              <div className="order-item-details">
+                <p className="order-item-name">{order.user.name}</p>
+                <div className="order-item-address">
+                  <p>{order.user.address}</p>
                 </div>
-                <p className="order-item-amount">
-                  Total: {currency}
-                  {totalAmount}
-                </p>
-                <select
-                  onChange={(e) => statusHandler(e, order._id)}
-                  value={order.status}
-                  className="order-status-select"
-                >
-                  <option value="Food Processing">Food Processing</option>
-                  <option value="Out for delivery">Out for delivery</option>
-                  <option value="Delivered">Delivered</option>
-                </select>
+                <p className="order-item-phone">{order.user.phone}</p>
               </div>
-            );
-          })
-        )}
-      </div>
+              <div className="order-items">
+                {order.items.map((item, idx) => (
+                  <div key={item.productId} className="order-product-details"> {/* Ensure this key is unique as well */}
+                    <img
+                      src={`http://localhost:3000/uploads/${item.image}`}
+                      alt={item.name}
+                      className="product-image"
+                    />
+                    <p className="product-name">
+                      {item.name} x {item.quantity}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p className="order-item-amount">
+                Total: {currency} {order.totalPrice}
+              </p>
+              <select
+                onChange={(e) => statusHandler(e, order._id)} // Ensure order._id is being passed correctly
+                value={order.status}
+                className="order-status-select"
+              >
+                <option value="Food Processing">Food Processing</option>
+                <option value="Out for delivery">Out for delivery</option>
+                <option value="Delivered">Delivered</option>
+              </select>
+            </div>
+          );
+        })
+      )}
     </div>
   );
 };
