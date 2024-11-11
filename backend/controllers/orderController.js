@@ -113,84 +113,71 @@ const createOrder = async (req, res) => {
 
 const getBakerOrders = async (req, res) => {
   try {
-    const bakerId = req.body.userId;
+    const orders = await orderModel.find({ bakerId: req.body.bakerId })
+      .populate({
+        path: 'items.productId',
+        select: 'name price image',
+      })
+      
+      .populate({
+        path: 'userId',
+        select: 'firstName lastName address phone',
+      })
 
-    const baker = await bakerModel.findById(bakerId);
-    if (!baker) {
-      return res.status(404).json({ success: false, message: "Baker not found" });
-    }
+    res.json({ success: true, data: orders });
+    // const bakerId = req.body.userId;
 
-    const formattedOrders = [];
+    // const baker = await bakerModel.findById(bakerId);
+    // if (!baker) {
+    //   return res.status(404).json({ success: false, message: "Baker not found" });
+    // }
 
-    for (const orderInfo of baker.orders) {
-      // Find each order and populate both items and user details
-      const order = await orderModel.findById(orderInfo.orderId)
-        .populate('items.productId', 'name price image')
-        .populate('userId', 'firstName lastName email phone address');
+    // const formattedOrders = [];
 
-      if (!order) continue;
+    // for (const orderInfo of baker.orders) {
+    //   // Find each order and populate both items and user details
+    //   const order = await orderModel.findById(orderInfo.orderId)
+    //     .populate('items.productId', 'name price image')
+    //     .populate('userId', 'firstName lastName email phone address');
 
-      const orderDetails = {
-        user: {
-          name: `${order.userId.firstName} ${order.userId.lastName}`,
-          email: order.userId.email,
-          phone: order.userId.phone,
-          address: order.userId.address,
-        },
-        items: order.items.map(item => ({
-          name: item.productId.name,
-          quantity: item.quantity,
-          price: item.productId.price,
-          image: item.productId.image,
-        })),
-        totalPrice: order.totalPrice,
-        status: order.status,
-      };
+    //   if (!order) continue;
 
-      formattedOrders.push(orderDetails);
-    }
+    //   const orderDetails = {
+    //     user: {
+    //       name: `${order.userId.firstName} ${order.userId.lastName}`,
+    //       email: order.userId.email,
+    //       phone: order.userId.phone,
+    //       address: order.userId.address,
+    //     },
+    //     items: order.items.map(item => ({
+    //       name: item.productId.name,
+    //       quantity: item.quantity,
+    //       price: item.productId.price,
+    //       image: item.productId.image,
+    //     })),
+    //     totalPrice: order.totalPrice,
+    //     status: order.status,
+    //   };
 
-    res.json({ success: true, data: formattedOrders });
+    //   formattedOrders.push(orderDetails);
+    // }
+
+    // res.json({ success: true, data: formattedOrders });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Error retrieving orders" });
   }
 };
 
-
-
 const updateOrderStatus = async (req, res) => {
+  console.log(req.body);
   try {
-    const bakerId = req.body.userId; // Get the baker's ID from the request body populated by middleware
-    const { orderId, status } = req.body;
-
-    // Validate incoming request
-    if (!orderId || !status) {
-      return res.status(400).json({ success: false, message: "Order ID and status are required." });
-    }
-
-    // Find the order to check if it exists
-    const order = await orderModel.findById(orderId);
-    if (!order) {
-      return res.status(404).json({ success: false, message: "Order not found." });
-    }
-
-    // Check if the order belongs to the baker
-    // if (order.bakerId.toString() !== bakerId) {
-    //   return res.status(403).json({ success: false, message: "Forbidden. You do not have permission to update this order." });
-    // }
-
-    // Update the order status
-    order.status = status; // Update the status field
-    await order.save(); // Save the updated order
-
-    res.json({ success: true, message: "Status updated successfully." });
+    await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status });
+    res.json({ success: true, message: "Status Updated" })
   } catch (error) {
-    console.error("Error updating order status:", error.message);
-    res.status(500).json({ success: false, message: "Error updating order status." });
+    res.json({ success: false, message: "Error" })
   }
-};
-
+}
 
 const getUserOrders = async (req, res) => {
   try {

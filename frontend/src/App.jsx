@@ -21,7 +21,6 @@ import Payment from "./pages/Payment/Payment.jsx";
 import UserOrder from "./HomeUser/UserOrders/UserOrder.jsx";
 import Bakerprofile from "../../frontend/src/HomeBaker/BakerProfile/Bakerprofile.jsx";
 import MyOrders from "./HomeUser/Myorder/Myorder.jsx";
-import AllProducts from "./pages/AllProducts/Allproducts.jsx";
 import ResetPassword from "./pages/Resetpass/Resetpass.jsx";
 import ForgetPassword from "./pages/Forgetpass/Forgetpass.jsx";
 import Verify from "./pages/Verify/Verify.jsx";
@@ -69,7 +68,6 @@ function App() {
         <Route path="/userOrder" element={<UserOrder />} />
         <Route path="/bakerprofile" element={<Bakerprofile />} />
         <Route path="/myorders" element={<MyOrders />} />
-        <Route path="/allproduct" element={<AllProducts />} />
         <Route path="/forgetpass" element={<ForgetPassword />} />
         <Route path="/resetpass" element={<ResetPassword />} />
         <Route path="/verify" element={<Verify />} />

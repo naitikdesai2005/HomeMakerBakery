@@ -68,7 +68,7 @@ function Login() {
     <>
       <Navbar />
       <div className="pt-20 flex items-center justify-center min-h-screen">
-        <div className="bg-white flex w-full max-w-4xl transform transition-all duration-500 hover:scale-105">
+        <div className="bg-white flex w-full max-w-4xl transform transition-all duration-500">
           {/* Left Side - Image */}
           <div className="hidden md:flex items-center justify-center w-1/2 rounded-l-2xl overflow-hidden">
             <img

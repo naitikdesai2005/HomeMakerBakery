@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaShoppingBasket } from "react-icons/fa";
+import { FaShoppingBasket, FaUserCircle } from "react-icons/fa";
 import { StoreContext } from "../../pages/context/StoreContext";
 import { assets } from "../../../images/assets";
 
@@ -78,22 +78,18 @@ const UserNavbar = () => {
         <div className="relative">
           <Link to="/cart">
             <FaShoppingBasket className="h-8 w-8 text-gray-800 hover:text-[#f79c3e]" />
-            {cartItemCount > 0 && (
-              <span className="absolute top-0 right-0 bg-black text-white text-xs font-bold rounded-full px-2 py-1">
-                {cartItemCount}
-              </span>
-            )}
           </Link>
+          {cartItemCount > 0 && (
+            <span className="absolute top-[-20px] right-[-10px] bg-black text-white text-xs font-bold rounded-full px-2 py-1">
+              {cartItemCount}
+            </span>
+          )}
         </div>
 
         {/* Profile Button and Dropdown */}
         <div className="relative">
           <button onClick={toggleDropdown} className="text-gray-800">
-            <img
-              src={assets.login_icon}
-              alt="Profile"
-              className="h-8 w-8 rounded-full"
-            />
+            <FaUserCircle className="mt-2 h-8 w-8 text-gray-800" />{" "}
           </button>
           {dropdownVisible && (
             <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">

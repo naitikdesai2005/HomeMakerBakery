@@ -95,14 +95,13 @@ const Cart = () => {
                       </button>
                     </div>
                     <p>Rs. {item.price * quantity}</p>
-                   
-                    <button
-                          onClick={() => deleteFromCart(item._id)} // This will now delete from both frontend and backend
-                           className="cross"
-                    >
-                    <img src={assets.cross_icon} alt="Remove item" />
-                    </button>
 
+                    <button
+                      onClick={() => deleteFromCart(item._id)} // This will now delete from both frontend and backend
+                      className="cross"
+                    >
+                      <img src={assets.cross_icon} alt="Remove item" />
+                    </button>
                   </div>
                   <hr />
                 </div>
@@ -121,7 +120,7 @@ const Cart = () => {
               <hr />
               <div className="cart-total-details">
                 <p>Delivery Fee</p>
-                <p>Rs. {getTotalCartAmount() === 0 ? 0 :40 }</p>
+                <p>Rs. {getTotalCartAmount() === 0 ? 0 : 40}</p>
               </div>
               <hr />
               <div className="cart-total-details">

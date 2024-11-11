@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import Navbar from "./Navbar/Navbar.jsx";
 import Menu from "./menu/Menu.jsx";
 import Footer from "./Footer/Footer.jsx";
+import { Link } from "react-router-dom";
 import ProductDisplay from "./ProductDisplay/ProductDisplay.jsx";
 import { StoreContext } from "./context/StoreContext.jsx";
 import UserNavbar from "../HomeUser/UserNavbar/UserNavbar.jsx";
@@ -34,9 +35,15 @@ function Homepage() {
             Discover the magic of homemade flavors delivered right to your
             doorstep!
           </p>
-          <button className="know-button mt-8 py-3 px-6 text-black bg-white border-2 border-[#58231f] rounded-full cursor-pointer transition duration-300 hover:bg-[#58231f] hover:text-white">
-            Learn More
-          </button>
+          <br />
+          <a>
+            <Link
+              to="/aboutus"
+              className="know-button mt-8 py-3 px-6 text-black bg-white border-2 border-[#58231f] rounded-full cursor-pointer transition duration-300 hover:bg-[#58231f] hover:text-white"
+            >
+              Learn More
+            </Link>
+          </a>
         </div>
 
         {/* Image Section */}

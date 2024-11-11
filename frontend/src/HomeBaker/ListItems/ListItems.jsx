@@ -1,18 +1,214 @@
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+// import { toast } from "react-toastify";
+// import { DataTable } from "primereact/datatable";
+// import { Column } from "primereact/column";
+// import { Button } from "primereact/button";
+// import { jsPDF } from "jspdf";
+// import "jspdf-autotable";
+
+// const ListItems = () => {
+//   const [list, setList] = useState([]);
+//   const [filteredItems, setFilteredItems] = useState([]);
+//   const [searchQuery, setSearchQuery] = useState("");
+//   const url = "http://localhost:3000";
+
+//   const fetchList = async () => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       const response = await axios.get(`${url}/api/product/bakerProduct`, {
+//         headers: {
+//           token: token,
+//         },
+//       });
+//       if (response.data.success) {
+//         setList(response.data.data);
+//         setFilteredItems(response.data.data);
+//       } else {
+//         toast.error(response.data.message || "Error fetching products");
+//       }
+//     } catch (error) {
+//       toast.error("Something went wrong. Please try again.");
+//     }
+//   };
+
+//   const handleSearch = (e) => {
+//     const query = e.target.value.toLowerCase();
+//     setSearchQuery(query);
+//     const filtered = list.filter(
+//       (item) => item.name.toLowerCase().indexOf(query) >= 0
+//     );
+//     setFilteredItems(filtered);
+//   };
+
+//   const removeFood = async (foodId) => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       const response = await axios.post(
+//         `${url}/api/product/delete`,
+//         { productId: foodId },
+//         {
+//           headers: {
+//             token: token,
+//           },
+//         }
+//       );
+//       if (response.data.success) {
+//         toast.success("Food item deleted successfully!");
+//         await fetchList();
+//       } else {
+//         toast.error(response.data.message || "Failed to delete food item.");
+//       }
+//     } catch (error) {
+//       toast.error("Something went wrong while deleting the item.");
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchList();
+//   }, []);
+
+//   const imageBodyTemplate = (rowData) => {
+//     return (
+//       <img
+//         src={`${url}/uploads/${rowData.image}`}
+//         alt={rowData.name}
+//         className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded"
+//       />
+//     );
+//   };
+
+//   const priceBodyTemplate = (rowData) => {
+//     return <p>Rs.{rowData.price}</p>;
+//   };
+
+//   const descriptionBodyTemplate = (rowData) => {
+//     return (
+//       <p className="text-xs text-gray-600 w-full">{rowData.description}</p>
+//     );
+//   };
+
+//   const statusBodyTemplate = (rowData) => {
+//     return (
+//       <Button
+//         label="Delete"
+//         icon="pi pi-times"
+//         className="p-button-danger"
+//         onClick={() => removeFood(rowData._id)}
+//       />
+//     );
+//   };
+
+//   const header = (
+//     <div className="p-2">
+//       <input
+//         type="text"
+//         className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
+//         placeholder="Search for a food item"
+//         value={searchQuery}
+//         onChange={handleSearch}
+//       />
+//     </div>
+//   );
+
+//   const footer = (
+//     <div className="p-2 text-right text-sm text-gray-600">
+//       <span>Displaying {filteredItems.length} items</span>
+//     </div>
+//   );
+
+//   // Function to generate PDF from the table data
+//   const downloadPDF = () => {
+//     const doc = new jsPDF();
+//     const tableData = filteredOrders.map((order) => [
+//       `${order.user?.firstName || ""} ${order.user?.lastName || ""}`,
+//       order.user?.address || "No address",
+//       order.user?.phone || "No phone",
+//       `${currency}${order.totalPrice}`,
+//       order.product?.name || "No name",
+//       order.product?.price || "No price",
+//       order.status || "No status",
+//     ]);
+
+//     const columns = [
+//       "Customer Name",
+//       "Address",
+//       "Phone",
+//       "Total Price",
+//       "Product Name",
+//       "Price",
+//       "Status",
+//     ];
+
+//     doc.autoTable({
+//       head: [columns],
+//       body: tableData,
+//       startY: 20,
+//     });
+
+//     doc.save("orders.pdf");
+//   };
+
+//   return (
+//     <div className="list-items-container p-4">
+//       {/* <h1 className="text-center text-2xl font-bold mb-4">All Foods List</h1> */}
+//       <Button
+//         label="Download PDF"
+//         icon="pi pi-download"
+//         className="p-button-success mb-4"
+//         onClick={downloadPDF}
+//       />
+//       <DataTable
+//         value={filteredItems}
+//         header={header}
+//         footer={footer}
+//         tableStyle={{ minWidth: "80rem" }}
+//         paginator
+//         rows={3}
+//         rowsPerPageOptions={[4, 8]}
+//         className="p-datatable-striped"
+//       >
+//         <Column
+//           field="name"
+//           header="Name"
+//           className="font-medium text-sm sm:col-span-4"
+//         />
+//         <Column header="Image" body={imageBodyTemplate} />
+//         <Column field="price" header="Price" body={priceBodyTemplate} />
+//         <Column field="category" header="Category" />
+//         <Column
+//           field="description"
+//           header="Description"
+//           body={descriptionBodyTemplate}
+//           style={{ maxWidth: "400px", whiteSpace: "normal" }} // Adjust width as needed
+//         />
+//         <Column header="Status" body={statusBodyTemplate} />
+//       </DataTable>
+//     </div>
+//   );
+// };
+
+// export default ListItems;
+
 import React, { useEffect, useState } from "react";
-import "./Listitems.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
+import { jsPDF } from "jspdf";
+import { RotatingLines } from "react-loader-spinner";
+import "jspdf-autotable";
 
 const ListItems = () => {
   const [list, setList] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true); // Add loading state
   const url = "http://localhost:3000";
 
   const fetchList = async () => {
+    setLoading(true); // Set loading to true when starting to fetch data
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(`${url}/api/product/bakerProduct`, {
@@ -29,6 +225,7 @@ const ListItems = () => {
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
     }
+    setLoading(false); // Set loading to false once data is fetched
   };
 
   const handleSearch = (e) => {
@@ -72,7 +269,7 @@ const ListItems = () => {
       <img
         src={`${url}/uploads/${rowData.image}`}
         alt={rowData.name}
-        className="product-image"
+        className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded"
       />
     );
   };
@@ -81,8 +278,10 @@ const ListItems = () => {
     return <p>Rs.{rowData.price}</p>;
   };
 
-  const ratingBodyTemplate = (rowData) => {
-    return <p>{rowData.rating} stars</p>;
+  const descriptionBodyTemplate = (rowData) => {
+    return (
+      <p className="text-xs text-gray-600 w-full">{rowData.description}</p>
+    );
   };
 
   const statusBodyTemplate = (rowData) => {
@@ -97,10 +296,10 @@ const ListItems = () => {
   };
 
   const header = (
-    <div className="table-header">
+    <div className="p-2">
       <input
         type="text"
-        className="search-input"
+        className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
         placeholder="Search for a food item"
         value={searchQuery}
         onChange={handleSearch}
@@ -109,30 +308,80 @@ const ListItems = () => {
   );
 
   const footer = (
-    <div className="table-footer">
+    <div className="p-2 text-right text-sm text-gray-600">
       <span>Displaying {filteredItems.length} items</span>
     </div>
   );
 
+  // Function to generate PDF from the table data
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    const tableData = filteredItems.map((item) => [
+      item.name || "No name",
+      item.price || "No price",
+      item.category || "No category",
+      item.description || "No description",
+    ]);
+
+    const columns = ["Name", "Price", "Category", "Description"];
+
+    doc.autoTable({
+      head: [columns],
+      body: tableData,
+      startY: 20,
+    });
+
+    doc.save("food-items.pdf");
+  };
+
   return (
-    <div className="list-items-container">
-      {/* <h1 className="title">All Foods List</h1> */}
-      <DataTable
-        value={filteredItems}
-        header={header}
-        footer={footer}
-        tableStyle={{ minWidth: "70rem" }}
-        paginator
-        rows={3}
-        rowsPerPageOptions={[5, 8]}
-      >
-        <Column field="name" header="Name"></Column>
-        <Column header="Image" body={imageBodyTemplate}></Column>
-        <Column field="price" header="Price" body={priceBodyTemplate}></Column>
-        <Column field="category" header="Category"></Column>
-        {/* <Column field="rating" header="Reviews" body={ratingBodyTemplate}></Column> */}
-        <Column header="Status" body={statusBodyTemplate}></Column>
-      </DataTable>
+    <div className="list-items-container p-4">
+      {loading ? (
+        <div className="flex justify-center items-center h-screen absolute top-0 left-0 right-0 bottom-0 bg-opacity-50">
+          <RotatingLines
+            strokeColor="#f79c3e"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="80"
+            visible={true}
+          />
+        </div>
+      ) : (
+        <div>
+          <Button
+            label="Download PDF"
+            icon="pi pi-download"
+            className="p-button-success mb-4"
+            onClick={downloadPDF}
+          />
+          <DataTable
+            value={filteredItems}
+            header={header}
+            footer={footer}
+            tableStyle={{ minWidth: "80rem" }}
+            paginator
+            rows={3}
+            rowsPerPageOptions={[4, 8]}
+            className="p-datatable-striped"
+          >
+            <Column
+              field="name"
+              header="Name"
+              className="font-medium text-sm sm:col-span-4"
+            />
+            <Column header="Image" body={imageBodyTemplate} />
+            <Column field="price" header="Price" body={priceBodyTemplate} />
+            <Column field="category" header="Category" />
+            <Column
+              field="description"
+              header="Description"
+              body={descriptionBodyTemplate}
+              style={{ maxWidth: "400px", whiteSpace: "normal" }} // Adjust width as needed
+            />
+            <Column header="Status" body={statusBodyTemplate} />
+          </DataTable>
+        </div>
+      )}
     </div>
   );
 };
