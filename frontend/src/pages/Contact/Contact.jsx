@@ -4,15 +4,17 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { StoreContext } from "../context/StoreContext";
 import UserNavbar from "../../HomeUser/UserNavbar/UserNavbar";
+import axios from "axios"; // If axios is not installed, run `npm install axios`
 
 function ContactForm() {
   const { isAuthenticated } = useContext(StoreContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phoneNumber: "",
+    phone: "",
     message: "",
   });
+  const [responseMessage, setResponseMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,9 +24,21 @@ function ContactForm() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      // Sending form data to the backend
+      const response = await axios.post("http://localhost:3000/api/user/createContactus", formData);
+      if (response.data.success) {
+        setResponseMessage("Your message has been submitted successfully!");
+        setFormData({ name: "", email: "", phone: "", message: "" }); // Clear form on success
+      } else {
+        setResponseMessage("Failed to submit your message. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting the form:", error);
+      setResponseMessage("An error occurred. Please try again later.");
+    }
   };
 
   return (
@@ -55,12 +69,12 @@ function ContactForm() {
             />
           </div>
           <div className="cform-group">
-            <label htmlFor="phoneNumber">Phone Number</label>
+            <label htmlFor="phone">Phone Number</label>
             <input
               type="tel"
-              id="phoneNumber"
-              name="phoneNumber"
-              value={formData.phoneNumber}
+              id="phone"
+              name="phone"
+              value={formData.phone}
               onChange={handleChange}
               required
             />
@@ -79,6 +93,7 @@ function ContactForm() {
             Submit
           </button>
         </form>
+        {responseMessage && <p className="response-message">{responseMessage}</p>}
         <div className="contact-info">
           <h2>Contact Us</h2>
           <p>
