@@ -394,7 +394,7 @@ const createContactUs = async(req,res) => {
             message: message
         });
 
-        const contactus = await newUser.save();
+        const contactus = await newContact.save();
         res.json({ success: true,message: "submitted", contactus});
     } catch (error) {
         console.log(error);
@@ -418,4 +418,28 @@ const deleteContactUs = async(req,res) => {
         return res.status(500).json({ success: false, message: "Something went wrong" });
     }
 };
-export { loginUser, registerUser, registerBaker, registerAdmin, allitem, logout, search, bakerProfile,createContactUs, updateBakerProfile,forgotPassword,verifyCodeAndResetPassword };
+const getAllContacts = async (req, res) => {
+    try {
+      const contacts = await contactusModel.find();
+      res.json({ success: true, contacts });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "Unable to fetch contacts" });
+    }
+  };
+  const sendEmail = async (req, res) => {
+    const { email } = req.body;
+    // Set up email sending logic here, such as using nodemailer
+    try {
+      // Example: send email to the specified address
+      // await transporter.sendMail({...});
+      res.json({ success: true, message: "Email sent successfully" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "Email failed to send" });
+    }
+  };
+  
+ 
+  
+export { loginUser, registerUser, registerBaker,sendEmail, registerAdmin, getAllContacts,allitem, logout, search, bakerProfile,createContactUs, updateBakerProfile,forgotPassword,verifyCodeAndResetPassword };
