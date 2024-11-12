@@ -1,16 +1,3 @@
-<<<<<<< Updated upstream
-import React from 'react'
-
-const Login = () => {
-  return (
-    <div>
-      login
-    </div>
-  )
-}
-
-export default Login
-=======
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -133,4 +120,3 @@ function Login() {
 }
 
 export default Login;
->>>>>>> Stashed changes
