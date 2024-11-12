@@ -17,8 +17,8 @@ const orderSchema = new mongoose.Schema({
             status: { type: String, default: "Pending" }
         }
     ],
-    payment:{type:Boolean,default:false}
-    // cancellation:{type:Boolean,default:false}
+    payment:{type:Boolean,default:false},
+    canclelled:{type:Boolean,default:false}
 }, { minimize: false });
 
 const orderModel = mongoose.models.order || mongoose.model("order", orderSchema);

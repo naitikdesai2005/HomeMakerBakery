@@ -113,56 +113,55 @@ const createOrder = async (req, res) => {
 
 const getBakerOrders = async (req, res) => {
   try {
-    const orders = await orderModel.find({ bakerId: req.body.bakerId })
-      .populate({
-        path: 'items.productId',
-        select: 'name price image',
-      })
-      
-      .populate({
-        path: 'userId',
-        select: 'firstName lastName address phone',
-      })
+    const bakerId = req.body.userId;
 
-    res.json({ success: true, data: orders });
-    // const bakerId = req.body.userId;
+    const baker = await bakerModel.findById(bakerId);
+    if (!baker) {
+      return res.status(404).json({ success: false, message: "Baker not found" });
+    }
 
-    // const baker = await bakerModel.findById(bakerId);
-    // if (!baker) {
-    //   return res.status(404).json({ success: false, message: "Baker not found" });
-    // }
+    const formattedOrders = [];
 
-    // const formattedOrders = [];
+    for (const orderInfo of baker.orders) {
+      const order = await orderModel.findById(orderInfo.orderId).populate('userId', 'firstName lastName email phone address');
 
-    // for (const orderInfo of baker.orders) {
-    //   // Find each order and populate both items and user details
-    //   const order = await orderModel.findById(orderInfo.orderId)
-    //     .populate('items.productId', 'name price image')
-    //     .populate('userId', 'firstName lastName email phone address');
+      if (!order) continue;
 
-    //   if (!order) continue;
+      const items = order.items.filter(item => item.bakerId.toString() === bakerId);
 
-    //   const orderDetails = {
-    //     user: {
-    //       name: `${order.userId.firstName} ${order.userId.lastName}`,
-    //       email: order.userId.email,
-    //       phone: order.userId.phone,
-    //       address: order.userId.address,
-    //     },
-    //     items: order.items.map(item => ({
-    //       name: item.productId.name,
-    //       quantity: item.quantity,
-    //       price: item.productId.price,
-    //       image: item.productId.image,
-    //     })),
-    //     totalPrice: order.totalPrice,
-    //     status: order.status,
-    //   };
+      if (items.length === 0) continue;
 
-    //   formattedOrders.push(orderDetails);
-    // }
+      let totalPrice = 0;
+      const formattedItems = await Promise.all(items.map(async item => {
+        const product = await productModel.findById(item.productId);
+        const itemTotalPrice = item.quantity * item.price; // Calculate total price for this item
+        totalPrice += itemTotalPrice;
 
-    // res.json({ success: true, data: formattedOrders });
+        return {
+          name: product.name,
+          quantity: item.quantity,
+          price: item.price,
+          image: product.image,
+          totalPrice: itemTotalPrice
+        };
+      }));
+
+      const orderDetails = {
+        user: {
+          name: `${order.firstname} ${order.lastname}`,
+          email: order.email,
+          phone: order.phone,
+          address: order.address,
+        },
+        items: formattedItems,
+        totalPrice: totalPrice,
+        status: order.status,
+      };
+
+      formattedOrders.push(orderDetails);
+    }
+
+    res.json({ success: true, data: formattedOrders });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Error retrieving orders" });
@@ -209,4 +208,63 @@ const verifyOrder = async (req, res) => {
   }
 }
 
-export { createOrder, updateOrderStatus, getBakerOrders, verifyOrder, getUserOrders };
+const updateOrder = async (req, res) => {
+  const { orderId, items, cancel } = req.body; // Expecting items and cancel from the request body
+
+  try {
+      // Find the order by ID
+      const order = await orderModel.findById(orderId);
+
+      if (!order) {
+          return res.status(404).json({ success: false, message: "Order not found" });
+      }
+
+      // Check if the order is cancelled
+      if (order.canclelled) {
+          return res.status(400).json({ success: false, message: "Order has already been cancelled" });
+      }
+
+      // If the user wants to cancel the order
+      if (cancel) {
+          order.canclelled = true; // Mark the order as cancelled
+
+          // Update each baker's orders
+          for (const item of order.items) {
+              const bakerId = item.bakerId; // Get the baker ID for each item
+              await bakerModel.updateOne(
+                  { _id: bakerId, 'orders.orderId': orderId },
+                  { $set: { 'orders.$.status': 'Cancelled' } }
+              );
+          }
+      } else {
+          // Update the order items
+          order.items = order.items.map(item => {
+              const updatedItem = items.find(i => i.productId.toString() === item.productId.toString());
+              if (updatedItem) {
+                  item.quantity = updatedItem.quantity; // Update the quantity
+              }
+              return item;
+          });
+
+          // Update each baker's orders with the new quantities
+          for (const item of order.items) {
+              const bakerId = item.bakerId; // Get the baker ID for each item
+              await bakerModel.updateOne(
+                  { _id: bakerId, 'orders.orderId': orderId, 'orders.items.productId': item.productId },
+                  { $set: { 'orders.$.items.$[elem].quantity': item.quantity } },
+                  { arrayFilters: [{ 'elem.productId': item.productId }] } // Update the specific item quantity
+              );
+          }
+      }
+
+      // Save the updated order
+      await order.save();
+
+      res.json({ success: true, order });
+  } catch (error) {
+      console.error("Error updating order:", error);
+      res.status(500).json({ success: false, message: "Error updating order" });
+  }
+};
+
+export { updateOrder,createOrder, updateOrderStatus, getBakerOrders, verifyOrder, getUserOrders };
