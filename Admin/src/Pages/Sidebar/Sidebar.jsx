@@ -51,7 +51,7 @@ const Sidebar = ({ visible }) => {
           <span className="text-lg">Users</span>
         </a>
         <a
-          href="#"
+          href="/order"
           className="flex items-center text-gray-700 hover:text-[#a0522d] transition-colors px-4 py-2 rounded-lg"
         >
           <Grid className="w-6 h-6 mr-4" />

@@ -273,6 +273,7 @@ const Bakers = () => {
         const response = await axios.get("http://localhost:3000/api/admin/bakersData");
         if (response.data.status) {
           setBakersData(response.data.data);
+          console.log(response.data.data);
         } else {
           setError("Failed to load bakers data.");
         }
@@ -325,54 +326,54 @@ const Bakers = () => {
         </div>
         <table className="w-full bg-white text-left border-separate border-spacing-y-2 border-spacing-x-4">
           <thead>
-            <tr className="text-brown-600 text-sm">
-              <th className="py-2 px-3">
+          <tr className="text-brown-500 text-sm bg-pastel-cream">
+              <th className="py-2 px-4">
                 <input type="checkbox" className="rounded border-brown-300" />
               </th>
-              <th className="py-2 px-3">Baker Id</th>
-              <th className="py-2 px-3">Baker Name</th>
-              <th className="py-2 px-3">Email</th>
-              <th className="py-2 px-3">Total Items</th>
-              <th className="py-2 px-3">Total Orders</th>
+              <th className="py-2 px-4">Baker Id</th>
+              <th className="py-2 px-4">Baker Name</th>
+              <th className="py-2 px-4">Email</th>
+              <th className="py-2 px-4">Total Items</th>
+              <th className="py-2 px-4">Total Orders</th>
             </tr>
           </thead>
           <tbody>
             {currentItems.map((baker, index) => (
               <tr
                 key={baker.id}
-                className={`${
-                  index % 2 === 0 ? "bg-pastel-cream" : "bg-white"
-                } hover:bg-pastel-yellow transition duration-200`}
+                className={`text-brown-700 ${index % 2 !== 0 ? "bg-brown-50" : ""}`}
               >
-                <td className="py-3 px-3">
+                <td className="py-3 px-4">
                   <input type="checkbox" className="rounded border-brown-300" />
                 </td>
-                <td className="py-3 px-3 text-brown-800">{baker.id}</td>
-                <td className="py-3 px-3 flex items-center">
+                <td className="py-3 px-4">{baker.id}</td>
+                <td className="py-3 px-4 flex items-center">
                   <img
-                    src={baker.image || "/default-image.png"}
+                    src={baker.image || "/default-baker.png"}
                     alt={baker.name}
-                    className="w-10 h-10 rounded-full mr-2"
+                    className="w-8 h-8 rounded-full mr-2"
                   />
-                  <span className="text-brown-700">{baker.name}</span>
+                  {baker.name}
                 </td>
-                <td className="py-3 px-3 text-brown-600">{baker.email}</td>
-                <td className="py-3 px-3 text-brown-600">{baker.Total_Items || "N/A"}</td>
-                <td className="py-3 px-3 text-brown-600">{baker.Total_Order || "N/A"}</td>
+                <td className="py-3 px-4">{baker.email}</td>
+                <td className="py-3 px-4">{baker.products.length}</td>
+                <td className="py-3 px-4">{baker.orders.length}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className="flex justify-between items-center mt-6 text-brown-700">
+
+        {/* Pagination */}
+        <div className="flex justify-between items-center mt-6 text-brown-600">
           <span>
-            {(currentPage - 1) * itemsPerPage + 1}-{" "}
+            Showing {(currentPage - 1) * itemsPerPage + 1} -{" "}
             {Math.min(currentPage * itemsPerPage, filteredBakers.length)} of{" "}
             {filteredBakers.length}
           </span>
           <div className="flex items-center space-x-2">
             <button
               onClick={goToPreviousPage}
-              className="p-2 hover:bg-pastel-cream rounded-full"
+              className="p-2 bg-brown-100 hover:bg-brown-200 rounded-full"
               disabled={currentPage === 1}
             >
               &lt;
@@ -382,9 +383,7 @@ const Bakers = () => {
                 key={index + 1}
                 onClick={() => goToPage(index + 1)}
                 className={`w-8 h-8 flex items-center justify-center rounded-full ${
-                  currentPage === index + 1
-                    ? "bg-brown-500 text-black"
-                    : "hover:bg-pastel-cream"
+                  currentPage === index + 1 ? "bg-brown-500 text-white" : "hover:bg-brown-200"
                 }`}
               >
                 {index + 1}
@@ -392,7 +391,7 @@ const Bakers = () => {
             ))}
             <button
               onClick={goToNextPage}
-              className="p-2 hover:bg-pastel-cream rounded-full"
+              className="p-2 bg-brown-100 hover:bg-brown-200 rounded-full"
               disabled={currentPage === totalPages}
             >
               &gt;

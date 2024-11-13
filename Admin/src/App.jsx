@@ -9,6 +9,7 @@ import "primereact/resources/themes/saga-blue/theme.css"; // Or any other theme
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import AdminLogin from "./Pages/Login/Login";
+import Orders from "./Pages/Orders/Orders";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/bakers" element={<Bakers />} />
           <Route path="/users" element={<Users />} />
           <Route path="/messages" element={<Messages />} />
+          <Route path="/order" element={<Orders />} />
         </Routes>
       </BrowserRouter>
     </>

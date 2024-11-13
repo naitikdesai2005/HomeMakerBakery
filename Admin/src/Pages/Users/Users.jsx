@@ -343,7 +343,7 @@ const Users = () => {
                   {user.name}
                 </td>
                 <td className="py-3 px-3">{user.email}</td>
-                <td className="py-3 px-3">{user.totalOrder}</td>
+                <td className="py-3 px-3">{user.orders.length}</td>
               </tr>
             ))}
           </tbody>
