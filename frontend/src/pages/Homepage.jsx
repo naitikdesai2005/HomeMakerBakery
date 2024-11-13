@@ -1,4 +1,3 @@
-import "./Home.css";
 import React, { useState, useContext } from "react";
 import Navbar from "./Navbar/Navbar.jsx";
 import Menu from "./menu/Menu.jsx";

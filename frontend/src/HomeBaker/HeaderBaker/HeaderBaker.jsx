@@ -1,49 +1,32 @@
-import React, { useContext, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import "./HeaderBaker.css";
-import { assets } from "../../../images/assets";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { StoreContext } from "../../pages/context/StoreContext";
+import { FaSignOutAlt } from "react-icons/fa";
 
 const HeaderBaker = () => {
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const { logout } = useContext(StoreContext);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
+  const handleLogout = () => {
+    logout();
+    navigate("/login"); // Redirect to login page after logout
   };
 
-  // const handleLogout = () => {
-  //   localStorage.removeItem("token");
-  //   navigate("/");
-  // };
-
   return (
-    <div className="baker-nav">
+    <div className="flex justify-between items-center p-4 px-16 bg-white shadow-md">
       <img
-        className="logo"
+        className="block ml-2"
         src={"../../../images/Logo.png"}
         alt="Logo"
-        height={"80px"}
-        width={"250px"}
+        height="80"
+        width="250"
       />
-      <button className="loginbutton" onClick={toggleDropdown}>
-        <img
-          className="profile"
-          src={assets.login_icon}
-          alt="Profile Icon"
-          height={"30px"}
-          width={"30px"}
-        />
+      <button
+        onClick={handleLogout}
+        className="text-gray-800 flex items-center"
+      >
+        <FaSignOutAlt className="mt-2 h-8 w-8 text-gray-800" />
       </button>
-      {dropdownVisible && (
-        <div className="dropdown-menu">
-          <Link to="/bakerprofile">Profile</Link>
-          <a onClick={logout} className="dropdown-item">
-            Logout
-          </a>
-        </div>
-      )}
     </div>
   );
 };
