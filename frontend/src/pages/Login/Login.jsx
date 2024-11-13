@@ -12,6 +12,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [loginError, setLoginError] = useState(""); // To store the generic login error message
   const { setToken, setIsAuthenticated } = useContext(StoreContext);
   const navigate = useNavigate();
 
@@ -21,6 +22,7 @@ function Login() {
 
     setEmailError("");
     setPasswordError("");
+    setLoginError(""); // Reset login error message
 
     if (!email) {
       setEmailError("Please enter your email.");
@@ -57,6 +59,9 @@ function Login() {
         } else if (response.data.message === "baker") {
           navigate("/homebaker");
         }
+      } else {
+        // If the login is unsuccessful, show a generic error message
+        setLoginError("Your email or password is incorrect. Please correct it.");
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
@@ -119,6 +124,9 @@ function Login() {
                 </FloatLabel>
                 {passwordError && (
                   <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+                )}
+                {loginError && (
+                  <p className="text-red-500 text-sm mt-1">{loginError}</p> // Show generic error here
                 )}
               </div>
 

@@ -52,7 +52,7 @@ const UserNavbar = () => {
         >
           About
         </Link>
-        <Link
+        {/* <Link
           to="/products"
           onClick={() => setMenu("Product")}
           className={`hover:text-[#f79c3e] ${
@@ -60,7 +60,7 @@ const UserNavbar = () => {
           }`}
         >
           Products
-        </Link>
+        </Link> */}
         <Link
           to="/contact"
           onClick={() => setMenu("Contact")}

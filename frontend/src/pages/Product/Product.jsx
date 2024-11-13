@@ -2,18 +2,34 @@ import React, { useContext, useState } from "react";
 import { assets } from "../../../images/assets";
 import { StoreContext } from "../context/StoreContext";
 import { Image } from "primereact/image";
+import { Toast } from "primereact/toast";
 
 const Product = ({ id, name, description, price, image }) => {
-  const { cartItems, addToCart } = useContext(StoreContext);
+  const { cartItems, addToCart, isAuthenticated } = useContext(StoreContext);
   const [showPreview, setShowPreview] = useState(false);
   const url = "http://localhost:3000";
+  const toast = React.useRef(null);
 
   const togglePreview = () => {
     setShowPreview(!showPreview);
   };
 
+  const handleAddToCart = () => {
+    if (isAuthenticated) {
+      addToCart(id);
+    } else {
+      toast.current.show({
+        severity: "warn",
+        summary: "Not Logged In",
+        detail: "Please log in to add items to your cart",
+        life: 3000,
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col w-full sm:w-64 md:w-72 lg:w-80 mx-auto rounded-lg shadow-lg transition duration-300 ease-in-out hover:shadow-xl">
+      <Toast ref={toast} />
       <div className="relative">
         <img
           className="w-full h-64 object-cover rounded-t-lg cursor-pointer transition-transform duration-300 hover:scale-105"
@@ -24,7 +40,7 @@ const Product = ({ id, name, description, price, image }) => {
         {!cartItems[id] ? (
           <img
             className="w-9 absolute bottom-4 right-4 cursor-pointer rounded-full bg-white p-1 shadow"
-            onClick={() => addToCart(id)}
+            onClick={handleAddToCart}
             src={assets.add_icon_white}
             alt="Add to cart"
           />

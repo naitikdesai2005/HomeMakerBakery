@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import { toast } from "react-toastify";
-import { Password } from "primereact/password";
 import { FloatLabel } from "primereact/floatlabel";
 import { InputText } from "primereact/inputtext";
 import "primereact/resources/themes/saga-blue/theme.css";
@@ -17,36 +16,53 @@ function Signup() {
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [passwordCriteria, setPasswordCriteria] = useState({
+    length: false,
+    number: false,
+    specialChar: false,
+    upperLower: false,
+  });
   const navigate = useNavigate();
+
+  const validatePassword = (value) => {
+    setPassword(value);
+
+    setPasswordCriteria({
+      length: value.length >= 8,
+      number: /\d/.test(value),
+      specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
+      upperLower: /[a-z]/.test(value) && /[A-Z]/.test(value),
+    });
+  };
+
+  const allCriteriaMet = Object.values(passwordCriteria).every(Boolean);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     let valid = true;
 
-    // Reset error messages
     setNameError("");
     setEmailError("");
     setPasswordError("");
 
-    // Validation checks
     if (!name) {
       setNameError("Please enter your name.");
       valid = false;
     }
-
     if (!email) {
       setEmailError("Please enter your email.");
       valid = false;
     }
-
     if (!password) {
       setPasswordError("Please enter your password.");
       valid = false;
     }
-
+    if (!allCriteriaMet) {
+      setPasswordError("Password does not meet all criteria.");
+      valid = false;
+    }
     if (!valid) return;
 
-    // API call to submit the form data
     try {
       const response = await axios.post(
         "http://localhost:3000/api/user/registerUser",
@@ -54,7 +70,6 @@ function Signup() {
       );
 
       if (response.data.success) {
-        console.log("SignUp Successful!", response.data);
         localStorage.setItem("token", response.data.token);
         toast.success("Sign up Successfully");
         if (response.data.message === "user") {
@@ -75,7 +90,6 @@ function Signup() {
       <br />
       <div className="pt-1 flex items-center justify-center min-h-screen">
         <div className="bg-white flex w-full max-w-4xl transform transition-all duration-500">
-          {/* Left Side - Image */}
           <div className="hidden md:flex items-center justify-center w-1/2 rounded-l-2xl overflow-hidden">
             <img
               src="/images/bg login.jpg"
@@ -83,8 +97,6 @@ function Signup() {
               className="w-full h-full object-cover"
             />
           </div>
-
-          {/* Right Side - Form */}
           <div className="w-full md:w-1/2 p-8">
             <div className="text-center mb-6">
               <h2 className="text-4xl font-bold text-gray-800">Sign Up</h2>
@@ -92,7 +104,6 @@ function Signup() {
                 Please sign up to continue.
               </p>
             </div>
-
             <form onSubmit={handleSubmit}>
               <div className="mb-6">
                 <FloatLabel>
@@ -132,10 +143,10 @@ function Signup() {
 
               <div className="mb-6">
                 <FloatLabel>
-                  <Password
+                  <input
+                    type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    toggleMask
+                    onChange={(e) => validatePassword(e.target.value)}
                     id="password"
                     className="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f79c3e] transition-all duration-300"
                   />
@@ -148,9 +159,65 @@ function Signup() {
                 )}
               </div>
 
+              <div className="mb-4 text-sm text-gray-700">
+                <p>
+                  <span
+                    className={
+                      passwordCriteria.length
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }
+                  >
+                    {passwordCriteria.length ? "✔" : "⬜"}
+                  </span>{" "}
+                  Password must be over 8 characters
+                </p>
+                <p>
+                  <span
+                    className={
+                      passwordCriteria.number
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }
+                  >
+                    {passwordCriteria.number ? "✔" : "⬜"}
+                  </span>{" "}
+                  Password must contain 1 number
+                </p>
+                <p>
+                  <span
+                    className={
+                      passwordCriteria.specialChar
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }
+                  >
+                    {passwordCriteria.specialChar ? "✔" : "⬜"}
+                  </span>{" "}
+                  Password must contain 1 special character
+                </p>
+                <p>
+                  <span
+                    className={
+                      passwordCriteria.upperLower
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }
+                  >
+                    {passwordCriteria.upperLower ? "✔" : "⬜"}
+                  </span>{" "}
+                  Password must contain 1 uppercase and 1 lowercase letter
+                </p>
+              </div>
+
               <button
                 type="submit"
-                className="w-full p-4 bg-gradient-to-r from-[#f79c3e] to-[#f79c3e] text-white font-semibold rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-[#f79c3e] transition-all duration-300"
+                className={`w-full p-4 ${
+                  allCriteriaMet
+                    ? "bg-gradient-to-r from-[#f79c3e] to-[#f79c3e] text-white"
+                    : "bg-gray-400 text-gray-700 cursor-not-allowed"
+                } font-semibold rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-4 transition-all duration-300`}
+                disabled={!allCriteriaMet}
               >
                 Create Account
               </button>

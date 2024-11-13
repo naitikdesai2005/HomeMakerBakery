@@ -30,7 +30,7 @@ const Sidebar = ({ visible }) => {
 
       <nav className="flex flex-col space-y-4 w-full px-8">
         <a
-          href="/"
+          href="/admindash"
           className="flex items-center text-gray-700 font-semibold hover:text-[#a0522d] transition-colors px-4 py-2 rounded-lg"
         >
           <Grid className="w-6 h-6 mr-4" />

@@ -1,5 +1,14 @@
-import React, { useState } from "react";
-import { FaEnvelope, FaLock, FaUser, FaStore, FaPhone, FaHome, FaCreditCard, FaLink } from "react-icons/fa";
+import React, { useRef, useState, useEffect } from "react";
+import {
+  FaEnvelope,
+  FaLock,
+  FaUser,
+  FaStore,
+  FaPhone,
+  FaHome,
+  FaCreditCard,
+  FaLink,
+} from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -15,25 +24,38 @@ function BakerRegister({ onClose }) {
   const [gender, setGender] = useState("");
   const [bakerlink, setBakerLink] = useState("");
   const navigate = useNavigate();
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (formRef.current && !formRef.current.contains(event.target)) {
+        onClose();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let valid = true;
-
-    if (!valid) return;
 
     try {
-      const response = await axios.post("http://localhost:3000/api/baker/registerBaker", {
-        email,
-        password,
-        name,
-        bakeryname,
-        mobilenumber,
-        bakeryaddress,
-        bankAccNumber,
-        bakerlink,
-        gender,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/baker/registerBaker",
+        {
+          email,
+          password,
+          name,
+          bakeryname,
+          mobilenumber,
+          bakeryaddress,
+          bankAccNumber,
+          bakerlink,
+          gender,
+        }
+      );
       if (response.data.success) {
         toast.success("Register Successfully");
         localStorage.setItem("token", response.data.token);
@@ -48,17 +70,26 @@ function BakerRegister({ onClose }) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white w-full md:w-1/2 lg:w-1/3 p-6 rounded-lg shadow-lg relative">
-        <button onClick={onClose} className="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+      <div
+        ref={formRef}
+        className="bg-white w-full md:w-1/2 lg:w-1/3 p-6 rounded-lg shadow-lg relative"
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+        >
           &times;
         </button>
-        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Register as a Baker</h2>
+        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
+          Register as a Baker
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="space-y-4">
-            {/* First two fields side by side */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block font-medium text-gray-600">Baker Name</label>
+                <label className="block font-medium text-gray-600">
+                  Baker Name
+                </label>
                 <div className="flex items-center border border-gray-300 rounded-lg">
                   <FaUser className="mx-2 text-gray-400" />
                   <input
@@ -84,10 +115,11 @@ function BakerRegister({ onClose }) {
                 </div>
               </div>
             </div>
-            {/* Additional fields side by side */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block font-medium text-gray-600">Password</label>
+                <label className="block font-medium text-gray-600">
+                  Password
+                </label>
                 <div className="flex items-center border border-gray-300 rounded-lg">
                   <FaLock className="mx-2 text-gray-400" />
                   <input
@@ -100,7 +132,9 @@ function BakerRegister({ onClose }) {
                 </div>
               </div>
               <div>
-                <label className="block font-medium text-gray-600">Bakery Name</label>
+                <label className="block font-medium text-gray-600">
+                  Bakery Name
+                </label>
                 <div className="flex items-center border border-gray-300 rounded-lg">
                   <FaStore className="mx-2 text-gray-400" />
                   <input
@@ -113,9 +147,10 @@ function BakerRegister({ onClose }) {
                 </div>
               </div>
             </div>
-            {/* Additional single fields */}
             <div>
-              <label className="block font-medium text-gray-600">Phone Number</label>
+              <label className="block font-medium text-gray-600">
+                Phone Number
+              </label>
               <div className="flex items-center border border-gray-300 rounded-lg">
                 <FaPhone className="mx-2 text-gray-400" />
                 <input
@@ -128,7 +163,9 @@ function BakerRegister({ onClose }) {
               </div>
             </div>
             <div>
-              <label className="block font-medium text-gray-600">Bakery Address</label>
+              <label className="block font-medium text-gray-600">
+                Bakery Address
+              </label>
               <div className="flex items-center border border-gray-300 rounded-lg">
                 <FaHome className="mx-2 text-gray-400" />
                 <input
@@ -141,7 +178,9 @@ function BakerRegister({ onClose }) {
               </div>
             </div>
             <div>
-              <label className="block font-medium text-gray-600">Bank Account Number</label>
+              <label className="block font-medium text-gray-600">
+                Bank Account Number
+              </label>
               <div className="flex items-center border border-gray-300 rounded-lg">
                 <FaCreditCard className="mx-2 text-gray-400" />
                 <input
@@ -170,7 +209,9 @@ function BakerRegister({ onClose }) {
               </div>
             </div>
             <div>
-              <label className="block font-medium text-gray-600">Baker's Website Link (optional)</label>
+              <label className="block font-medium text-gray-600">
+                Baker's Website Link (optional)
+              </label>
               <div className="flex items-center border border-gray-300 rounded-lg">
                 <FaLink className="mx-2 text-gray-400" />
                 <input
@@ -183,7 +224,7 @@ function BakerRegister({ onClose }) {
             </div>
             <button
               type="submit"
-              className="w-full py-3 mt-6 bg-[#f79c3e] text-white rounded-lg font-medium hover:bg-opacity-90"
+              className="w-full py-3 mt-6 bg-[#f79c3e] text-white rounded-lg font-medium hover:bg-orange-600"
             >
               Register
             </button>
