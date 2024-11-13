@@ -1,72 +1,3 @@
-// import React,{ useState,useEffect} from 'react'
-// import Sidebar  from '../Sidebar/Sidebar'
-// import axios from "axios";
-
-// const Messages = () => {
-
-//     const [isSidebarVisible, setIsSidebarVisible] = useState(true);
-//     const [contacts, setContacts] = useState([]);
-//     const sendEmail = async (email) => {
-//       try {
-//         await axios.post("http://localhost:3000/api/user/send-email", { email });
-//         alert(`Email sent to ${email}`);
-//       } catch (error) {
-//         console.log("Error sending email:", error);
-//       }
-//     };
-//   useEffect(() => {
-//     const fetchContacts = async () => {
-//       try {
-//         const response = await axios.get("http://localhost:3000/api/user/contactus");
-//         if (response.data.success) {
-//           setContacts(response.data.contacts);
-//         }
-//       } catch (error) {
-//         console.log("Error fetching contacts:", error);
-//       }
-//     };
-
-//     fetchContacts();
-//   }, []);
-
-
-//   return (
-//     <div>
-//         <Sidebar visible={isSidebarVisible} />
-//         <div className="admin-contacts-table">
-//       <table>
-//         <thead>
-//           <tr>
-//             <th>Name</th>
-//             <th>Email</th>
-//             <th>Phone</th>
-//             <th>Message</th>
-//             <th>Action</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {contacts.map((contact) => (
-//             <tr key={contact._id}>
-//               <td>{contact.name}</td>
-//               <td>{contact.email}</td>
-//               <td>{contact.phone}</td>
-//               <td>{contact.message}</td>
-//               <td>
-//                 <button onClick={() => sendEmail(contact.email)}>
-//                   Send Email
-//                 </button>
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//     </div>
-//   )
-// }
-
-// export default Messages
-
 import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import axios from "axios";
@@ -74,15 +5,9 @@ import axios from "axios";
 const Messages = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [contacts, setContacts] = useState([]);
-
-  const sendEmail = async (email) => {
-    try {
-      await axios.post("http://localhost:3000/api/user/send-email", { email });
-      alert(`Email sent to ${email}`);
-    } catch (error) {
-      console.log("Error sending email:", error);
-    }
-  };
+  const [selectedEmail, setSelectedEmail] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  const [showEmailModal, setShowEmailModal] = useState(false);
 
   useEffect(() => {
     const fetchContacts = async () => {
@@ -95,17 +20,35 @@ const Messages = () => {
         console.log("Error fetching contacts:", error);
       }
     };
-
     fetchContacts();
   }, []);
 
+  const sendEmail = async () => {
+    try {
+      await axios.post("http://localhost:3000/api/user/send-email", {
+        email: selectedEmail,
+        message: emailMessage,
+      });
+      alert(`Email sent to ${selectedEmail}`);
+      setShowEmailModal(false);
+      setEmailMessage("");
+    } catch (error) {
+      console.log("Error sending email:", error);
+    }
+  };
+
+  const openEmailModal = (email) => {
+    setSelectedEmail(email);
+    setShowEmailModal(true);
+  };
+
   return (
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="flex bg-pastel-cream min-h-screen">
       <Sidebar visible={isSidebarVisible} />
-      <div className="flex-grow p-6 bg-white rounded-lg shadow-md mx-4 my-8">
-        <h2 className="text-2xl font-semibold text-brown-700 mb-6 text-center">User Messages</h2>
+      <div className="flex-grow p-6 bg-pastel-peach rounded-lg shadow-lg mx-4 my-8">
+        <h2 className="text-2xl font-bold text-brown-700 mb-6 text-center">User Messages</h2>
         <div className="overflow-x-auto">
-          <table className="min-w-full border-collapse">
+          <table className="min-w-full border-collapse bg-white shadow-md rounded-lg">
             <thead>
               <tr className="bg-brown-100 text-brown-700">
                 <th className="py-3 px-4 font-semibold border-b">Name</th>
@@ -117,15 +60,15 @@ const Messages = () => {
             </thead>
             <tbody>
               {contacts.map((contact) => (
-                <tr key={contact._id} className="even:bg-brown-50">
-                  <td className="py-3 px-4 border-b text-gray-700">{contact.name}</td>
-                  <td className="py-3 px-4 border-b text-gray-700">{contact.email}</td>
-                  <td className="py-3 px-4 border-b text-gray-700">{contact.phone}</td>
-                  <td className="py-3 px-4 border-b text-gray-700">{contact.message}</td>
+                <tr key={contact._id} className="even:bg-pastel-cream hover:bg-brown-50 transition duration-150">
+                  <td className="py-3 px-4 border-b text-gray-800">{contact.name}</td>
+                  <td className="py-3 px-4 border-b text-gray-800">{contact.email}</td>
+                  <td className="py-3 px-4 border-b text-gray-800">{contact.phone}</td>
+                  <td className="py-3 px-4 border-b text-gray-800">{contact.message}</td>
                   <td className="py-3 px-4 border-b">
                     <button
-                      onClick={() => sendEmail(contact.email)}
-                      className="bg-brown-600 text-black py-2 px-4 rounded-lg hover:bg-brown-800 transition duration-300"
+                      onClick={() => openEmailModal(contact.email)}
+                      className="bg-orange-400 text-white py-2 px-4 rounded-lg hover:bg-orange-500 transition duration-300"
                     >
                       Send Email
                     </button>
@@ -136,9 +79,36 @@ const Messages = () => {
           </table>
         </div>
       </div>
+
+      {showEmailModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full">
+            <h3 className="text-xl font-bold text-brown-700 mb-4">Send Custom Email</h3>
+            <textarea
+              value={emailMessage}
+              onChange={(e) => setEmailMessage(e.target.value)}
+              placeholder="Type your message here..."
+              className="w-full h-32 p-3 border border-brown-200 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-brown-500"
+            />
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowEmailModal(false)}
+                className="mr-4 px-4 py-2 bg-gray-200 text-brown-700 rounded-lg hover:bg-gray-300 transition duration-300"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={sendEmail}
+                className="px-4 py-2 bg-orange-400 text-white rounded-lg hover:bg-orange-500 transition duration-300"
+              >
+                Send Email
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Messages;
-

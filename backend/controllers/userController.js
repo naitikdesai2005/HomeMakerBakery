@@ -427,19 +427,37 @@ const getAllContacts = async (req, res) => {
       res.status(500).json({ success: false, message: "Unable to fetch contacts" });
     }
   };
-  const sendEmail = async (req, res) => {
-    const { email } = req.body;
-    // Set up email sending logic here, such as using nodemailer
-    try {
-      // Example: send email to the specified address
-      // await transporter.sendMail({...});
-      res.json({ success: true, message: "Email sent successfully" });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ success: false, message: "Email failed to send" });
-    }
-  };
-  
+
+
+const sendEmail = async (req, res) => {
+  const { email, message } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+        user: 'bakenest9@gmail.com',
+        pass: 'aghm pbse asnm gbwv' 
+    },
+    tls: {
+        rejectUnauthorized: false,
+      },
+  });
+
+  try {
  
+    await transporter.sendMail({
+      from: 'bakenest9@gmail.com',
+      to: email,
+      subject: "Response to Your Query",
+      text: message, 
+    });
+
+    res.json({ success: true, message: "Email sent successfully" });
+  } catch (error) {
+    console.log("Error sending email:", error);
+    res.status(500).json({ success: false, message: "Email failed to send" });
+  }
+};
+
   
 export { loginUser, registerUser, registerBaker,sendEmail, registerAdmin, getAllContacts,allitem, logout, search, bakerProfile,createContactUs, updateBakerProfile,forgotPassword,verifyCodeAndResetPassword };
