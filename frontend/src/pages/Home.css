@@ -1,8 +1,0 @@
-.know-button {
-  transition: background-color 0.3s;
-}
-
-.know-button:hover {
-  background-color: #58231f;
-  color: white;
-}

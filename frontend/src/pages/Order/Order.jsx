@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Order.css";
 import { StoreContext } from "../context/StoreContext";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
@@ -77,10 +76,16 @@ const PlaceOrder = () => {
   return (
     <>
       {isAuthenticated ? <UserNavbar /> : <Navbar />}
-      <form onSubmit={placeOrder} className="place-order">
-        <div className="place-order-left">
-          <p className="title">Delivery Information</p>
-          <div className="multi-field">
+      <form
+        onSubmit={placeOrder}
+        className="flex mt-[170px] mb-[20px] gap-[30px] justify-around"
+      >
+        {/* Delivery Information Section */}
+        <div className="max-w-[480px] w-full">
+          <p className="text-[30px] font-semibold mb-[50px]">
+            Delivery Information
+          </p>
+          <div className="flex gap-[10px] mb-[15px]">
             <input
               name="firstName"
               onChange={onChangeHandler}
@@ -88,6 +93,7 @@ const PlaceOrder = () => {
               type="text"
               placeholder="First Name"
               required
+              className="w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500"
             />
             <input
               name="lastName"
@@ -96,6 +102,7 @@ const PlaceOrder = () => {
               type="text"
               placeholder="Last Name"
               required
+              className="w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500"
             />
           </div>
           <input
@@ -105,6 +112,7 @@ const PlaceOrder = () => {
             type="email"
             placeholder="Email address"
             required
+            className="w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500 mb-[15px]"
           />
           <input
             onChange={onChangeHandler}
@@ -113,6 +121,7 @@ const PlaceOrder = () => {
             type="text"
             placeholder="Street"
             required
+            className="w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500 mb-[15px]"
           />
           <input
             onChange={onChangeHandler}
@@ -121,36 +130,46 @@ const PlaceOrder = () => {
             type="text"
             placeholder="Phone"
             required
+            className="w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500 mb-[15px]"
           />
         </div>
-        <div className="place-order-right">
-          <div className="cart-total">
-            <h1>Cart Totals</h1>
-            <div>
-              <div className="cart-total-details">
-                <p>Subtotal</p>
-                <p>Rs. {getTotalCartAmount()}</p>
-              </div>
-              <hr />
-              <div className="cart-total-details">
-                <p>Delivery Fee</p>
-                <p>Rs. {getTotalCartAmount() === 0 ? 0 : 40}</p>
-              </div>
-              <hr />
-              <div className="cart-total-details">
-                <b>Total</b>
-                <b>
-                  Rs.{" "}
-                  {getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 40}
-                </b>
-              </div>
+
+        {/* Cart Totals Section */}
+        <div className="max-w-[550px] w-full">
+          <div className="border p-[20px] rounded-[8px] bg-white shadow-lg">
+            <h1 className="text-[24px] font-semibold mb-[20px]">Cart Totals</h1>
+
+            <div className="flex justify-between text-lg mb-[10px]">
+              <p className="text-gray-600">Subtotal</p>
+              <p className="font-bold text-gray-800">
+                Rs. {getTotalCartAmount()}
+              </p>
             </div>
-            <button type="submit">
+
+            <div className="flex justify-between text-lg mb-[10px]">
+              <p className="text-gray-600">Delivery Fee</p>
+              <p className="font-bold text-gray-800">
+                Rs. {getTotalCartAmount() === 0 ? 0 : 40}
+              </p>
+            </div>
+
+            <div className="flex justify-between text-lg font-semibold mb-[20px] border-t pt-[10px]">
+              <p>Total</p>
+              <p>
+                Rs. {getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 40}
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full mt-[20px] bg-orange-500 text-white p-[12px] rounded-[4px] hover:bg-orange-600 transition duration-300 ease-in-out"
+            >
               PROCEED TO PAY
             </button>
           </div>
         </div>
       </form>
+
       <Footer />
     </>
   );

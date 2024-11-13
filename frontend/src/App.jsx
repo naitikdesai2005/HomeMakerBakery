@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Signup from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login.jsx";
@@ -17,7 +16,6 @@ import ProductDisplay from "./pages/ProductDisplay/ProductDisplay.jsx";
 import AddItems from "./HomeBaker/AddItems/AddItems.jsx";
 import ListItems from "./HomeBaker/ListItems/ListItems.jsx";
 import Profile from "./HomeUser/Profile/Profile.jsx";
-import Payment from "./pages/Payment/Payment.jsx";
 import UserOrder from "./HomeUser/UserOrders/UserOrder.jsx";
 import Bakerprofile from "../../frontend/src/HomeBaker/BakerProfile/Bakerprofile.jsx";
 import MyOrders from "./HomeUser/Myorder/Myorder.jsx";
@@ -64,7 +62,6 @@ function App() {
         <Route path="/additem" element={<AddItems url={url} />} />
         <Route path="/listitem" element={<ListItems />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/payment" element={<Payment />} />
         <Route path="/userOrder" element={<UserOrder />} />
         <Route path="/bakerprofile" element={<Bakerprofile />} />
         <Route path="/myorders" element={<MyOrders />} />
