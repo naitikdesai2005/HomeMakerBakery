@@ -41,7 +41,11 @@ const DashboardInterface = () => {
       {/* Sidebar */}
       <Sidebar visible={isSidebarVisible} />
 
-      <div className={`flex-1 p-6 transition-all duration-300 ${isSidebarVisible ? "ml-64" : ""}`}>
+      <div
+        className={`flex-1 p-6 transition-all duration-300 ${
+          isSidebarVisible ? "ml-64" : ""
+        }`}
+      >
         <header className="flex justify-between items-center mb-8">
           <div className="flex items-center">
             <button
@@ -77,7 +81,9 @@ const DashboardInterface = () => {
               <div className="flex items-center space-x-4">
                 <span className="text-3xl">{stat.icon}</span>
                 <div>
-                  <div className="text-2xl font-bold text-brown-800">{stat.value}</div>
+                  <div className="text-2xl font-bold text-brown-800">
+                    {stat.value}
+                  </div>
                   <div className="text-brown-500 text-sm">{stat.title}</div>
                 </div>
               </div>
@@ -90,7 +96,7 @@ const DashboardInterface = () => {
           {/* Line Chart */}
           <div className="bg-cream-100 p-6 rounded-xl lg:col-span-3 shadow-md">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold text-brown-800">Reports</h2>
+              {/* <h2 className="text-xl font-semibold text-brown-800">Reports</h2>
               <div className="relative">
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -114,27 +120,53 @@ const DashboardInterface = () => {
                     </button>
                   </div>
                 )}
-              </div>
+              </div> */}
             </div>
             <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <LineChart
+                data={data}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              >
                 <defs>
-                  <linearGradient id="colorGradient" x1="0" y1="0" x2="1" y2="0">
+                  <linearGradient
+                    id="colorGradient"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="0"
+                  >
                     <stop offset="0%" stopColor="#FBBF24" />
                     <stop offset="50%" stopColor="#F97316" />
                     <stop offset="100%" stopColor="#DC2626" />
                   </linearGradient>
                 </defs>
-                <XAxis dataKey="time" tick={{ fill: "#9CA3AF", fontSize: 12 }} dy={10} />
-                <YAxis tick={{ fill: "#9CA3AF", fontSize: 12 }} tickFormatter={(value) => `${value / 1000}K`} dx={-10} />
-                <Line type="monotone" dataKey="value" stroke="url(#colorGradient)" strokeWidth={3} dot={false} activeDot={{ r: 6, fill: "#F97316" }} />
+                <XAxis
+                  dataKey="time"
+                  tick={{ fill: "#9CA3AF", fontSize: 12 }}
+                  dy={10}
+                />
+                <YAxis
+                  tick={{ fill: "#9CA3AF", fontSize: 12 }}
+                  tickFormatter={(value) => `${value / 1000}K`}
+                  dx={-10}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="value"
+                  stroke="url(#colorGradient)"
+                  strokeWidth={3}
+                  dot={false}
+                  activeDot={{ r: 6, fill: "#F97316" }}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
 
           {/* Analytics Circle Chart */}
           <div className="bg-cream-100 p-6 rounded-xl lg:col-span-1 flex flex-col items-center shadow-md">
-            <h2 className="text-brown-700 text-lg font-semibold mb-4">Analytics</h2>
+            <h2 className="text-brown-700 text-lg font-semibold mb-4">
+              Analytics
+            </h2>
             <div className="relative w-40 h-40 rounded-full bg-cream-200 flex items-center justify-center">
               <div className="absolute w-40 h-40 rounded-full border-8 border-brown-300 border-r-orange-400 border-b-orange-500 border-l-transparent" />
               <div className="absolute text-center">

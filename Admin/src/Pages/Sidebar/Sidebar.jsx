@@ -1,21 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  BellDot,
-  Settings,
-  Lock,
-  BarChart2,
-  Grid,
-  Calendar,
-  PieChart,
-} from "lucide-react";
+  Home,
+  Coffee, 
+  Users,
+  ShoppingCart,
+  MessageCircle,
+  LogOut,
+} from "lucide-react"; 
 
-const Sidebar = ({ visible }) => {
+const Sidebar = ({ visible, totalMessages }) => { 
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Here you could also clear any auth tokens or user data as necessary
-    navigate("/"); // Redirect to login page
+    navigate("/");
   };
 
   return (
@@ -33,39 +31,39 @@ const Sidebar = ({ visible }) => {
           href="/admindash"
           className="flex items-center text-gray-700 font-semibold hover:text-[#a0522d] transition-colors px-4 py-2 rounded-lg"
         >
-          <Grid className="w-6 h-6 mr-4" />
+          <Home className="w-6 h-6 mr-4" />
           <span className="text-lg">Dashboard</span>
         </a>
         <a
           href="/bakers"
           className="flex items-center text-gray-700 hover:text-[#a0522d] transition-colors px-4 py-2 rounded-lg"
         >
-          <BarChart2 className="w-6 h-6 mr-4" />
+          <Coffee className="w-6 h-6 mr-4" />
           <span className="text-lg">Bakers</span>
         </a>
         <a
           href="/users"
           className="flex items-center text-gray-700 hover:text-[#a0522d] transition-colors px-4 py-2 rounded-lg"
         >
-          <PieChart className="w-6 h-6 mr-4" />
+          <Users className="w-6 h-6 mr-4" />
           <span className="text-lg">Users</span>
         </a>
         <a
           href="/order"
           className="flex items-center text-gray-700 hover:text-[#a0522d] transition-colors px-4 py-2 rounded-lg"
         >
-          <Grid className="w-6 h-6 mr-4" />
+          <ShoppingCart className="w-6 h-6 mr-4" />
           <span className="text-lg">Orders</span>
         </a>
-        
+
         <a
           href="/messages"
           className="flex items-center text-gray-700 hover:text-[#a0522d] transition-colors px-4 py-2 rounded-lg relative"
         >
-          <PieChart className="w-6 h-6 mr-4" />
+          <MessageCircle className="w-6 h-6 mr-4" />
           <span className="text-lg">User's Messages</span>
           <span className="absolute right-4 bg-[#fafaf9] text-[#a0522d] text-xs rounded-full px-2 py-0.5">
-            49
+            {totalMessages} 
           </span>
         </a>
         <a
@@ -73,7 +71,7 @@ const Sidebar = ({ visible }) => {
           onClick={handleLogout}
           className="flex items-center text-gray-700 hover:text-[#a0522d] transition-colors px-4 py-2 rounded-lg"
         >
-          <Calendar className="w-6 h-6 mr-4" />
+          <LogOut className="w-6 h-6 mr-4" />
           <span className="text-lg">Logout</span>
         </a>
       </nav>
