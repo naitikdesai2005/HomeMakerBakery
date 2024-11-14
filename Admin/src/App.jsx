@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import Admindash from "./Pages/AdminDash";
@@ -10,10 +10,25 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import AdminLogin from "./Pages/Login/Login";
 import Orders from "./Pages/Orders/Orders";
+import MainLoader from "./Pages/MainLoader";
 
 function App() {
+  const [loading,setloading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setloading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
+    {
+      loading? (
+        <MainLoader />
+      ) : (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AdminLogin/>}/>
@@ -24,6 +39,7 @@ function App() {
           <Route path="/order" element={<Orders />} />
         </Routes>
       </BrowserRouter>
+      )}
     </>
   );
 }
