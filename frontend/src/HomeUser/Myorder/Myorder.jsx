@@ -270,10 +270,8 @@ const MyOrders = () => {
     }
   };
 
-<<<<<<< Updated upstream
-  // Handle order cancellation
-=======
->>>>>>> Stashed changes
+
+
   const handleCancelOrder = async () => {
     try {
       const response = await axios.post(
@@ -281,23 +279,14 @@ const MyOrders = () => {
         { orderId: orderIdToCancel, cancel: true },
         { headers: { token } }
       );
-<<<<<<< Updated upstream
 
-=======
-  
->>>>>>> Stashed changes
       if (response.data.success) {
         toast.current.show({
           severity: "success",
           summary: "Success",
           detail: "Order canceled successfully",
         });
-<<<<<<< Updated upstream
-        // Update order status to "Cancelled"
-=======
-  
-        // Update the order status to "Cancelled" in the frontend
->>>>>>> Stashed changes
+
         setData((prevData) =>
           prevData.map((order) =>
             order._id === orderIdToCancel
@@ -323,11 +312,7 @@ const MyOrders = () => {
       setVisible(false);
     }
   };
-<<<<<<< Updated upstream
 
-=======
-  
->>>>>>> Stashed changes
   // Accept order cancellation
   const accept = () => {
     handleCancelOrder();
