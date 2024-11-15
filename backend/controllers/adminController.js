@@ -28,26 +28,26 @@ const bakerData = async (req, res) => {
 
 const userData = async (req, res) => {
   try {
-    const usersData = await userModel.find();
+    const usersData = await userModel.find().lean(); // Using lean() to improve performance if you don't need full mongoose objects
+    const usersWithOrders = await Promise.all(
+      usersData.map(async (user) => {
+        const orderCount = await orderModel.countDocuments({ userId: user._id });
+        return { ...user, orderCount }; // Add orderCount to each user object
+      })
+    );
 
-    if (!usersData) {
-      return res
-        .status(404)
-        .json({ status: false, message: "Users data not found" });
+    if (!usersWithOrders.length) {
+      return res.status(404).json({ status: false, message: "Users data not found" });
     }
- 
-    console.log(usersData);
 
-    return res.status(200).json({
-      status:true,
-      data:usersData
-    })
-
-  }catch (e) {
+    console.log(usersWithOrders);
+    return res.status(200).json({ status: true, data: usersWithOrders });
+  } catch (e) {
     console.log(e);
     return res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
+
 
 
 const orderData = async (req, res) => {

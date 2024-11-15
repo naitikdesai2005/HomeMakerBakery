@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Home,
-  Coffee, 
+  Coffee,
   Users,
   ShoppingCart,
   MessageCircle,
   LogOut,
-} from "lucide-react"; 
+} from "lucide-react";
 
-const Sidebar = ({ visible, totalMessages }) => { 
+const Sidebar = ({ visible, totalMessages }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -18,12 +18,16 @@ const Sidebar = ({ visible, totalMessages }) => {
 
   return (
     <div
-      className={`fixed left-0 top-0 h-full w-64 bg-[#ffffff] shadow-xl flex flex-col py-8 space-y-6 transition-all duration-300 ${
+      className={`fixed left-0 top-0 h-full w-64 bg-white shadow-xl flex flex-col py-8 space-y-6 transition-transform duration-300 ${
         visible ? "translate-x-0" : "-translate-x-full"
       }`}
     >
       <div className="flex items-center justify-center mb-8">
-        <img src="../../Image/Logo.png" alt="Logo" className="h-20 w-60 rounded-lg" />
+        <img
+          src="../../Image/Logo.png"
+          alt="Logo"
+          className="h-20 w-60 rounded-lg"
+        />
       </div>
 
       <nav className="flex flex-col space-y-4 w-full px-8">
@@ -56,24 +60,25 @@ const Sidebar = ({ visible, totalMessages }) => {
           <span className="text-lg">Orders</span>
         </a>
 
-        <a
+        {/* <a
           href="/messages"
           className="flex items-center text-gray-700 hover:text-[#a0522d] transition-colors px-4 py-2 rounded-lg relative"
         >
           <MessageCircle className="w-6 h-6 mr-4" />
           <span className="text-lg">User's Messages</span>
-          <span className="absolute right-4 bg-[#fafaf9] text-[#a0522d] text-xs rounded-full px-2 py-0.5">
-            {totalMessages} 
-          </span>
-        </a>
-        <a
-          href="#"
+          {totalMessages > 0 && (
+            <span className="absolute right-4 bg-[#fafaf9] text-[#a0522d] text-xs rounded-full px-2 py-0.5">
+              {totalMessages}
+            </span>
+          )}
+        </a> */}
+        <button
           onClick={handleLogout}
           className="flex items-center text-gray-700 hover:text-[#a0522d] transition-colors px-4 py-2 rounded-lg"
         >
           <LogOut className="w-6 h-6 mr-4" />
           <span className="text-lg">Logout</span>
-        </a>
+        </button>
       </nav>
     </div>
   );

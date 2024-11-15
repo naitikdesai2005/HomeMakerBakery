@@ -6,7 +6,7 @@ import { Column } from "primereact/column";
 import { RotatingLines } from "react-loader-spinner";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
-import { FaCheckCircle } from "react-icons/fa"; 
+import { FaCheckCircle } from "react-icons/fa";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -105,7 +105,7 @@ const Order = () => {
       case "Delivered":
         return "bg-green-200 border-green-900 text-black-800";
       default:
-        return "bg-gray-200 border-gray-400 text-gray-800";
+        return "bg-yellow-200 border-yellow-400 text-yellow-800";
     }
   };
 
@@ -183,7 +183,6 @@ const Order = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
-      {/* Sidebar and header remain visible while orders load */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Order Management</h1>
         <input
@@ -197,7 +196,6 @@ const Order = () => {
         />
       </div>
 
-      {/* Loading Spinner for Order content only */}
       {loading && (
         <div className="absolute inset-0 bg-white flex items-center justify-center z-10">
           <RotatingLines
@@ -210,7 +208,6 @@ const Order = () => {
         </div>
       )}
 
-      {/* Order Table */}
       <div className="relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm p-4 w-full">
         <DataTable
           value={filteredOrders}
@@ -225,31 +222,56 @@ const Order = () => {
           }
           rowHover
           responsiveLayout="scroll"
+          style={{ minWidth: "100%" }}
         >
           <Column
             header="Customer"
             body={customerNameTemplate}
             className="p-4"
+            style={{ minWidth: "150px" }}
           />
-          <Column header="Address" body={addressTemplate} className="p-4" />
-          <Column header="Phone" body={phoneTemplate} className="p-4" />
+          <Column
+            header="Address"
+            body={addressTemplate}
+            className="p-4"
+            style={{ minWidth: "200px" }}
+          />
+          <Column
+            header="Phone"
+            body={phoneTemplate}
+            className="p-4"
+            style={{ minWidth: "150px" }}
+          />
           <Column
             header="Total Price"
             body={totalPriceTemplate}
             className="p-4"
+            style={{ minWidth: "150px" }}
           />
           <Column
             header="Products"
             body={productImageTemplate}
             className="p-4"
+            style={{ minWidth: "180px" }}
           />
           <Column
             header="Product Details"
             body={productNameTemplate}
             className="p-4"
+            style={{ minWidth: "150px" }}
           />
-          <Column header="Price" body={productPriceTemplate} className="p-4" />
-          <Column header="Status" body={orderStatusTemplate} className="p-4" />
+          <Column
+            header="Price"
+            body={productPriceTemplate}
+            className="p-4"
+            style={{ minWidth: "100px" }}
+          />
+          <Column
+            header="Status"
+            body={orderStatusTemplate}
+            className="p-4"
+            style={{ minWidth: "180px" }}
+          />
         </DataTable>
       </div>
     </div>

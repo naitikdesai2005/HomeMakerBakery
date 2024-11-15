@@ -107,7 +107,7 @@ const Cart = () => {
             }
           })}
         </div>
-        <div className="flex justify-between gap-8 mt-20">
+        <div className="flex justify-end gap-8 mt-20">
           <div className="flex flex-col gap-5 w-1/3">
             <h2 className="text-xl font-semibold">Cart Totals</h2>
             <div className="space-y-2">

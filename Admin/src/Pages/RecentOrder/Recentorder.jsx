@@ -58,7 +58,7 @@ const Bakers = () => {
     <div className="flex min-h from-orange-100 to-pastel-peach">
       <Sidebar visible={isSidebarVisible} />
 
-      <div className="flex-grow bg-white p-8 rounded-xl shadow-xl ml-0 mt-10 mx-6">
+      <div className="flex-grow bg-white p-8 rounded-xl shadow-xl ml-0 mt-10 mx-1">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-4xl font-bold text-brown-800">Bakers List</h2>
           <div className="relative w-full lg:w-1/3">

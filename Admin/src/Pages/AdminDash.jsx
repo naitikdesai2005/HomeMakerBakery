@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import {
   Bell,
   Menu,
@@ -13,8 +14,25 @@ import Sidebar from "./Sidebar/Sidebar";
 import RecentOrders from "./RecentOrder/Recentorder";
 
 const DashboardInterface = () => {
+  const navigate = useNavigate(); // Initialize navigate
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [totalMessages, setTotalMessages] = useState(0);
+
+  useEffect(() => {
+    const fetchTotalMessages = async () => {
+      const response = await new Promise((resolve) =>
+        setTimeout(() => resolve({ count: 5 }), 1000)
+      );
+      setTotalMessages(response.count);
+    };
+
+    fetchTotalMessages();
+  }, []);
+
+  const handleBellClick = () => {
+    navigate("/messages"); // Navigate to /messages on bell icon click
+  };
 
   const data = [
     { time: "10am", value: 50000 },
@@ -37,9 +55,8 @@ const DashboardInterface = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-cream-50 via-orange-50 to-orange-100">
-      {/* Sidebar */}
-      <Sidebar visible={isSidebarVisible} />
+    <div className="min-h-screen bg-gradient-to-b from-cream-50 via-orange-50 to-orange-100 flex">
+      <Sidebar visible={isSidebarVisible} totalMessages={totalMessages} />
 
       <div
         className={`flex-1 p-6 transition-all duration-300 ${
@@ -65,10 +82,16 @@ const DashboardInterface = () => {
           </div>
           <div className="flex items-center space-x-4">
             <div className="relative">
-              <Bell className="w-6 h-6 text-brown-600" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
-                2
-              </span>
+              <button onClick={handleBellClick}>
+                {" "}
+                {/* Add onClick to Bell */}
+                <Bell className="w-6 h-6 text-brown-600" />
+              </button>
+              {totalMessages > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
+                  {totalMessages}
+                </span>
+              )}
             </div>
             <div className="w-10 h-10 rounded-full bg-brown-100" />
           </div>
@@ -96,31 +119,7 @@ const DashboardInterface = () => {
           {/* Line Chart */}
           <div className="bg-cream-100 p-6 rounded-xl lg:col-span-3 shadow-md">
             <div className="flex justify-between items-center mb-6">
-              {/* <h2 className="text-xl font-semibold text-brown-800">Reports</h2>
-              <div className="relative">
-                <button
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="p-2 hover:bg-cream-200 rounded-full"
-                >
-                  <MoreVertical className="w-5 h-5 text-brown-500" />
-                </button>
-                {isMenuOpen && (
-                  <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-lg border border-cream-200">
-                    <button className="w-full px-4 py-2 text-left flex items-center gap-3 hover:bg-cream-50">
-                      <RefreshCw className="w-4 h-4 text-brown-500" />
-                      <span>Refresh</span>
-                    </button>
-                    <button className="w-full px-4 py-2 text-left flex items-center gap-3 hover:bg-cream-50">
-                      <Download className="w-4 h-4 text-brown-500" />
-                      <span>Export</span>
-                    </button>
-                    <button className="w-full px-4 py-2 text-left flex items-center gap-3 hover:bg-cream-50">
-                      <Share2 className="w-4 h-4 text-brown-500" />
-                      <span>Share</span>
-                    </button>
-                  </div>
-                )}
-              </div> */}
+              {/* Optional: Uncomment and customize the Reports header and menu */}
             </div>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart

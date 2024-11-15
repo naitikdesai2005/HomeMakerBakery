@@ -54,7 +54,7 @@ const Sidebar = ({ setActiveComponent }) => {
       </nav>
 
       {/* Footer - Admin Info */}
-      <div className="p-4 border-t border-gray-200 flex-shrink-0">
+      {/* <div className="p-4 border-t border-gray-200 flex-shrink-0">
         <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'}`}>
           <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#773631] to-[#a85751]" />
           {!isCollapsed && (
@@ -64,7 +64,7 @@ const Sidebar = ({ setActiveComponent }) => {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
     </aside>
   );
 };
