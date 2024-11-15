@@ -453,12 +453,23 @@ const updateOrder = async (req, res) => {
       return res.status(404).json({ success: false, message: "Order not found" });
     }
 
+<<<<<<< Updated upstream
     if (order.canclelled) {
+=======
+    // Check if the order is already cancelled
+    if (order.cancelled) {
+>>>>>>> Stashed changes
       return res.status(400).json({ success: false, message: "Order has already been cancelled" });
     }
 
     if (cancel) {
+<<<<<<< Updated upstream
       order.canclelled = true;
+=======
+      // Mark the order as cancelled
+      order.cancelled = true;
+      order.status = "Cancelled";
+>>>>>>> Stashed changes
 
       for (const item of order.items) {
         const bakerId = item.bakerId;
@@ -468,8 +479,16 @@ const updateOrder = async (req, res) => {
         );
       }
     } else {
+<<<<<<< Updated upstream
       order.items = order.items.map(item => {
         const updatedItem = items.find(i => i.productId.toString() === item.productId.toString());
+=======
+      // Update the order items
+      order.items = order.items.map((item) => {
+        const updatedItem = items.find(
+          (i) => i.productId.toString() === item.productId.toString()
+        );
+>>>>>>> Stashed changes
         if (updatedItem) {
           item.quantity = updatedItem.quantity;
         }
@@ -494,5 +513,6 @@ const updateOrder = async (req, res) => {
     res.status(500).json({ success: false, message: "Error updating order" });
   }
 };
+
 
 export { updateOrder, createOrder, updateOrderStatus, getBakerOrders, verifyOrder, getUserOrders };

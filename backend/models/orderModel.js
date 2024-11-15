@@ -18,7 +18,7 @@ const orderSchema = new mongoose.Schema({
         }
     ],
     payment:{type:Boolean,default:false},
-    canclelled:{type:Boolean,default:false}
+    cancelled:{type:Boolean,default:false}
 }, { minimize: false });
 
 const orderModel = mongoose.models.order || mongoose.model("order", orderSchema);

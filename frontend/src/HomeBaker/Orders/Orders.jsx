@@ -37,7 +37,7 @@ const Order = () => {
     }
     setLoading(false);
   };
-
+  
   useEffect(() => {
     fetchAllOrders();
   }, []);
@@ -75,10 +75,14 @@ const Order = () => {
   };
 
   const orderStatusTemplate = (rowData) => {
-    return rowData.status === "Delivered" ? (
-      <div className="flex items-center text-green-600 font-semibold">
-        <FaCheckCircle className="mr-2" />
-        Delivered
+    return rowData.status === "Delivered" || rowData.status === "Cancelled" ? (
+      <div
+        className={`flex items-center ${
+          rowData.status === "Cancelled" ? "text-red-600" : "text-green-600"
+        } font-semibold`}
+      >
+        {rowData.status === "Delivered" ? <FaCheckCircle className="mr-2" /> : null}
+        {rowData.status}
       </div>
     ) : (
       <select
@@ -87,7 +91,6 @@ const Order = () => {
         className={`order-status-select w-full md:w-auto p-2 border-2 rounded-lg 
           transition-all duration-200 ease-in-out cursor-pointer 
           hover:opacity-80 font-medium ${getStatusClass(rowData.status)}`}
-        disabled={rowData.status === "Delivered"}
       >
         <option value="Food Processing">Food Processing</option>
         <option value="Out for delivery">Out for delivery</option>
@@ -95,7 +98,7 @@ const Order = () => {
       </select>
     );
   };
-
+  
   const getStatusClass = (status) => {
     switch (status) {
       case "Food Processing":
@@ -104,10 +107,13 @@ const Order = () => {
         return "bg-blue-200 border-blue-400 text-blue-800";
       case "Delivered":
         return "bg-green-200 border-green-900 text-black-800";
+      case "Cancelled":
+        return "bg-red-200 border-red-400 text-red-800"; // Add this case
       default:
         return "bg-yellow-200 border-yellow-400 text-yellow-800";
     }
   };
+  
 
   const productImageTemplate = (rowData) => (
     <div className="flex flex-wrap gap-2">
