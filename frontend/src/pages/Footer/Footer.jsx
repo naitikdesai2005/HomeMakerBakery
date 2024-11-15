@@ -6,10 +6,9 @@ const Footer = () => {
     <footer className="footer">
       <div className="containerf">
         <div className="section">
-          <h2>Bakery Shop</h2>
+          <h2>BakeNest</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Home Bakery Platform
           </p>
           <div className="social-icons">
             <a href="#">
@@ -45,25 +44,26 @@ const Footer = () => {
         </div> */}
         <div className="section">
           <h3>Contact</h3>
-          <p>(406) 555-0120</p>
+          <p>+91 9316281115</p>
           <p>
-            <a href="https://www.example.com">www.example.com</a>
+            <a href="http://localhost:5173/contact">http://localhost:5173/contact</a>
           </p>
           <p>
-            <a href="mailto:example@gmail.com">example@gmail.com</a>
+            <a href="mailto:bakenest9@gmail.com">
+            bakenest9@gmail.com</a>
           </p>
-          <p>56, Rajar Golli, Amborkhana, Sylhet</p>
+          <p>139, CHARUSAT Campus, Highway, Off, Nadiad - Petlad Rd, Changa, Gujarat 388421</p>
         </div>
-        <div className="section">
+        {/* <div className="section">
           <h3>Get the latest information</h3>
           <div className="newsletter">
             <input type="email" placeholder="Email address" />
             <button>&gt;</button>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="bottom-bar">
-        <p>Copyright © 2023 Bakery Shop App. All Rights Reserved.</p>
+        <p>Copyright © 2024 HomeMakerBakery App. All Rights Reserved.</p>
         <p>
           <a href="#">User Terms & Conditions</a> |{" "}
           <a href="#">Privacy Policy</a>

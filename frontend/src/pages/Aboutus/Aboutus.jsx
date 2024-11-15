@@ -42,16 +42,13 @@ const Aboutus = () => {
               sweeter. Join us at Happy Bakes, where every visit is a treat, and
               every treat is a story.
             </p>
-            <p className="italic text-gray-600 mt-5">
-              Adam Smith
-              <br />
-              Owner, Happy Bakes
+            <p className="italic text-gray-700 mt-5">
+              Saloni, Rishee, Roshni, Naitik
             </p>
           </div>
           <div className="about-us-image max-w-xs mx-4 animate-fadeInRight">
             <img
               src="../../images/cake.jpg"
-              alt="Our Chef"
               className="w-full rounded-xl shadow-xl"
             />
           </div>
