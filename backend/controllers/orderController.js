@@ -861,4 +861,4 @@ const updateOrder = async (req, res) => {
 };
 
 
-export { updateOrder, createOrder, updateOrderStatus, getBakerOrders, verifyOrder, getUserOrders };
+export { updateOrder, createOrder, updateOrderStatus, getBakerOrders, verifyOrder, getUserOrders, checkOrderStatus};
