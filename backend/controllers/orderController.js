@@ -713,14 +713,60 @@ const getBakerOrders = async (req, res) => {
 };
 
 const updateOrderStatus = async (req, res) => {
-  console.log(req.body);
-  try {
-    await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status });
-    res.json({ success: true, message: "Status Updated" })
-  } catch (error) {
-    res.json({ success: false, message: "Error" })
-  }
-}
+  console.log(req.body);
+  try {
+    const { orderId, itemId, status } = req.body;
+
+    const order = await orderModel.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
+
+    const item = order.items.id(itemId);
+    if (!item) {
+      return res.status(404).json({ success: false, message: "Item not found" });
+    }
+
+    item.status = status;
+    await order.save();
+
+    // await checkOrderStatus(orderId);
+
+    res.json({ success: true, message: "Item status updated" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Error updating status" });
+  }
+};
+
+const checkOrderStatus = async (req,res) => {
+  const orderId = req.body.orderId;
+  console.log(orderId);
+  try {
+    const order = await orderModel.findById(orderId);
+    if (!order) {
+      throw new Error("Order not found");
+    }
+
+    const allDelivered = order.items.every(item => item.status === "Delivered");
+
+    if (allDelivered) {
+      order.status = "Delivered";
+      await order.save();
+      res.json({
+        success:"true"
+      });
+    }else{
+      res.json({
+        success:"false"
+      });
+    }
+    
+  } catch (error) {
+    console.error("Error checking order status:", error);
+  }
+};
+
 
 const getUserOrders = async (req, res) => {
   try {
