@@ -76,10 +76,7 @@ const Bakers = () => {
         <table className="w-full text-left bg-white shadow-md rounded-lg overflow-hidden">
           <thead className="bg-orange-100 text-orange-800 uppercase text-sm font-semibold">
             <tr>
-              <th className="py-3 px-4">
-                {/* <input type="checkbox" className="rounded border-gray-300" /> */}
-              </th>
-              <th className="py-3 px-4">Baker Id</th>
+              <th className="py-3 px-4"></th> {/* Empty header for spacing */}
               <th className="py-3 px-4">Baker Name</th>
               <th className="py-3 px-4">Email</th>
               <th className="py-3 px-4">Total Items</th>
@@ -94,18 +91,8 @@ const Bakers = () => {
                   index % 2 === 0 ? "bg-gray-50" : "bg-white"
                 }`}
               >
-                <td className="py-4 px-4">
-                  {/* <input type="checkbox" className="rounded border-gray-300" /> */}
-                </td>
-                <td className="py-4 px-4">{baker.id}</td>
-                <td className="py-4 px-4 flex items-center">
-                  {/* <img
-                    src={baker.image || "/default-baker.png"}
-                    alt={baker.name}
-                    className="w-8 h-8 rounded-full mr-3 shadow-md"
-                  /> */}
-                  {baker.name}
-                </td>
+                <td className="py-4 px-4"></td> {/* Empty cell for spacing */}
+                <td className="py-4 px-4 flex items-center">{baker.name}</td>
                 <td className="py-4 px-4">{baker.email}</td>
                 <td className="py-4 px-4">{baker.products?.length || 0}</td>
                 <td className="py-4 px-4">{baker.orders?.length || 0}</td>

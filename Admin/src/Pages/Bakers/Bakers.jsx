@@ -52,7 +52,6 @@ const Bakers = () => {
     setCurrentPage(page);
   };
 
-
   if (error) return <p>{error}</p>;
 
   return (
@@ -77,31 +76,35 @@ const Bakers = () => {
         <table className="w-full text-left bg-white shadow-md rounded-lg overflow-hidden">
           <thead className="bg-orange-100 text-orange-800 uppercase text-sm font-semibold">
             <tr>
-              <th className="py-3 px-4">Baker Id</th>
               <th className="py-3 px-4">Baker Name</th>
               <th className="py-3 px-4">Email</th>
               <th className="py-3 px-4">Total Items</th>
-              <th className="py-3 px-4">Total Orders</th> {/* Display total orders */}
+              <th className="py-3 px-4">Total Orders</th>{" "}
+              {/* Display total orders */}
             </tr>
           </thead>
           <tbody>
             {currentItems.map((baker, index) => (
               <tr
                 key={baker.id}
-                className={`transition-colors hover:bg-orange-50 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}
+                className={`transition-colors hover:bg-orange-50 ${
+                  index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                }`}
               >
-                <td className="py-4 px-4">{baker.id}</td>
                 <td className="py-4 px-4 flex items-center">{baker.name}</td>
                 <td className="py-4 px-4">{baker.email}</td>
                 <td className="py-4 px-4">{baker.products?.length || 0}</td>
-                <td className="py-4 px-4">{baker.orders?.length || 0}</td> {/* Show total orders */}
+                <td className="py-4 px-4">{baker.orders?.length || 0}</td>{" "}
+                {/* Show total orders */}
               </tr>
             ))}
           </tbody>
         </table>
 
         <br />
-        <p className="text-lg text-gray-700">Total Bakers: {filteredBakers.length}</p>
+        <p className="text-lg text-gray-700">
+          Total Bakers: {filteredBakers.length}
+        </p>
 
         <Stack spacing={2} className="mt-8 items-center">
           <Pagination

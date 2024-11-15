@@ -5,16 +5,15 @@ import { RotatingLines } from "react-loader-spinner"; // Import the loader
 
 const ProductDisplay = ({ category }) => {
   const [products, setProducts] = useState([]);
-  const [visibleProducts, setVisibleProducts] = useState(8); // Start with showing 8 products
-  const [loading, setLoading] = useState(true); // Track loading state for the initial load
-  const [loadingMore, setLoadingMore] = useState(false); // Track loading state for 'Load More' button
+  const [visibleProducts, setVisibleProducts] = useState(8);
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const url = "http://localhost:3000";
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${url}/api/user/getallitem`);
-
         if (response.data.success && Array.isArray(response.data.data)) {
           setProducts(response.data.data);
         } else {
@@ -23,7 +22,7 @@ const ProductDisplay = ({ category }) => {
       } catch (error) {
         console.error("Error fetching products data:", error);
       } finally {
-        setLoading(false); // Set loading to false after fetching data
+        setLoading(false);
       }
     };
 
@@ -31,18 +30,33 @@ const ProductDisplay = ({ category }) => {
   }, []);
 
   const loadMore = async () => {
-    setLoadingMore(true); // Set loadingMore to true when fetching more products
-
+    setLoadingMore(true);
     setTimeout(() => {
-      // Simulating network delay
-      setVisibleProducts((prevVisible) => prevVisible + 8); // Load 8 more products
-      setLoadingMore(false); // Set loadingMore to false after fetching
-    }, 1500); // Delay for demonstration (1.5 seconds)
+      setVisibleProducts((prevVisible) => prevVisible + 8);
+      setLoadingMore(false);
+    }, 1500);
   };
+
+  // Handle scroll event for automatic loading
+  const handleScroll = () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight;
+
+    if (scrollTop === 0 && visibleProducts < products.length && !loadingMore) {
+      loadMore();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [visibleProducts, loadingMore, products.length]);
 
   return (
     <div className="mt-8 mb-5" id="product-display">
-      {/* Display Loading Spinner for the initial products */}
       {loading ? (
         <div className="flex justify-center items-center mt-8">
           <RotatingLines
@@ -73,19 +87,18 @@ const ProductDisplay = ({ category }) => {
         </div>
       )}
 
-      {/* Load More Button */}
       {visibleProducts < products.length && (
         <div className="flex justify-center mt-6">
           <button
             onClick={loadMore}
             className={`px-6 py-2 ${
-              loadingMore ? "" : "bg-[#f79c3e]"
-            } text-white font-semibold rounded-lg hover:bg-[#f79c3e] transition duration-300`}
-            disabled={loadingMore} // Disable button when loading more products
+              loadingMore ? "bg-white" : "bg-[#f79c3e]"
+            } text-white font-semibold rounded-lg transition duration-600`}
+            disabled={loadingMore}
           >
             {loadingMore ? (
               <RotatingLines
-                strokeColor="white"
+                strokeColor="#f79c3e"
                 strokeWidth="5"
                 animationDuration="0.75"
                 width="30"

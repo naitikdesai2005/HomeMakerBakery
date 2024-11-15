@@ -17,7 +17,9 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/admin/ordersData");
+        const response = await axios.get(
+          "http://localhost:3000/api/admin/ordersData"
+        );
         if (response.data.status) {
           setOrders(response.data.data);
         } else {
@@ -87,7 +89,9 @@ const Orders = () => {
               {currentItems.map((order, index) => (
                 <tr
                   key={index}
-                  className={`transition-colors hover:bg-orange-50 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}
+                  className={`transition-colors hover:bg-orange-50 ${
+                    index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                  }`}
                 >
                   <td className="py-4 px-4">{order.email}</td>
                   <td className="py-4 px-4">{order.address}</td>
@@ -100,7 +104,9 @@ const Orders = () => {
         )}
 
         <br />
-        <p className="text-lg text-gray-700">Total Orders: {filteredOrders.length}</p> {/* Display total orders */}
+        <p className="text-lg text-gray-700">
+          Total Orders: {filteredOrders.length}
+        </p>
 
         <Stack spacing={2} className="mt-8 items-center">
           <Pagination

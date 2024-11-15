@@ -1,37 +1,52 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Bell, Menu, Search } from "lucide-react";
 import {
-  Bell,
-  Menu,
-  Search,
-  MoreVertical,
-  RefreshCw,
-  Share2,
-  Download,
-} from "lucide-react";
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts";
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  Tooltip,
+} from "recharts";
 import Sidebar from "./Sidebar/Sidebar";
 import RecentOrders from "./RecentOrder/Recentorder";
 
 const DashboardInterface = () => {
-  const navigate = useNavigate(); // Initialize navigate
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [totalMessages, setTotalMessages] = useState(0);
+  const [dashboardData, setDashboardData] = useState({
+    totalBakers: 0,
+    totalUsers: 0,
+    totalOrders: 0,
+    totalItems: 0,
+  });
 
   useEffect(() => {
-    const fetchTotalMessages = async () => {
-      const response = await new Promise((resolve) =>
-        setTimeout(() => resolve({ count: 5 }), 1000)
-      );
-      setTotalMessages(response.count);
+    const fetchDashboardData = async () => {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:3000/api/admin/dashdata"
+        );
+        if (data.status) {
+          setDashboardData(data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
     };
 
-    fetchTotalMessages();
+    fetchDashboardData();
   }, []);
 
   const handleBellClick = () => {
-    navigate("/messages"); // Navigate to /messages on bell icon click
+    navigate("/messages");
   };
 
   const data = [
@@ -48,29 +63,30 @@ const DashboardInterface = () => {
   ];
 
   const stats = [
-    { title: "Save Products", value: "178+", icon: "🍞" },
-    { title: "Stock Products", value: "20+", icon: "🥐" },
-    { title: "Sales Products", value: "190+", icon: "🍪" },
-    { title: "Job Application", value: "12+", icon: "🧁" },
+    { title: "Products", value: `${dashboardData.totalItems}`, icon: "🍞" },
+    { title: "Bakers", value: `${dashboardData.totalBakers}`, icon: "🥐" },
+    { title: "Orders", value: `${dashboardData.totalOrders}`, icon: "🍪" },
+    { title: "Users", value: `${dashboardData.totalUsers}`, icon: "🧁" },
   ];
+
+  const pieData = [
+    { name: "Users", value: dashboardData.totalUsers },
+    { name: "Bakers", value: dashboardData.totalBakers },
+    { name: "Orders", value: dashboardData.totalOrders },
+  ];
+
+  const COLORS = ["#F97316", "#FBBF24", "#34D399"];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream-50 via-orange-50 to-orange-100 flex">
       <Sidebar visible={isSidebarVisible} totalMessages={totalMessages} />
-
       <div
         className={`flex-1 p-6 transition-all duration-300 ${
-          isSidebarVisible ? "ml-64" : ""
+          isSidebarVisible ? "ml-64" : "ml-0"
         }`}
       >
         <header className="flex justify-between items-center mb-8">
           <div className="flex items-center">
-            <button
-              onClick={() => setIsSidebarVisible(!isSidebarVisible)}
-              className="w-8 h-8 mr-4 text-brown-800"
-            >
-              <Menu className="w-8 h-8 text-brown-500" />
-            </button>
             <div className="relative">
               <input
                 type="text"
@@ -83,8 +99,6 @@ const DashboardInterface = () => {
           <div className="flex items-center space-x-4">
             <div className="relative">
               <button onClick={handleBellClick}>
-                {" "}
-                {/* Add onClick to Bell */}
                 <Bell className="w-6 h-6 text-brown-600" />
               </button>
               {totalMessages > 0 && (
@@ -96,8 +110,6 @@ const DashboardInterface = () => {
             <div className="w-10 h-10 rounded-full bg-brown-100" />
           </div>
         </header>
-
-        {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
             <div key={index} className="bg-cream-100 p-6 rounded-xl shadow-md">
@@ -113,14 +125,8 @@ const DashboardInterface = () => {
             </div>
           ))}
         </div>
-
-        {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Line Chart */}
           <div className="bg-cream-100 p-6 rounded-xl lg:col-span-3 shadow-md">
-            <div className="flex justify-between items-center mb-6">
-              {/* Optional: Uncomment and customize the Reports header and menu */}
-            </div>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart
                 data={data}
@@ -142,12 +148,10 @@ const DashboardInterface = () => {
                 <XAxis
                   dataKey="time"
                   tick={{ fill: "#9CA3AF", fontSize: 12 }}
-                  dy={10}
                 />
                 <YAxis
                   tick={{ fill: "#9CA3AF", fontSize: 12 }}
                   tickFormatter={(value) => `${value / 1000}K`}
-                  dx={-10}
                 />
                 <Line
                   type="monotone"
@@ -160,33 +164,37 @@ const DashboardInterface = () => {
               </LineChart>
             </ResponsiveContainer>
           </div>
-
-          {/* Analytics Circle Chart */}
-          <div className="bg-cream-100 p-6 rounded-xl lg:col-span-1 flex flex-col items-center shadow-md">
+          <div className="bg-cream-100 p-6 rounded-xl lg:col-span-1 shadow-md">
             <h2 className="text-brown-700 text-lg font-semibold mb-4">
               Analytics
             </h2>
-            <div className="relative w-40 h-40 rounded-full bg-cream-200 flex items-center justify-center">
-              <div className="absolute w-40 h-40 rounded-full border-8 border-brown-300 border-r-orange-400 border-b-orange-500 border-l-transparent" />
-              <div className="absolute text-center">
-                <span className="text-2xl font-bold text-brown-700">80%</span>
-                <p className="text-brown-500">Transactions</p>
-              </div>
-            </div>
-            <div className="flex space-x-4 mt-6">
-              <div className="flex items-center">
-                <span className="w-3 h-3 rounded-full bg-orange-400 mr-2"></span>
-                <span className="text-brown-500">Sale</span>
-              </div>
-              <div className="flex items-center">
-                <span className="w-3 h-3 rounded-full bg-yellow-400 mr-2"></span>
-                <span className="text-brown-500">Distribute</span>
-              </div>
-              <div className="flex items-center">
-                <span className="w-3 h-3 rounded-full bg-red-400 mr-2"></span>
-                <span className="text-brown-500">Return</span>
-              </div>
-            </div>
+            <PieChart width={250} height={250}>
+              <Pie
+                data={pieData}
+                cx="50%"
+                cy="50%"
+                innerRadius={50}
+                outerRadius={80}
+                fill="#8884d8"
+                paddingAngle={5}
+                dataKey="value"
+                label={({ name, value }) => `${name}: ${value}`}
+              >
+                {pieData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend
+                layout="vertical"
+                align="right"
+                verticalAlign="middle"
+                wrapperStyle={{ fontSize: "12px" }}
+              />
+            </PieChart>
           </div>
         </div>
         <RecentOrders />

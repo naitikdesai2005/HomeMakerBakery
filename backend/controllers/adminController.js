@@ -1,6 +1,7 @@
 import bakerModel from "../models/bakerModel.js";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
+import productModel from "../models/productModel.js";
 
 const bakerData = async (req, res) => {
   try {
@@ -11,15 +12,15 @@ const bakerData = async (req, res) => {
         .status(404)
         .json({ status: false, message: "Bakers data not found" });
     }
- 
+
     console.log(bakersData);
 
     return res.status(200).json({
-      status:true,
-      data:bakersData
+      status: true,
+      data: bakersData
     })
 
-  }catch (e) {
+  } catch (e) {
     console.log(e);
     return res.status(500).json({ success: false, message: "Something went wrong" });
   }
@@ -59,19 +60,50 @@ const orderData = async (req, res) => {
         .status(404)
         .json({ status: false, message: "Orders data not found" });
     }
- 
+
     console.log(ordersData);
 
     return res.status(200).json({
-      status:true,
-      data:ordersData
+      status: true,
+      data: ordersData
     })
 
-  }catch (e) {
+  } catch (e) {
     console.log(e);
     return res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
 
+const dashboardData = async (req, res) => {
+  try {
+    const totalBakers = await bakerModel.countDocuments(); // Get total bakers
+    const totalUsers = await userModel.countDocuments(); // Get total users
+    const totalOrders = await orderModel.countDocuments(); // Get total orders
+    const totalItems = await productModel.countDocuments(); // Get total items
 
-export { bakerData,userData,orderData};
+    if (
+      totalBakers === null ||
+      totalUsers === null ||
+      totalOrders === null ||
+      totalItems === null
+    ) {
+      return res
+        .status(404)
+        .json({ status: false, message: "Dashboard data not found" });
+    }
+
+    return res.status(200).json({
+      status: true,
+      data: { totalBakers, totalUsers, totalOrders, totalItems },
+    });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong while fetching dashboard data",
+    });
+  }
+};
+
+
+export { bakerData, userData, orderData, dashboardData };

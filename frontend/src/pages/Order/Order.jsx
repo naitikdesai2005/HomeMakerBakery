@@ -78,14 +78,12 @@ const PlaceOrder = () => {
       {isAuthenticated ? <UserNavbar /> : <Navbar />}
       <form
         onSubmit={placeOrder}
-        className="flex mt-[170px] mb-[20px] gap-[30px] justify-around"
+        className="flex flex-col md:flex-row mt-[170px] mb-[20px] gap-[30px] md:justify-around"
       >
         {/* Delivery Information Section */}
         <div className="max-w-[480px] w-full">
-          <p className="text-[30px] font-semibold mb-[50px]">
-            Delivery Information
-          </p>
-          <div className="flex gap-[10px] mb-[15px]">
+          <p className="text-[30px] font-semibold mb-[50px]">Delivery Information</p>
+          <div className="flex flex-col md:flex-row gap-[10px] mb-[15px]">
             <input
               name="firstName"
               onChange={onChangeHandler}
@@ -93,7 +91,7 @@ const PlaceOrder = () => {
               type="text"
               placeholder="First Name"
               required
-              className="w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500"
+              className="w-full md:w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500 mb-[15px]"
             />
             <input
               name="lastName"
@@ -102,7 +100,7 @@ const PlaceOrder = () => {
               type="text"
               placeholder="Last Name"
               required
-              className="w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500"
+              className="w-full md:w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500 mb-[15px]"
             />
           </div>
           <input
@@ -112,7 +110,7 @@ const PlaceOrder = () => {
             type="email"
             placeholder="Email address"
             required
-            className="w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500 mb-[15px]"
+            className="w-full md:w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500 mb-[15px]"
           />
           <input
             onChange={onChangeHandler}
@@ -121,7 +119,7 @@ const PlaceOrder = () => {
             type="text"
             placeholder="Street"
             required
-            className="w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500 mb-[15px]"
+            className="w-full md:w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500 mb-[15px]"
           />
           <input
             onChange={onChangeHandler}
@@ -130,13 +128,13 @@ const PlaceOrder = () => {
             type="text"
             placeholder="Phone"
             required
-            className="w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500 mb-[15px]"
+            className="w-full md:w-[478px] p-[10px] border border-[#c5c5c5] rounded-[4px] outline-gray-500 mb-[15px]"
           />
         </div>
 
         {/* Cart Totals Section */}
-        <div className="max-w-[550px] w-full">
-          <div className="border p-[20px] rounded-[8px] bg-white shadow-lg">
+        <div className="max-w-[550px] w-full mt-10">
+          <div className="p-[20px] rounded-[8px] bg-white">
             <h1 className="text-[24px] font-semibold mb-[20px]">Cart Totals</h1>
 
             <div className="flex justify-between text-lg mb-[10px]">

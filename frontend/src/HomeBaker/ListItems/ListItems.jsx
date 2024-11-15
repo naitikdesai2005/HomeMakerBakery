@@ -168,7 +168,7 @@ const ListItems = () => {
             tableStyle={{ minWidth: "80rem" }}
             paginator
             rows={3}
-            rowsPerPageOptions={[4, 8]}
+            rowsPerPageOptions={[, 8]}
             className="p-datatable-striped"
           >
             <Column
@@ -183,7 +183,7 @@ const ListItems = () => {
               field="description"
               header="Description"
               body={descriptionBodyTemplate}
-              style={{ maxWidth: "400px", whiteSpace: "normal" }} // Adjust width as needed
+              style={{ maxWidth: "400px", whiteSpace: "normal" }} 
             />
             <Column header="Delete" body={statusBodyTemplate} />
           </DataTable>
