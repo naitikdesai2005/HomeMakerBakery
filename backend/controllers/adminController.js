@@ -73,7 +73,6 @@ const orderData = async (req, res) => {
     return res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
-import productModel from "../models/productModel.js"; // Import the item model
 
 const dashboardData = async (req, res) => {
   try {
@@ -106,9 +105,5 @@ const dashboardData = async (req, res) => {
   }
 };
 
-<<<<<<< Updated upstream
 
 export { bakerData, userData, orderData, dashboardData };
-=======
-export { bakerData,userData,orderData,dashboardData};
->>>>>>> Stashed changes
