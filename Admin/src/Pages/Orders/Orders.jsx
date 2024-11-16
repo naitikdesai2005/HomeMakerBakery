@@ -89,13 +89,9 @@ const Orders = () => {
               {currentItems.map((order, index) => (
                 <tr
                   key={index}
-<<<<<<< Updated upstream
                   className={`transition-colors hover:bg-orange-50 ${
                     index % 2 === 0 ? "bg-gray-50" : "bg-white"
                   }`}
-=======
-                  className={`transition-colors hover:bg-orange-50 ${index % 2 === 0 ? "bg-white" : "bg-white"}`}
->>>>>>> Stashed changes
                 >
                   <td className="py-4 px-4">{order.email}</td>
                   <td className="py-4 px-4">{order.address}</td>

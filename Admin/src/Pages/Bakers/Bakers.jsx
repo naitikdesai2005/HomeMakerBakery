@@ -87,13 +87,9 @@ const Bakers = () => {
             {currentItems.map((baker, index) => (
               <tr
                 key={baker.id}
-<<<<<<< Updated upstream
                 className={`transition-colors hover:bg-orange-50 ${
                   index % 2 === 0 ? "bg-gray-50" : "bg-white"
                 }`}
-=======
-                className={`transition-colors hover:bg-orange-50 ${index % 2 === 0 ? "bg-white" : "bg-white"}`}
->>>>>>> Stashed changes
               >
                 <td className="py-4 px-4 flex items-center">{baker.name}</td>
                 <td className="py-4 px-4">{baker.email}</td>
