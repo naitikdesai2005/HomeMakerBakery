@@ -13,59 +13,30 @@ const MainLoader = () => {
   const bakingTrayRef = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.5 });
+    const tl = gsap.timeline();
 
-    tl.to(rollingPinRef.current, {
+    tl.to([rollingPinRef.current, whiskRef.current, cupcakeRef.current, bakingTrayRef.current], {
       rotation: 360,
       transformOrigin: "center",
-      duration: 2,
+      duration: 1,
       ease: "power2.inOut",
-    })
-      .to(
-        whiskRef.current,
-        {
-          rotation: 360,
-          transformOrigin: "center",
-          duration: 2,
-          ease: "power2.inOut",
-        },
-        "-=2"
-      )
-      .to(
-        cupcakeRef.current,
-        {
-          rotation: 360,
-          transformOrigin: "center",
-          duration: 2,
-          ease: "power2.inOut",
-        },
-        "-=2"
-      )
-      .to(
-        bakingTrayRef.current,
-        {
-          rotation: 360,
-          transformOrigin: "center",
-          duration: 2,
-          ease: "power2.inOut",
-        },
-        "-=2"
-      )
-      .to(
-        [rollingPinRef.current, whiskRef.current, cupcakeRef.current, bakingTrayRef.current],
-        {
-          scale: 1.2,
-          yoyo: true,
-          repeat: -1,
-          duration: 0.8,
-          ease: "power1.inOut",
-        }
-      );
+      stagger: 0.2,
+    }).to(
+      [rollingPinRef.current, whiskRef.current, cupcakeRef.current, bakingTrayRef.current],
+      {
+        scale: 1.2,
+        yoyo: true,
+        repeat: 1,
+        duration: 0.5,
+        ease: "power1.inOut",
+        stagger: 0.2,
+      }
+    );
 
     gsap.to(loaderRef.current, {
       opacity: 0,
-      duration: 1,
-      delay: 3,
+      duration: 0.5,
+      delay: 2,
       ease: "power2.out",
       onComplete: () => {
         if (loaderRef.current) {

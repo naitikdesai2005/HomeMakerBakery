@@ -93,7 +93,7 @@ const Users = () => {
                 <tr
                   key={user.email} // Updated key to user.email
                   className={`transition-colors hover:bg-orange-50 ${
-                    index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                    index % 2 === 0 ? "bg-white" : "bg-white"
                   }`}
                 >
                   <td className="py-4 px-4">{user.name}</td>
