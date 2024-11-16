@@ -710,6 +710,7 @@ const getBakerOrders = async (req, res) => {
   try {
     const bakerId = req.body.userId;
 
+    // Find the baker
     const baker = await bakerModel.findById(bakerId);
     if (!baker) {
       return res.status(404).json({ success: false, message: "Baker not found" });
@@ -718,7 +719,8 @@ const getBakerOrders = async (req, res) => {
     const formattedOrders = [];
 
     for (const orderInfo of baker.orders) {
-      const order = await orderModel.findById(orderInfo.orderId).populate('userId', 'firstName lastName email phone address');
+      const order = await orderModel.findById(orderInfo.orderId)
+        .populate('userId', 'firstname lastname email phone address'); // Populate user details
 
       if (!order) continue;
 
@@ -727,16 +729,20 @@ const getBakerOrders = async (req, res) => {
       if (items.length === 0) continue;
 
       let totalPrice = 0;
-      const formattedItems = await Promise.all(items.map(async item => {
+
+      const formattedItems = await Promise.all(items.map(async (item) => {
         const product = await productModel.findById(item.productId);
-        const itemTotalPrice = item.quantity * item.price; // Calculate total price for this item
+
+        if (!product) return null; // Skip if product is missing
+
+        const itemTotalPrice = item.quantity * item.price;
         totalPrice += itemTotalPrice;
 
         return {
-          name: product.name,
+          name: product.name, // Fetch product name
           quantity: item.quantity,
           price: item.price,
-          image: product.image,
+          image: product.image, // Fetch product image
           totalPrice: itemTotalPrice
         };
       }));
@@ -748,7 +754,7 @@ const getBakerOrders = async (req, res) => {
           phone: order.phone,
           address: order.address,
         },
-        items: formattedItems,
+        items: formattedItems.filter(item => item !== null), // Exclude null items
         totalPrice: totalPrice,
         status: order.status,
       };
@@ -762,6 +768,7 @@ const getBakerOrders = async (req, res) => {
     res.status(500).json({ success: false, message: "Error retrieving orders" });
   }
 };
+
 
 const updateOrderStatus = async (req, res) => {
   console.log(req.body);
