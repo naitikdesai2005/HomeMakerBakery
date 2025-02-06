@@ -1,47 +1,47 @@
-# HomeMaker Bakery Platform
+# 🏠 HomeMaker Bakery Platform
 
 A MERN stack marketplace connecting home bakers with customers, enabling homemakers to monetize their baking skills by selling homemade bakery items.
 
-## Features
+## ✨ Features
 
-### For Bakers
-- Bakery registration and profile management
-- Product catalog management
-- Order tracking and status updates
-- Dashboard with sales analytics
-- Real-time order notifications
+### 👩‍🍳 For Bakers
+- 🏪 Bakery registration and profile management
+- 📝 Product catalog management
+- 📊 Order tracking and status updates
+- 📈 Dashboard with sales analytics
+- 🔔 Real-time order notifications
 
-### For Customers
-- Browse diverse bakery products
-- Place and track orders
-- Digital invoice generation
-- Order history
-- Product search and filtering
+### 👥 For Customers
+- 🛍️ Browse diverse bakery products
+- 🛒 Place and track orders
+- 📄 Digital invoice generation
+- 📋 Order history
+- 🔍 Product search and filtering
 
-### For Admin
-- User management
-- Platform monitoring
-- Content moderation
-- Analytics dashboard
-- Dispute resolution
+### 👨‍💼 For Admin
+- 👥 User management
+- 📊 Platform monitoring
+- 👮 Content moderation
+- 📈 Analytics dashboard
+- ⚖️ Dispute resolution
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-### Frontend
-- React.js
-- Tailwind CSS
-- Redux for state management
-- Axios for API integration
-- React Router for navigation
+### 🎨 Frontend
+- ⚛️ React.js
+- 🎨 Tailwind CSS
+- 🔄 Redux for state management
+- 🌐 Axios for API integration
+- 🛣️ React Router for navigation
 
-### Backend
-- Node.js
-- Express.js
-- MongoDB
-- JWT Authentication
-- Mongoose ODM
+### ⚙️ Backend
+- 📦 Node.js
+- 🚀 Express.js
+- 🍃 MongoDB
+- 🔐 JWT Authentication
+- 🔗 Mongoose ODM
 
-## Installation
+## 🚀 Installation
 
 ```bash
 # Clone repository
@@ -62,7 +62,7 @@ npm run dev
 npm start
 ```
 
-## Environment Variables
+## 🔑 Environment Variables
 
 Create `.env` files in both frontend and backend directories:
 
@@ -76,9 +76,9 @@ PORT=5000
 REACT_APP_API_URL=http://localhost:5000/api
 ```
 
-## API Documentation
+## 📚 API Documentation
 
-### Baker Routes
+### 👩‍🍳 Baker Routes
 ```
 POST /api/baker/register - Register new baker
 POST /api/baker/login - Baker login
@@ -87,7 +87,7 @@ POST /api/baker/products - Add new product
 PUT /api/baker/orders/:id - Update order status
 ```
 
-### Customer Routes
+### 👥 Customer Routes
 ```
 POST /api/user/register - Register new user
 POST /api/user/login - User login
@@ -96,7 +96,7 @@ POST /api/orders - Place new order
 GET /api/orders/:id - Get order details
 ```
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 ├── backend/
@@ -115,21 +115,21 @@ GET /api/orders/:id - Get order details
 └── README.md
 ```
 
-## Team
+## 👥 Team
 
-- Backend Development:
+- 🔧 Backend Development:
   - Naitik Desai
   - Rishee Gandhi
 
-- Frontend Development:
+- 🎨 Frontend Development:
   - Saloni Gadhiya
   - Roshni Dholariya
 
-- Documentation:
+- 📝 Documentation:
   - Saloni Gadhiya
   - Roshni Dholariya
 
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create your feature branch: `git checkout -b feature/new-feature`
@@ -137,6 +137,6 @@ GET /api/orders/:id - Get order details
 4. Push to branch: `git push origin feature/new-feature`
 5. Submit a pull request
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
